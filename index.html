@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Sentinel-X | Autonomous Security Agent</title>
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <title>AI Sentinel-X | Login</title>
     <style>
         * {
             margin: 0;
@@ -13,28 +12,32 @@
         }
 
         :root {
-            --primary: #7c3aed;
-            --secondary: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --info: #3b82f6;
-            --bg-dark: #0a0a0a;
-            --bg-card: rgba(17, 17, 23, 0.8);
-            --border: rgba(124, 58, 237, 0.2);
+            --primary: #00ff88;
+            --secondary: #00ccff;
+            --accent: #7c3aed;
+            --danger: #ff0044;
+            --bg-dark: #0a0e1a;
+            --bg-darker: #060912;
+            --bg-card: rgba(10, 20, 40, 0.8);
+            --border: rgba(0, 255, 136, 0.2);
             --text-primary: #ffffff;
-            --text-secondary: #9ca3af;
+            --text-secondary: #8892b0;
+            --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+            --gradient-shield: linear-gradient(135deg, #1a4d2e 0%, #00ff88 50%, #00ccff 100%);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-dark);
+            font-family: 'Consolas', 'Monaco', monospace;
+            background: var(--bg-darker);
             color: var(--text-primary);
-            overflow-x: hidden;
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Background Effects */
-        .bg-effects {
+        /* Matrix Background */
+        .matrix-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -42,2972 +45,514 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
+            overflow: hidden;
         }
 
-        .grid-bg {
+        .matrix-column {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(124, 58, 237, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(124, 58, 237, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
+            top: -100%;
+            font-size: 14px;
+            color: var(--primary);
+            animation: matrixFall 20s linear infinite;
+            opacity: 0.1;
+            font-family: 'Courier New', monospace;
         }
 
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+        @keyframes matrixFall {
+            to {
+                top: 100%;
+            }
         }
 
-        .gradient-orb {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.3;
-            animation: orbFloat 20s ease-in-out infinite;
-        }
-
-        .gradient-orb:nth-child(2) {
-            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-            top: -200px;
-            right: -200px;
-        }
-
-        .gradient-orb:nth-child(3) {
-            background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
-            bottom: -200px;
-            left: -200px;
-            animation-delay: 10s;
-        }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(50px, -50px) scale(1.1); }
-        }
-
-        /* Container */
-        .container {
+        /* Login Container */
+        .login-container {
             position: relative;
             z-index: 1;
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Setup Modal */
-        .setup-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
-
-        .setup-modal.hidden {
-            display: none;
-        }
-
-        .setup-content {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
+            padding: 50px;
             width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            backdrop-filter: blur(10px);
+            max-width: 500px;
+            backdrop-filter: blur(20px);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            animation: modalSlideIn 0.5s ease;
+            animation: loginSlideIn 0.5s ease;
         }
 
-        @keyframes modalSlideIn {
+        @keyframes loginSlideIn {
             from {
-                transform: translateY(50px);
                 opacity: 0;
+                transform: translateY(50px) scale(0.95);
             }
             to {
-                transform: translateY(0);
                 opacity: 1;
+                transform: translateY(0) scale(1);
             }
         }
 
-        .setup-header {
+        /* Logo */
+        .logo-section {
             text-align: center;
             margin-bottom: 40px;
         }
 
-        .logo-setup {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 40px;
-            font-weight: bold;
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
-            animation: logoPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes logoPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 15px 40px rgba(124, 58, 237, 0.6); }
-        }
-
-        .setup-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .setup-subtitle {
-            color: var(--text-secondary);
-            font-size: 16px;
-        }
-
-        .key-input-group {
-            margin-bottom: 25px;
-        }
-
-        .key-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .key-icon {
-            width: 30px;
-            height: 30px;
-            background: rgba(124, 58, 237, 0.2);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-
-        .key-input {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 14px;
-            font-family: 'Courier New', monospace;
-            transition: all 0.3s ease;
-        }
-
-        .key-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: rgba(124, 58, 237, 0.1);
-            box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
-        }
-
-        .key-description {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 5px;
-        }
-
-        .setup-button {
-            width: 100%;
-            padding: 15px 30px;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 30px;
+        .sentinel-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
             position: relative;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .setup-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+        .logo-shield {
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: left 0.5s ease;
-        }
-
-        .setup-button:hover::before {
-            left: 100%;
-        }
-
-        .setup-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
-        }
-
-        /* Header */
-        .header {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 20px 30px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .logo {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: bold;
-            box-shadow: 0 5px 20px rgba(124, 58, 237, 0.3);
+            background: var(--gradient-shield);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             position: relative;
-            overflow: hidden;
+            animation: shieldPulse 3s ease-in-out infinite;
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
         }
 
-        .logo::after {
-            content: '';
+        .logo-eye {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-            animation: logoScan 3s linear infinite;
-        }
-
-        @keyframes logoScan {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .brand {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand-name {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .brand-tagline {
-            font-size: 14px;
-            color: var(--secondary);
-            font-weight: 500;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 20px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .status-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--secondary);
-            border-radius: 50%;
-            animation: statusPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes statusPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.5); }
-        }
-
-        /* AI Agent Status Card */
-        .agent-status-card {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .agent-status-card::before {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, transparent 0%, rgba(124, 58, 237, 0.2) 100%);
-            animation: scanLine 4s linear infinite;
-        }
-
-        @keyframes scanLine {
-            0% { top: -100%; }
-            100% { top: 100%; }
-        }
-
-        .agent-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .agent-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .agent-avatar {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #1a4d2e 0%, #10b981 100%);
-            border-radius: 12px;
+            background: var(--bg-darker);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+
+        .logo-iris {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 50%;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
-            animation: agentPulse 3s ease-in-out infinite;
+            animation: irisGlow 2s ease-in-out infinite;
         }
 
-        .agent-avatar::before {
+        .logo-iris::before {
             content: '';
             position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--bg-darker);
+            border-radius: 50%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 30px;
-            height: 30px;
-            background: radial-gradient(circle, #10b981 0%, transparent 70%);
-            border-radius: 50%;
-            animation: agentScan 2s linear infinite;
         }
 
-        .agent-avatar::after {
-            content: '';
+        .logo-circuits {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 20px;
-            height: 20px;
-            border: 2px solid #10b981;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: agentRotate 1s linear infinite;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
         }
 
-        @keyframes agentScan {
-            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+        .circuit {
+            position: absolute;
+            background: var(--primary);
+            opacity: 0.6;
+            animation: circuitGlow 2s ease-in-out infinite;
         }
 
-        @keyframes agentRotate {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
+        .circuit-1 { width: 30px; height: 2px; top: 50%; left: -30px; }
+        .circuit-2 { width: 30px; height: 2px; top: 50%; right: -30px; }
+        .circuit-3 { width: 2px; height: 30px; top: -30px; left: 50%; transform: translateX(-50%); }
+        .circuit-4 { width: 2px; height: 30px; bottom: -30px; left: 50%; transform: translateX(-50%); }
 
-        @keyframes agentPulse {
+        @keyframes shieldPulse {
             0%, 100% { 
-                box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.4),
-                           0 0 20px rgba(124, 58, 237, 0.6);
+                transform: scale(1);
+                box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
             }
             50% { 
-                box-shadow: 0 0 0 20px rgba(124, 58, 237, 0),
-                           0 0 40px rgba(124, 58, 237, 0.8);
+                transform: scale(1.05);
+                box-shadow: 0 0 60px rgba(0, 255, 136, 0.8);
             }
         }
 
-        .agent-details h2 {
-            font-size: 20px;
-            margin-bottom: 5px;
+        @keyframes irisGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(0, 204, 255, 0.8); }
         }
 
-        .agent-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--secondary);
-            font-size: 14px;
+        @keyframes circuitGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
 
-        .agent-status-indicator {
-            width: 10px;
-            height: 10px;
-            background: var(--secondary);
-            border-radius: 50%;
-            animation: blink 1s ease-in-out infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .agent-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .agent-action-btn {
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .agent-action-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .agent-metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
-
-        .agent-metric {
-            text-align: center;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-        }
-
-        .agent-metric-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--secondary);
-        }
-
-        .agent-metric-label {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 5px;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .stat-card:hover::before {
-            opacity: 1;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
-        }
-
-        .stat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .stat-title {
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .stat-value {
+        .login-title {
             font-size: 32px;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            font-weight: bold;
+            background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: 3px;
             margin-bottom: 10px;
         }
 
-        .stat-change {
-            font-size: 12px;
-            color: var(--secondary);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .stat-change.negative {
-            color: var(--danger);
-        }
-
-        /* Main Grid */
-        .main-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-        }
-
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .panel-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .panel-action {
-            padding: 6px 12px;
-            background: rgba(124, 58, 237, 0.1);
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            border-radius: 8px;
-            color: var(--primary);
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .panel-action:hover {
-            background: rgba(124, 58, 237, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Threat List */
-        .threat-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .threat-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .threat-item.resolving {
-            opacity: 0.5;
-            background: rgba(16, 185, 129, 0.1);
-        }
-
-        .threat-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 3px;
-            height: 100%;
-            background: var(--danger);
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-        }
-
-        .threat-item:hover::before {
-            transform: scaleY(1);
-        }
-
-        .threat-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateX(5px);
-        }
-
-        .threat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .threat-name {
-            font-weight: 600;
+        .login-subtitle {
+            color: var(--text-secondary);
             font-size: 14px;
-        }
-
-        .threat-severity {
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 11px;
-            font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .severity-critical {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+        /* Form */
+        .login-form {
+            margin-top: 30px;
         }
 
-        .severity-high {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning);
-            border: 1px solid rgba(245, 158, 11, 0.3);
+        .input-group {
+            margin-bottom: 20px;
         }
 
-        .severity-medium {
-            background: rgba(59, 130, 246, 0.2);
-            color: var(--info);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
-        .threat-details {
-            font-size: 12px;
-            color: var(--text-secondary);
+        .input-label {
             display: flex;
-            justify-content: space-between;
-        }
-
-        .threat-actions {
-            display: flex;
+            align-items: center;
             gap: 10px;
-            margin-top: 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
         }
 
-        .threat-action-btn {
-            padding: 4px 10px;
-            background: rgba(124, 58, 237, 0.1);
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            border-radius: 6px;
-            color: var(--primary);
-            font-size: 11px;
-            cursor: pointer;
+        .input-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 255, 136, 0.2);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
             transition: all 0.3s ease;
         }
 
-        .threat-action-btn:hover {
-            background: rgba(124, 58, 237, 0.2);
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(0, 255, 136, 0.05);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
         }
 
-        /* AI Console */
-        .ai-console {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            padding: 20px;
-            height: 400px;
-            overflow-y: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            position: relative;
-        }
-
-        .console-entry {
-            margin-bottom: 10px;
-            opacity: 0;
-            animation: consoleFadeIn 0.5s ease forwards;
-        }
-
-        @keyframes consoleFadeIn {
-            to { opacity: 1; }
-        }
-
-        .console-time {
-            color: var(--secondary);
-            margin-right: 10px;
-        }
-
-        .console-agent {
-            color: var(--primary);
-            margin-right: 10px;
-        }
-
-        .console-message {
+        .input-field::placeholder {
             color: var(--text-secondary);
+            opacity: 0.5;
         }
 
-        .console-cursor {
-            display: inline-block;
-            width: 10px;
-            height: 20px;
-            background: var(--secondary);
-            animation: cursorBlink 1s ease-in-out infinite;
-        }
-
-        @keyframes cursorBlink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        /* Neural Network Visualization */
-        .neural-viz {
-            height: 300px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
+        /* Login Button */
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 8px;
+            color: var(--bg-darker);
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            margin-top: 30px;
         }
 
-        .neural-canvas {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Response Timeline */
-        .response-timeline {
-            padding: 20px 0;
-        }
-
-        .timeline-item {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-            opacity: 0;
-            animation: timelineFadeIn 0.5s ease forwards;
-        }
-
-        @keyframes timelineFadeIn {
-            to { 
-                opacity: 1;
-                transform: translateX(0);
-            }
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-        }
-
-        .timeline-marker {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 16px;
-        }
-
-        .timeline-content {
-            flex: 1;
-            padding-top: 8px;
-        }
-
-        .timeline-title {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .timeline-description {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        /* Quick Actions */
-        .quick-actions {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .quick-action {
-            padding: 12px 24px;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .quick-action:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.3) 0%, rgba(16, 185, 129, 0.3) 100%);
-        }
-
-        /* Security Score Chart */
-        .security-score {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 200px;
-            position: relative;
-        }
-
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            position: relative;
-        }
-
-        .score-svg {
-            transform: rotate(-90deg);
-        }
-
-        .score-bg {
-            fill: none;
-            stroke: rgba(255, 255, 255, 0.1);
-            stroke-width: 10;
-        }
-
-        .score-fill {
-            fill: none;
-            stroke: url(#scoreGradient);
-            stroke-width: 10;
-            stroke-linecap: round;
-            stroke-dasharray: 440;
-            stroke-dashoffset: 440;
-            animation: scoreAnimate 2s ease-out forwards;
-        }
-
-        @keyframes scoreAnimate {
-            to { stroke-dashoffset: 44; }
-        }
-
-        .score-text {
+        .login-btn::before {
+            content: '';
             position: absolute;
             top: 50%;
             left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
             transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .login-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Status Message */
+        .status-message {
+            margin-top: 20px;
             text-align: center;
+            font-size: 13px;
+            min-height: 20px;
+            color: var(--text-secondary);
         }
 
-        .score-value {
-            font-size: 36px;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .status-message.error {
+            color: var(--danger);
         }
 
-        .score-label {
+        .status-message.success {
+            color: var(--success);
+        }
+
+        /* Demo Info */
+        .demo-info {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
             font-size: 12px;
             color: var(--text-secondary);
         }
 
-        /* Settings Button */
-        .settings-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
-            transition: all 0.3s ease;
-            z-index: 100;
+        .demo-info p {
+            margin-bottom: 10px;
         }
 
-        .settings-button:hover {
-            transform: rotate(90deg) scale(1.1);
-            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.6);
-        }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            background: var(--bg-card);
+        .demo-credentials {
+            background: rgba(0, 255, 136, 0.05);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-            max-width: 300px;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
         }
 
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .notification-icon {
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
             width: 20px;
             height: 20px;
-            background: var(--secondary);
+            border: 2px solid var(--bg-darker);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
         }
 
-        .notification-message {
-            font-size: 13px;
-            color: var(--text-secondary);
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .main-grid {
-                grid-template-columns: 1fr;
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
             }
             
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .login-title {
+                font-size: 24px;
             }
-            
-            .header {
-                flex-direction: column;
-            }
-            
-            .header-left, .header-right {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .quick-actions {
-                justify-content: center;
-            }
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(124, 58, 237, 0.5);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(124, 58, 237, 0.7);
         }
     </style>
 </head>
 <body>
-    <!-- Background Effects -->
-    <div class="bg-effects">
-        <div class="grid-bg"></div>
-        <div class="gradient-orb"></div>
-        <div class="gradient-orb"></div>
-    </div>
+    <!-- Matrix Background -->
+    <div class="matrix-bg" id="matrixBg"></div>
 
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <div class="notification-header">
-            <div class="notification-icon">✓</div>
-            <span id="notificationTitle">System Alert</span>
-        </div>
-        <div class="notification-message" id="notificationMessage">Message here</div>
-    </div>
-
-    <!-- Setup Modal -->
-    <div class="setup-modal" id="setupModal">
-        <div class="setup-content">
-            <div class="setup-header">
-                <div class="logo-setup">S</div>
-                <h2 class="setup-title">Welcome to AI Sentinel-X</h2>
-                <p class="setup-subtitle">Activate your Autonomous Security Agent</p>
-            </div>
-
-            <form id="setupForm">
-                <div class="key-input-group">
-                    <label class="key-label">
-                        <div class="key-icon">🧠</div>
-                        <span>OpenAI API Key</span>
-                    </label>
-                    <input 
-                        type="text" 
-                        class="key-input" 
-                        id="openaiKey"
-                        placeholder="sk-... (or any text for demo)"
-                        required
-                    >
-                    <p class="key-description">Powers the AI brain for autonomous threat analysis and decision-making</p>
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="logo-section">
+            <div class="sentinel-logo">
+                <div class="logo-shield"></div>
+                <div class="logo-eye">
+                    <div class="logo-iris"></div>
                 </div>
-
-                <div class="key-input-group">
-                    <label class="key-label">
-                        <div class="key-icon">🔍</div>
-                        <span>Shodan API Key</span>
-                    </label>
-                    <input 
-                        type="text" 
-                        class="key-input" 
-                        id="shodanKey"
-                        placeholder="Enter your Shodan API key (or any text for demo)"
-                        required
-                    >
-                    <p class="key-description">Enables global network scanning and vulnerability discovery</p>
-                </div>
-
-                <div class="key-input-group">
-                    <label class="key-label">
-                        <div class="key-icon">🔐</div>
-                        <span>Sentinel-X API Key</span>
-                    </label>
-                    <input 
-                        type="text" 
-                        class="key-input" 
-                        id="sentinelKey"
-                        placeholder="SNTL-... (or any text for demo)"
-                        required
-                    >
-                    <p class="key-description">Secures agent communications and enables advanced features</p>
-                </div>
-
-                <button type="button" class="setup-button" onclick="initializeFromSetup()">
-                    Activate Autonomous Agent
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-left">
-                <div class="logo">S</div>
-                <div class="brand">
-                    <div class="brand-name">AI Sentinel-X</div>
-                    <div class="brand-tagline">Autonomous Security Agent</div>
+                <div class="logo-circuits">
+                    <div class="circuit circuit-1"></div>
+                    <div class="circuit circuit-2"></div>
+                    <div class="circuit circuit-3"></div>
+                    <div class="circuit circuit-4"></div>
                 </div>
             </div>
-            <div class="header-right">
-                <div class="status-badge" id="systemStatus">
-                    <div class="status-dot"></div>
-                    <span>Agent Active</span>
-                </div>
-                <div class="status-badge" style="background: rgba(124, 58, 237, 0.1); border-color: rgba(124, 58, 237, 0.3);">
-                    <div class="status-dot" style="background: var(--primary);"></div>
-                    <span>Learning Mode</span>
-                </div>
-                <div class="status-badge" id="threatStatus" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3);">
-                    <div class="status-dot" style="background: var(--warning);"></div>
-                    <span><span id="activeThreatCount">3</span> Active Threats</span>
-                </div>
-            </div>
-        </header>
-
-        <!-- AI Agent Status -->
-        <div class="agent-status-card">
-            <div class="agent-header">
-                <div class="agent-info">
-                    <div class="agent-avatar"></div>
-                    <div class="agent-details">
-                        <h2>Sentinel AI Agent</h2>
-                        <div class="agent-status">
-                            <div class="agent-status-indicator"></div>
-                            <span id="agentStatus">Actively monitoring and protecting your systems</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="agent-actions">
-                    <button class="agent-action-btn" onclick="runDiagnostics()">Run Diagnostics</button>
-                    <button class="agent-action-btn" onclick="forceLearn()">Force Learn</button>
-                    <button class="agent-action-btn" onclick="emergencyMode()">Emergency Mode</button>
-                </div>
-            </div>
-            <div class="agent-metrics">
-                <div class="agent-metric">
-                    <div class="agent-metric-value" id="decisionsPerMin">247</div>
-                    <div class="agent-metric-label">Decisions/Min</div>
-                </div>
-                <div class="agent-metric">
-                    <div class="agent-metric-value" id="threatsBlocked">1,847</div>
-                    <div class="agent-metric-label">Threats Blocked</div>
-                </div>
-                <div class="agent-metric">
-                    <div class="agent-metric-value" id="learningProgress">87%</div>
-                    <div class="agent-metric-label">Learning Progress</div>
-                </div>
-                <div class="agent-metric">
-                    <div class="agent-metric-value" id="responseTime">0.3ms</div>
-                    <div class="agent-metric-label">Response Time</div>
-                </div>
-                <div class="agent-metric">
-                    <div class="agent-metric-value" id="uptime">99.99%</div>
-                    <div class="agent-metric-label">Uptime</div>
-                </div>
-            </div>
+            <h1 class="login-title">AI SENTINEL-X</h1>
+            <p class="login-subtitle">Autonomous Security Agent</p>
         </div>
 
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-            <button class="quick-action" onclick="startHunt()">
-                <span>🎯</span> Start Threat Hunt
+        <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
+            <div class="input-group">
+                <label class="input-label">
+                    <div class="input-icon">🧠</div>
+                    <span>OpenAI API Key</span>
+                </label>
+                <input 
+                    type="password" 
+                    class="input-field" 
+                    id="openaiKey"
+                    placeholder="Enter your OpenAI API key"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">
+                    <div class="input-icon">🔍</div>
+                    <span>Shodan API Key</span>
+                </label>
+                <input 
+                    type="password" 
+                    class="input-field" 
+                    id="shodanKey"
+                    placeholder="Enter your Shodan API key"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">
+                    <div class="input-icon">🔐</div>
+                    <span>Sentinel-X API Key</span>
+                </label>
+                <input 
+                    type="password" 
+                    class="input-field" 
+                    id="sentinelKey"
+                    placeholder="Enter your Sentinel-X API key"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                ACTIVATE AGENT
             </button>
-            <button class="quick-action" onclick="scanNetwork()">
-                <span>📡</span> Deep Network Scan
-            </button>
-            <button class="quick-action" onclick="updateDefenses()">
-                <span>🛡️</span> Update Defenses
-            </button>
-            <button class="quick-action" onclick="generateReport()">
-                <span>📊</span> Generate Report
-            </button>
-            <button class="quick-action" onclick="trainAgent()">
-                <span>🧠</span> Train Agent
-            </button>
-        </div>
 
-        <!-- Stats Grid -->
-        <div class="stats-grid">
-            <div class="stat-card" onclick="showThreatDetails()">
-                <div class="stat-header">
-                    <div>
-                        <div class="stat-title">Active Threats</div>
-                        <div class="stat-value" id="activeThreats">3</div>
-                        <div class="stat-change negative">↑ 2 detected</div>
-                    </div>
-                    <div class="stat-icon">⚡</div>
-                </div>
-            </div>
+            <div class="status-message" id="statusMessage"></div>
+        </form>
 
-            <div class="stat-card" onclick="showNeutralizationLog()">
-                <div class="stat-header">
-                    <div>
-                        <div class="stat-title">Threats Neutralized</div>
-                        <div class="stat-value" id="threatsNeutralized">1,847</div>
-                        <div class="stat-change">↑ 147 today</div>
-                    </div>
-                    <div class="stat-icon">🛡️</div>
-                </div>
-            </div>
-
-            <div class="stat-card" onclick="showSecurityMetrics()">
-                <div class="stat-header">
-                    <div>
-                        <div class="stat-title">Security Score</div>
-                        <div class="stat-value" id="securityScore">98.7%</div>
-                        <div class="stat-change">↑ 0.3% improved</div>
-                    </div>
-                    <div class="stat-icon">📊</div>
-                </div>
-            </div>
-
-            <div class="stat-card" onclick="showPerformanceStats()">
-                <div class="stat-header">
-                    <div>
-                        <div class="stat-title">Agent Performance</div>
-                        <div class="stat-value" id="agentPerformance">99.8%</div>
-                        <div class="stat-change">↑ Optimal</div>
-                    </div>
-                    <div class="stat-icon">🚀</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Grid -->
-        <div class="main-grid">
-            <!-- Active Threats Panel -->
-            <div class="panel">
-                <div class="panel-header">
-                    <h3 class="panel-title">Live Threat Monitor</h3>
-                    <button class="panel-action" onclick="refreshThreats()">Refresh</button>
-                </div>
-                <div class="threat-list" id="threatList">
-                    <div class="threat-item" id="threat1">
-                        <div class="threat-header">
-                            <span class="threat-name">DDoS Attack - Layer 7</span>
-                            <span class="threat-severity severity-critical">CRITICAL</span>
-                        </div>
-                        <div class="threat-details">
-                            <span>Source: 45.12.78.* (Multiple IPs)</span>
-                            <span>Duration: 2 min</span>
-                        </div>
-                        <div class="threat-actions">
-                            <button class="threat-action-btn" onclick="neutralizeThreat('threat1')">Neutralize</button>
-                            <button class="threat-action-btn" onclick="analyzeThreat('threat1')">Analyze</button>
-                            <button class="threat-action-btn" onclick="blockSource('threat1')">Block Source</button>
-                        </div>
-                    </div>
-                    <div class="threat-item" id="threat2">
-                        <div class="threat-header">
-                            <span class="threat-name">SQL Injection Attempt</span>
-                            <span class="threat-severity severity-high">HIGH</span>
-                        </div>
-                        <div class="threat-details">
-                            <span>Target: /api/users endpoint</span>
-                            <span>Attempts: 5</span>
-                        </div>
-                        <div class="threat-actions">
-                            <button class="threat-action-btn" onclick="neutralizeThreat('threat2')">Neutralize</button>
-                            <button class="threat-action-btn" onclick="analyzeThreat('threat2')">Analyze</button>
-                            <button class="threat-action-btn" onclick="blockSource('threat2')">Block Source</button>
-                        </div>
-                    </div>
-                    <div class="threat-item" id="threat3">
-                        <div class="threat-header">
-                            <span class="threat-name">Suspicious Port Scan</span>
-                            <span class="threat-severity severity-medium">MEDIUM</span>
-                        </div>
-                        <div class="threat-details">
-                            <span>Scanner: 192.168.1.105</span>
-                            <span>Ports: 22, 80, 443</span>
-                        </div>
-                        <div class="threat-actions">
-                            <button class="threat-action-btn" onclick="neutralizeThreat('threat3')">Neutralize</button>
-                            <button class="threat-action-btn" onclick="analyzeThreat('threat3')">Analyze</button>
-                            <button class="threat-action-btn" onclick="blockSource('threat3')">Block Source</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- AI Console -->
-            <div class="panel">
-                <div class="panel-header">
-                    <h3 class="panel-title">AI Agent Console</h3>
-                    <button class="panel-action" onclick="clearConsole()">Clear</button>
-                </div>
-                <div class="ai-console" id="aiConsole">
-                    <div class="console-entry">
-                        <span class="console-time">14:32:15</span>
-                        <span class="console-agent">[AGENT]</span>
-                        <span class="console-message">Autonomous security agent initialized. All systems operational.</span>
-                    </div>
-                    <div class="console-cursor"></div>
-                </div>
-            </div>
-
-            <!-- Neural Network Activity -->
-            <div class="panel">
-                <div class="panel-header">
-                    <h3 class="panel-title">Neural Network Activity</h3>
-                    <button class="panel-action" onclick="resetNeural()">Reset View</button>
-                </div>
-                <div class="neural-viz">
-                    <canvas class="neural-canvas" id="neuralCanvas"></canvas>
-                </div>
-            </div>
-
-            <!-- Security Score -->
-            <div class="panel">
-                <div class="panel-header">
-                    <h3 class="panel-title">Overall Security Status</h3>
-                    <button class="panel-action" onclick="recalculateScore()">Recalculate</button>
-                </div>
-                <div class="security-score">
-                    <div class="score-circle">
-                        <svg class="score-svg" width="150" height="150">
-                            <defs>
-                                <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <circle class="score-bg" cx="75" cy="75" r="70"></circle>
-                            <circle class="score-fill" cx="75" cy="75" r="70"></circle>
-                        </svg>
-                        <div class="score-text">
-                            <div class="score-value">98.7%</div>
-                            <div class="score-label">Security Score</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Response Timeline -->
-            <div class="panel">
-                <div class="panel-header">
-                    <h3 class="panel-title">Recent Agent Actions</h3>
-                    <button class="panel-action" onclick="viewAllActions()">View All</button>
-                </div>
-                <div class="response-timeline" id="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-marker">🛡️</div>
-                        <div class="timeline-content">
-                            <div class="timeline-title">Blocked Malicious IP Range</div>
-                            <div class="timeline-description">Prevented access from 45.12.78.0/24 - Known botnet</div>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker">🔍</div>
-                        <div class="timeline-content">
-                            <div class="timeline-title">Completed Network Scan</div>
-                            <div class="timeline-description">Discovered 2 new devices, all verified safe</div>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker">🧠</div>
-                        <div class="timeline-content">
-                            <div class="timeline-title">Updated Threat Model</div>
-                            <div class="timeline-description">Learned new attack pattern from global threat feed</div>
-                        </div>
-                    </div>
-                </div>
+        <div class="demo-info">
+            <p>For demo purposes, you can use any text in the fields</p>
+            <div class="demo-credentials">
+                Example: demo / demo / demo
             </div>
         </div>
     </div>
-
-    <!-- Settings Button -->
-    <button class="settings-button" onclick="showSetup()">⚙️</button>
-
-    <!-- Modal Container for Dynamic Pages -->
-    <div class="modal-container" id="modalContainer" style="display: none;">
-        <div class="modal-backdrop" onclick="closeModal()"></div>
-        <div class="modal-content" id="modalContent">
-            <!-- Dynamic content will be loaded here -->
-        </div>
-    </div>
-
-    <style>
-        /* Modal Styles */
-        .modal-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-backdrop {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-        }
-
-        .modal-content {
-            position: relative;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            animation: modalSlideIn 0.3s ease;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .modal-title {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .close-modal {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 20px;
-        }
-
-        .close-modal:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(90deg);
-        }
-
-        /* Threat Details Modal */
-        .threat-detail-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .threat-detail-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-        }
-
-        .threat-graph {
-            height: 300px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Report Modal */
-        .report-section {
-            margin-bottom: 30px;
-        }
-
-        .report-section h3 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: var(--secondary);
-        }
-
-        .report-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .report-table th,
-        .report-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .report-table th {
-            background: rgba(124, 58, 237, 0.1);
-            font-weight: 600;
-        }
-
-        .report-table tr:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Network Scan Modal */
-        .network-map {
-            height: 400px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .network-node {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: rgba(16, 185, 129, 0.2);
-            border: 2px solid var(--secondary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .network-node:hover {
-            transform: scale(1.2);
-            background: rgba(16, 185, 129, 0.4);
-        }
-
-        .scan-progress {
-            margin-top: 20px;
-        }
-
-        .scan-progress-bar {
-            height: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .scan-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            width: 0%;
-            transition: width 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
-
-        /* Training Modal */
-        .training-modules {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .training-module {
-            background: rgba(124, 58, 237, 0.1);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .training-module:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
-        }
-
-        .training-module-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        .training-module-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .training-module-status {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-    </style>
 
     <script>
-        // Global variables
-        let threats = 3;
-        let isAgentActive = false;
+        // Initialize Matrix Background
+        function initMatrix() {
+            const matrixBg = document.getElementById('matrixBg');
+            const columns = Math.floor(window.innerWidth / 20);
+            
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = i * 20 + 'px';
+                column.style.animationDelay = Math.random() * 20 + 's';
+                
+                // Generate random binary/hex characters
+                let content = '';
+                for (let j = 0; j < 100; j++) {
+                    if (Math.random() > 0.5) {
+                        content += Math.random() > 0.5 ? '1' : '0';
+                    } else {
+                        content += Math.floor(Math.random() * 16).toString(16).toUpperCase();
+                    }
+                    if (j % 2 === 1) content += ' ';
+                }
+                column.textContent = content;
+                
+                matrixBg.appendChild(column);
+            }
+        }
 
-        // Initialize from setup
-        function initializeFromSetup() {
+        // Handle Login
+        function handleLogin(event) {
+            event.preventDefault();
+            
             const openaiKey = document.getElementById('openaiKey').value;
             const shodanKey = document.getElementById('shodanKey').value;
             const sentinelKey = document.getElementById('sentinelKey').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const statusMessage = document.getElementById('statusMessage');
             
-            if (openaiKey && shodanKey && sentinelKey) {
-                // Store keys
-                localStorage.setItem('sentinel_openai_key', openaiKey);
-                localStorage.setItem('sentinel_shodan_key', shodanKey);
-                localStorage.setItem('sentinel_x_key', sentinelKey);
-                
-                // Hide the modal
-                const modal = document.getElementById('setupModal');
-                modal.style.display = 'none';
-                
-                // Initialize the system
-                initializeSystem();
-                
-                // Clear form
-                document.getElementById('openaiKey').value = '';
-                document.getElementById('shodanKey').value = '';
-                document.getElementById('sentinelKey').value = '';
-            } else {
-                alert('Please fill in all three API key fields to activate the agent');
+            // Clear previous status
+            statusMessage.className = 'status-message';
+            statusMessage.textContent = '';
+            
+            // Validate inputs
+            if (!openaiKey || !shodanKey || !sentinelKey) {
+                statusMessage.className = 'status-message error';
+                statusMessage.textContent = 'All API keys are required';
+                return;
             }
-        }
-
-        // Show setup modal
-        function showSetup() {
-            const modal = document.getElementById('setupModal');
-            modal.style.display = 'flex';
-        }
-
-        // Check for stored API keys
-        function checkApiKeys() {
-            const openai = localStorage.getItem('sentinel_openai_key');
-            const shodan = localStorage.getItem('sentinel_shodan_key');
-            const sentinel = localStorage.getItem('sentinel_x_key');
             
-            return !!(openai && shodan && sentinel);
-        }
-
-        // Initialize system
-        function initializeSystem() {
-            isAgentActive = true;
-            console.log('AI Sentinel-X Agent activated');
+            // Show loading state
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="loading"></span> AUTHENTICATING...';
+            statusMessage.textContent = 'Verifying credentials...';
             
-            // Start all systems
-            startNeuralVisualization();
-            startAgentActivity();
-            startMetricUpdates();
-            startThreatSimulation();
-            
-            // Show welcome message
-            addConsoleMessage('[AGENT]', 'Autonomous security agent activated. Beginning system protection protocols.');
-            showNotification('Agent Activated', 'AI Sentinel-X is now protecting your systems');
-            
-            // Simulate initial scan
+            // Simulate authentication
             setTimeout(() => {
-                addConsoleMessage('[SCAN]', 'Initiating comprehensive network scan...');
-                setTimeout(() => {
-                    addConsoleMessage('[SCAN]', 'Network scan complete. 3 potential threats identified.');
-                    addConsoleMessage('[AGENT]', 'Analyzing threat patterns and preparing countermeasures...');
-                }, 2000);
-            }, 1000);
-        }
-
-        // Console functions
-        function addConsoleMessage(agent, message) {
-            const console = document.getElementById('aiConsole');
-            const cursor = console.querySelector('.console-cursor');
-            const time = new Date().toTimeString().split(' ')[0];
-            
-            const entry = document.createElement('div');
-            entry.className = 'console-entry';
-            entry.innerHTML = `
-                <span class="console-time">${time}</span>
-                <span class="console-agent">${agent}</span>
-                <span class="console-message">${message}</span>
-            `;
-            
-            console.insertBefore(entry, cursor);
-            console.scrollTop = console.scrollHeight;
-        }
-
-        function clearConsole() {
-            const console = document.getElementById('aiConsole');
-            console.innerHTML = '<div class="console-cursor"></div>';
-            addConsoleMessage('[AGENT]', 'Console cleared. Monitoring continues...');
-        }
-
-        // Threat functions
-        function neutralizeThreat(threatId) {
-            const threatElement = document.getElementById(threatId);
-            threatElement.classList.add('resolving');
-            
-            addConsoleMessage('[AGENT]', `Neutralizing threat: ${threatElement.querySelector('.threat-name').textContent}`);
-            
-            setTimeout(() => {
-                threatElement.style.transition = 'all 0.5s ease';
-                threatElement.style.opacity = '0';
-                threatElement.style.transform = 'translateX(100px)';
+                // Store credentials
+                localStorage.setItem('sentinel_auth', JSON.stringify({
+                    openai: openaiKey,
+                    shodan: shodanKey,
+                    sentinel: sentinelKey,
+                    timestamp: Date.now()
+                }));
                 
+                statusMessage.className = 'status-message success';
+                statusMessage.textContent = 'Authentication successful! Redirecting...';
+                
+                // Redirect to dashboard
                 setTimeout(() => {
-                    threatElement.remove();
-                    threats--;
-                    updateThreatCount();
-                    
-                    const neutralized = parseInt(document.getElementById('threatsNeutralized').textContent.replace(',', ''));
-                    document.getElementById('threatsNeutralized').textContent = (neutralized + 1).toLocaleString();
-                    
-                    addConsoleMessage('[SUCCESS]', 'Threat successfully neutralized. System security restored.');
-                    showNotification('Threat Neutralized', 'The security threat has been eliminated');
-                    
-                    // Add to timeline
-                    addTimelineEvent('✅', 'Threat Neutralized', 'Successfully eliminated security threat');
-                }, 500);
-            }, 1500);
-        }
-
-        function analyzeThreat(threatId) {
-            const threatElement = document.getElementById(threatId);
-            const threatName = threatElement.querySelector('.threat-name').textContent;
-            
-            addConsoleMessage('[ANALYSIS]', `Deep analysis initiated for: ${threatName}`);
-            showNotification('Analysis Started', `Analyzing ${threatName}`);
-            
-            setTimeout(() => {
-                addConsoleMessage('[ANALYSIS]', 'Threat signature matches known attack pattern.');
-                addConsoleMessage('[ANALYSIS]', 'Recommended action: Immediate neutralization and IP block.');
-            }, 2000);
-        }
-
-        function blockSource(threatId) {
-            const threatElement = document.getElementById(threatId);
-            const source = threatElement.querySelector('.threat-details span').textContent;
-            
-            addConsoleMessage('[FIREWALL]', `Blocking source: ${source}`);
-            
-            setTimeout(() => {
-                addConsoleMessage('[FIREWALL]', 'Source successfully blocked. Firewall rules updated.');
-                showNotification('Source Blocked', 'Malicious source has been blocked');
-                neutralizeThreat(threatId);
-            }, 1000);
-        }
-
-        function refreshThreats() {
-            addConsoleMessage('[SCAN]', 'Refreshing threat detection systems...');
-            
-            // Simulate finding new threats
-            if (Math.random() > 0.5 && threats < 5) {
-                setTimeout(() => {
-                    addNewThreat();
-                }, 1500);
-            }
-        }
-
-        function addNewThreat() {
-            const threatTypes = [
-                { name: 'Brute Force Attack', severity: 'HIGH', source: 'SSH Service', detail: 'Failed attempts: 42' },
-                { name: 'Malware Detected', severity: 'CRITICAL', source: 'File: system32.exe', detail: 'Quarantined' },
-                { name: 'Data Exfiltration Attempt', severity: 'CRITICAL', source: 'Process: svchost.exe', detail: 'Blocked: 15MB' },
-                { name: 'Cryptomining Script', severity: 'MEDIUM', source: 'Browser extension', detail: 'CPU usage: 85%' },
-                { name: 'Phishing Email', severity: 'HIGH', source: 'finance@company.co', detail: 'Recipients: 12' }
-            ];
-            
-            const threat = threatTypes[Math.floor(Math.random() * threatTypes.length)];
-            const threatId = 'threat' + Date.now();
-            
-            const threatHtml = `
-                <div class="threat-item" id="${threatId}" style="opacity: 0; transform: translateX(-50px);">
-                    <div class="threat-header">
-                        <span class="threat-name">${threat.name}</span>
-                        <span class="threat-severity severity-${threat.severity.toLowerCase()}">${threat.severity}</span>
-                    </div>
-                    <div class="threat-details">
-                        <span>${threat.source}</span>
-                        <span>${threat.detail}</span>
-                    </div>
-                    <div class="threat-actions">
-                        <button class="threat-action-btn" onclick="neutralizeThreat('${threatId}')">Neutralize</button>
-                        <button class="threat-action-btn" onclick="analyzeThreat('${threatId}')">Analyze</button>
-                        <button class="threat-action-btn" onclick="blockSource('${threatId}')">Block Source</button>
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('threatList').insertAdjacentHTML('afterbegin', threatHtml);
-            
-            setTimeout(() => {
-                const element = document.getElementById(threatId);
-                element.style.transition = 'all 0.5s ease';
-                element.style.opacity = '1';
-                element.style.transform = 'translateX(0)';
-            }, 100);
-            
-            threats++;
-            updateThreatCount();
-            
-            addConsoleMessage('[ALERT]', `New threat detected: ${threat.name}`);
-            showNotification('New Threat Detected', threat.name);
-        }
-
-        function updateThreatCount() {
-            document.getElementById('activeThreats').textContent = threats;
-            document.getElementById('activeThreatCount').textContent = threats;
-            
-            const threatStatus = document.getElementById('threatStatus');
-            if (threats === 0) {
-                threatStatus.style.background = 'rgba(16, 185, 129, 0.1)';
-                threatStatus.style.borderColor = 'rgba(16, 185, 129, 0.3)';
-                threatStatus.querySelector('.status-dot').style.background = 'var(--secondary)';
-            } else if (threats > 5) {
-                threatStatus.style.background = 'rgba(239, 68, 68, 0.1)';
-                threatStatus.style.borderColor = 'rgba(239, 68, 68, 0.3)';
-                threatStatus.querySelector('.status-dot').style.background = 'var(--danger)';
-            }
-        }
-
-        // Quick action functions
-        function startHunt() {
-            addConsoleMessage('[HUNT]', 'Initiating proactive threat hunting protocol...');
-            showNotification('Threat Hunt Started', 'Scanning for hidden threats');
-            
-            setTimeout(() => {
-                addConsoleMessage('[HUNT]', 'Scanning system processes...');
-                setTimeout(() => {
-                    addConsoleMessage('[HUNT]', 'Analyzing network connections...');
-                    setTimeout(() => {
-                        addConsoleMessage('[HUNT]', 'Threat hunt complete. No hidden threats detected.');
-                        addTimelineEvent('🎯', 'Threat Hunt Complete', 'No hidden threats found in system');
-                    }, 2000);
-                }, 1500);
-            }, 1000);
-        }
-
-        function scanNetwork() {
-            addConsoleMessage('[SCAN]', 'Initiating deep network scan via Shodan integration...');
-            showNotification('Network Scan', 'Deep scan in progress');
-            
-            const scanSteps = [
-                'Mapping network topology...',
-                'Identifying all connected devices...',
-                'Checking for open ports...',
-                'Analyzing service vulnerabilities...',
-                'Cross-referencing with threat database...'
-            ];
-            
-            let step = 0;
-            const scanInterval = setInterval(() => {
-                if (step < scanSteps.length) {
-                    addConsoleMessage('[SCAN]', scanSteps[step]);
-                    step++;
-                } else {
-                    clearInterval(scanInterval);
-                    addConsoleMessage('[SCAN]', 'Network scan complete. 2 devices need security updates.');
-                    addTimelineEvent('📡', 'Network Scan Complete', 'Identified 2 devices requiring updates');
-                }
-            }, 1500);
-        }
-
-        function updateDefenses() {
-            addConsoleMessage('[DEFENSE]', 'Updating security rules and threat signatures...');
-            showNotification('Defense Update', 'Updating security systems');
-            
-            setTimeout(() => {
-                addConsoleMessage('[DEFENSE]', 'Downloaded 1,247 new threat signatures.');
-                setTimeout(() => {
-                    addConsoleMessage('[DEFENSE]', 'Firewall rules optimized. 15 new blocks added.');
-                    setTimeout(() => {
-                        addConsoleMessage('[DEFENSE]', 'Defense update complete. Protection level increased.');
-                        
-                        // Update security score
-                        const currentScore = parseFloat(document.getElementById('securityScore').textContent);
-                        const newScore = Math.min(99.9, currentScore + 0.5);
-                        document.getElementById('securityScore').textContent = newScore.toFixed(1) + '%';
-                        document.querySelector('.score-value').textContent = newScore.toFixed(1) + '%';
-                        
-                        addTimelineEvent('🛡️', 'Defenses Updated', 'Security systems upgraded with latest protections');
-                    }, 1500);
-                }, 1500);
-            }, 1500);
-        }
-
-        function generateReport() {
-            addConsoleMessage('[REPORT]', 'Generating comprehensive security report...');
-            showNotification('Report Generation', 'Creating security analysis report');
-            
-            setTimeout(() => {
-                addConsoleMessage('[REPORT]', 'Analyzing threat patterns...');
-                setTimeout(() => {
-                    addConsoleMessage('[REPORT]', 'Calculating risk metrics...');
-                    setTimeout(() => {
-                        addConsoleMessage('[REPORT]', 'Report generated successfully. Download ready.');
-                        showNotification('Report Ready', 'Security report has been generated');
-                        addTimelineEvent('📊', 'Report Generated', 'Comprehensive security analysis complete');
-                    }, 1500);
+                    window.location.href = 'dashboard.html';
                 }, 1000);
-            }, 1000);
-        }
-
-        function trainAgent() {
-            addConsoleMessage('[TRAIN]', 'Initiating AI agent training sequence...');
-            showNotification('Training Started', 'AI agent is learning new patterns');
-            
-            const progress = document.getElementById('learningProgress');
-            let currentProgress = parseInt(progress.textContent);
-            
-            const trainingInterval = setInterval(() => {
-                if (currentProgress < 95) {
-                    currentProgress += 1;
-                    progress.textContent = currentProgress + '%';
-                    addConsoleMessage('[TRAIN]', `Training progress: ${currentProgress}%`);
-                } else {
-                    clearInterval(trainingInterval);
-                    addConsoleMessage('[TRAIN]', 'Training complete. Agent intelligence increased.');
-                    addTimelineEvent('🧠', 'Training Complete', 'AI agent capabilities enhanced');
-                }
-            }, 500);
-        }
-
-        // Agent control functions
-        function runDiagnostics() {
-            addConsoleMessage('[DIAG]', 'Running comprehensive system diagnostics...');
-            document.getElementById('agentStatus').textContent = 'Running diagnostics...';
-            
-            const diagnosticSteps = [
-                'Checking neural network integrity... OK',
-                'Testing threat detection modules... OK',
-                'Verifying quantum encryption... OK',
-                'Analyzing response systems... OK',
-                'Memory optimization... Complete'
-            ];
-            
-            let step = 0;
-            const diagInterval = setInterval(() => {
-                if (step < diagnosticSteps.length) {
-                    addConsoleMessage('[DIAG]', diagnosticSteps[step]);
-                    step++;
-                } else {
-                    clearInterval(diagInterval);
-                    document.getElementById('agentStatus').textContent = 'All systems operational - Performance optimal';
-                    showNotification('Diagnostics Complete', 'All systems functioning normally');
-                }
-            }, 800);
-        }
-
-        function forceLearn() {
-            addConsoleMessage('[LEARN]', 'Force learning mode activated. Analyzing all recent threats...');
-            document.getElementById('agentStatus').textContent = 'Learning from threat patterns...';
-            
-            setTimeout(() => {
-                addConsoleMessage('[LEARN]', 'Processed 1,247 threat samples.');
-                addConsoleMessage('[LEARN]', 'Updated neural network weights.');
-                addConsoleMessage('[LEARN]', 'New attack patterns recognized: 23');
-                document.getElementById('agentStatus').textContent = 'Learning complete - Intelligence enhanced';
-                
-                // Update metrics
-                const decisions = document.getElementById('decisionsPerMin');
-                decisions.textContent = (parseInt(decisions.textContent) + 50).toString();
-            }, 3000);
-        }
-
-        function emergencyMode() {
-            addConsoleMessage('[EMERGENCY]', 'EMERGENCY MODE ACTIVATED - Maximum security engaged!');
-            document.getElementById('agentStatus').textContent = 'EMERGENCY MODE - All threats will be neutralized';
-            
-            // Change UI to emergency mode
-            document.querySelector('.agent-avatar').style.background = 'linear-gradient(135deg, #ef4444 0%, #f59e0b 100%)';
-            document.querySelector('.agent-status-indicator').style.background = '#ef4444';
-            
-            // Auto-neutralize all threats
-            const allThreats = document.querySelectorAll('.threat-item');
-            allThreats.forEach((threat, index) => {
-                setTimeout(() => {
-                    if (!threat.classList.contains('resolving')) {
-                        neutralizeThreat(threat.id);
-                    }
-                }, index * 500);
-            });
-            
-            setTimeout(() => {
-                addConsoleMessage('[EMERGENCY]', 'All threats neutralized. Returning to normal mode.');
-                document.querySelector('.agent-avatar').style.background = '';
-                document.querySelector('.agent-status-indicator').style.background = '';
-                document.getElementById('agentStatus').textContent = 'Actively monitoring and protecting your systems';
-            }, 5000);
-        }
-
-        // Timeline functions
-        function addTimelineEvent(icon, title, description) {
-            const timeline = document.getElementById('timeline');
-            const event = document.createElement('div');
-            event.className = 'timeline-item';
-            event.style.animationDelay = '0.1s';
-            event.innerHTML = `
-                <div class="timeline-marker">${icon}</div>
-                <div class="timeline-content">
-                    <div class="timeline-title">${title}</div>
-                    <div class="timeline-description">${description}</div>
-                </div>
-            `;
-            
-            timeline.insertBefore(event, timeline.firstChild);
-            
-            // Keep only last 5 events
-            while (timeline.children.length > 5) {
-                timeline.removeChild(timeline.lastChild);
-            }
-        }
-
-        // Notification system
-        function showNotification(title, message) {
-            const notification = document.getElementById('notification');
-            document.getElementById('notificationTitle').textContent = title;
-            document.getElementById('notificationMessage').textContent = message;
-            
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        // Modal functions
-        function showModal(content) {
-            document.getElementById('modalContent').innerHTML = content;
-            document.getElementById('modalContainer').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('modalContainer').style.display = 'none';
-        }
-
-        // Enhanced click handlers with full pages
-        function showThreatDetails() {
-            const threatData = [
-                { time: '14:32', type: 'DDoS', severity: 95, blocked: true },
-                { time: '14:28', type: 'SQL Injection', severity: 78, blocked: true },
-                { time: '14:15', type: 'Port Scan', severity: 45, blocked: false },
-                { time: '13:52', type: 'Brute Force', severity: 82, blocked: true },
-                { time: '13:41', type: 'XSS Attempt', severity: 67, blocked: true }
-            ];
-
-            const content = `
-                <div class="modal-header">
-                    <h2 class="modal-title">Threat Intelligence Dashboard</h2>
-                    <button class="close-modal" onclick="closeModal()">×</button>
-                </div>
-                
-                <div class="threat-detail-grid">
-                    <div class="threat-detail-card">
-                        <h3>Threat Timeline</h3>
-                        <canvas id="threatTimeline" class="threat-graph"></canvas>
-                    </div>
-                    <div class="threat-detail-card">
-                        <h3>Threat Categories</h3>
-                        <canvas id="threatCategories" class="threat-graph"></canvas>
-                    </div>
-                </div>
-                
-                <div class="report-section">
-                    <h3>Recent Threat Activity</h3>
-                    <table class="report-table">
-                        <thead>
-                            <tr>
-                                <th>Time</th>
-                                <th>Threat Type</th>
-                                <th>Severity</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${threatData.map(threat => `
-                                <tr>
-                                    <td>${threat.time}</td>
-                                    <td>${threat.type}</td>
-                                    <td><span style="color: ${threat.severity > 70 ? '#ef4444' : '#f59e0b'}">${threat.severity}%</span></td>
-                                    <td>${threat.blocked ? '<span style="color: #10b981">Blocked</span>' : '<span style="color: #f59e0b">Monitoring</span>'}</td>
-                                    <td><button class="threat-action-btn" onclick="analyzeThreatDeep('${threat.type}')">Analyze</button></td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="quick-actions" style="justify-content: center; margin-top: 30px;">
-                    <button class="quick-action" onclick="exportThreatReport()">
-                        <span>📥</span> Export Report
-                    </button>
-                    <button class="quick-action" onclick="scheduleThreatScan()">
-                        <span>⏰</span> Schedule Scan
-                    </button>
-                    <button class="quick-action" onclick="updateThreatDb()">
-                        <span>🔄</span> Update Database
-                    </button>
-                </div>
-            `;
-            
-            showModal(content);
-            setTimeout(() => drawThreatGraphs(), 100);
-        }
-
-        function showNeutralizationLog() {
-            const logs = [];
-            for (let i = 0; i < 20; i++) {
-                const time = new Date(Date.now() - i * 3600000).toLocaleTimeString();
-                const types = ['DDoS Attack', 'Malware', 'SQL Injection', 'Port Scan', 'Brute Force'];
-                const methods = ['IP Block', 'Quarantine', 'Firewall Rule', 'Connection Drop', 'Pattern Block'];
-                logs.push({
-                    time: time,
-                    threat: types[Math.floor(Math.random() * types.length)],
-                    method: methods[Math.floor(Math.random() * methods.length)],
-                    duration: Math.floor(Math.random() * 500) + 'ms'
-                });
-            }
-
-            const content = `
-                <div class="modal-header">
-                    <h2 class="modal-title">Threat Neutralization History</h2>
-                    <button class="close-modal" onclick="closeModal()">×</button>
-                </div>
-                
-                <div class="report-section">
-                    <h3>Neutralization Statistics</h3>
-                    <div class="stats-grid" style="margin-bottom: 30px;">
-                        <div class="stat-card" style="cursor: default;">
-                            <div class="stat-value">1,847</div>
-                            <div class="stat-title">Total Neutralized</div>
-                        </div>
-                        <div class="stat-card" style="cursor: default;">
-                            <div class="stat-value">99.8%</div>
-                            <div class="stat-title">Success Rate</div>
-                        </div>
-                        <div class="stat-card" style="cursor: default;">
-                            <div class="stat-value">0.3ms</div>
-                            <div class="stat-title">Avg Response</div>
-                        </div>
-                        <div class="stat-card" style="cursor: default;">
-                            <div class="stat-value">247</div>
-                            <div class="stat-title">Today</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="report-section">
-                    <h3>Recent Neutralizations</h3>
-                    <table class="report-table">
-                        <thead>
-                            <tr>
-                                <th>Time</th>
-                                <th>Threat Type</th>
-                                <th>Method Used</th>
-                                <th>Response Time</th>
-                                <th>Details</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${logs.map(log => `
-                                <tr>
-                                    <td>${log.time}</td>
-                                    <td>${log.threat}</td>
-                                    <td>${log.method}</td>
-                                    <td>${log.duration}</td>
-                                    <td><button class="threat-action-btn" onclick="viewNeutralizationDetails()">View</button></td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            `;
-            
-            showModal(content);
-        }
-
-        function showSecurityMetrics() {
-            const content = `
-                <div class="modal-header">
-                    <h2 class="modal-title">Security Analytics Dashboard</h2>
-                    <button class="close-modal" onclick="closeModal()">×</button>
-                </div>
-                
-                <div class="threat-detail-grid">
-                    <div class="threat-detail-card">
-                        <h3>Security Score Trend</h3>
-                        <canvas id="scoreGraph" class="threat-graph"></canvas>
-                    </div>
-                    <div class="threat-detail-card">
-                        <h3>Attack Vectors</h3>
-                        <canvas id="vectorGraph" class="threat-graph"></canvas>
-                    </div>
-                    <div class="threat-detail-card">
-                        <h3>Response Times</h3>
-                        <canvas id="responseGraph" class="threat-graph"></canvas>
-                    </div>
-                    <div class="threat-detail-card">
-                        <h3>System Load</h3>
-                        <canvas id="loadGraph" class="threat-graph"></canvas>
-                    </div>
-                </div>
-                
-                <div class="report-section">
-                    <h3>Key Security Metrics</h3>
-                    <div class="training-modules">
-                        <div class="training-module">
-                            <div class="training-module-icon">🛡️</div>
-                            <div class="training-module-name">Defense Rating</div>
-                            <div class="training-module-status">A+ Grade</div>
-                        </div>
-                        <div class="training-module">
-                            <div class="training-module-icon">⚡</div>
-                            <div class="training-module-name">Response Speed</div>
-                            <div class="training-module-status">0.3ms Average</div>
-                        </div>
-                        <div class="training-module">
-                            <div class="training-module-icon">🔒</div>
-                            <div class="training-module-name">Encryption</div>
-                            <div class="training-module-status">Quantum-Safe</div>
-                        </div>
-                        <div class="training-module">
-                            <div class="training-module-icon">📊</div>
-                            <div class="training-module-name">Coverage</div>
-                            <div class="training-module-status">100% Protected</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            showModal(content);
-            setTimeout(() => drawSecurityGraphs(), 100);
-        }
-
-        function showPerformanceStats() {
-            const content = `
-                <div class="modal-header">
-                    <h2 class="modal-title">AI Agent Performance Metrics</h2>
-                    <button class="close-modal" onclick="closeModal()">×</button>
-                </div>
-                
-                <div class="report-section">
-                    <h3>Neural Network Performance</h3>
-                    <div class="network-map" id="performanceMap">
-                        <canvas id="performanceCanvas" style="width: 100%; height: 100%;"></canvas>
-                    </div>
-                </div>
-                
-                <div class="report-section">
-                    <h3>Processing Statistics</h3>
-                    <div class="stats-grid">
-                        <div class="stat-card" style="cursor: default;">
-                            <div class="stat-value">2.3 THz</div>
-                            <div class="stat-title">Processing Power</div>
-                        </div>
-                        <div class="stat-card" style="cursor: default;">
-                            <div class="stat-value">16 GB</div>
-                            <div class="stat-title">Active Memory</div>
-                        </div>
-                        <div class="stat-card" style="cursor: default;">
-                            <div class="stat-value">12ms</div>
-                            <div class="stat-title">Latency</div>
-                        </div>
-                        <div class="stat-card" style="cursor: default;">
-                            <div class="stat-value">847K</div>
-                            <div class="stat-title">Decisions/Hour</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="quick-actions" style="justify-content: center; margin-top: 30px;">
-                    <button class="quick-action" onclick="optimizePerformance()">
-                        <span>⚡</span> Optimize Now
-                    </button>
-                    <button class="quick-action" onclick="scheduleMaintenanceModal()">
-                        <span>🔧</span> Schedule Maintenance
-                    </button>
-                </div>
-            `;
-            
-            showModal(content);
-            setTimeout(() => drawPerformanceGraph(), 100);
-        }
-
-        // Enhanced generateReport function
-        function generateReport() {
-            addConsoleMessage('[REPORT]', 'Generating comprehensive security report...');
-            
-            const content = `
-                <div class="modal-header">
-                    <h2 class="modal-title">Security Report Generator</h2>
-                    <button class="close-modal" onclick="closeModal()">×</button>
-                </div>
-                
-                <div class="report-section">
-                    <h3>Report Configuration</h3>
-                    <div class="threat-detail-grid">
-                        <div class="threat-detail-card">
-                            <h4>Report Type</h4>
-                            <select style="width: 100%; padding: 10px; background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 5px; color: white;">
-                                <option>Executive Summary</option>
-                                <option>Technical Analysis</option>
-                                <option>Compliance Report</option>
-                                <option>Threat Intelligence</option>
-                            </select>
-                        </div>
-                        <div class="threat-detail-card">
-                            <h4>Time Period</h4>
-                            <select style="width: 100%; padding: 10px; background: rgba(255,255,255,0.1); border: 1px solid var(--border); border-radius: 5px; color: white;">
-                                <option>Last 24 Hours</option>
-                                <option>Last 7 Days</option>
-                                <option>Last 30 Days</option>
-                                <option>Custom Range</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="report-section">
-                    <h3>Include Sections</h3>
-                    <div class="training-modules">
-                        <div class="training-module" onclick="toggleReportSection(this)">
-                            <div class="training-module-icon">📊</div>
-                            <div class="training-module-name">Threat Analysis</div>
-                            <div class="training-module-status">✓ Included</div>
-                        </div>
-                        <div class="training-module" onclick="toggleReportSection(this)">
-                            <div class="training-module-icon">🛡️</div>
-                            <div class="training-module-name">Defense Actions</div>
-                            <div class="training-module-status">✓ Included</div>
-                        </div>
-                        <div class="training-module" onclick="toggleReportSection(this)">
-                            <div class="training-module-icon">🧠</div>
-                            <div class="training-module-name">AI Insights</div>
-                            <div class="training-module-status">✓ Included</div>
-                        </div>
-                        <div class="training-module" onclick="toggleReportSection(this)">
-                            <div class="training-module-icon">📈</div>
-                            <div class="training-module-name">Metrics</div>
-                            <div class="training-module-status">✓ Included</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="quick-actions" style="justify-content: center; margin-top: 30px;">
-                    <button class="quick-action" onclick="generateReportNow()">
-                        <span>📄</span> Generate Report
-                    </button>
-                    <button class="quick-action" onclick="scheduleReport()">
-                        <span>⏰</span> Schedule Reports
-                    </button>
-                    <button class="quick-action" onclick="viewPastReports()">
-                        <span>📚</span> Past Reports
-                    </button>
-                </div>
-            `;
-            
-            showModal(content);
-        }
-
-        // Enhanced scanNetwork function with visual feedback
-        function scanNetwork() {
-            addConsoleMessage('[SCAN]', 'Initiating deep network scan via Shodan integration...');
-            
-            const content = `
-                <div class="modal-header">
-                    <h2 class="modal-title">Network Scanner - Powered by Shodan</h2>
-                    <button class="close-modal" onclick="closeModal()">×</button>
-                </div>
-                
-                <div class="report-section">
-                    <h3>Network Topology</h3>
-                    <div class="network-map" id="networkMap">
-                        <div class="network-node" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                            <span>Core</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="scan-progress">
-                    <h3>Scan Progress</h3>
-                    <div class="scan-progress-bar">
-                        <div class="scan-progress-fill" id="scanProgress">0%</div>
-                    </div>
-                </div>
-                
-                <div class="report-section" style="margin-top: 30px;">
-                    <h3>Discovered Devices</h3>
-                    <div id="deviceList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                        <div class="threat-detail-card">
-                            <h4>Scanning...</h4>
-                            <p style="color: var(--text-secondary);">Please wait</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            showModal(content);
-            startNetworkScan();
-        }
-
-        // Enhanced trainAgent function
-        function trainAgent() {
-            const content = `
-                <div class="modal-header">
-                    <h2 class="modal-title">AI Agent Training Center</h2>
-                    <button class="close-modal" onclick="closeModal()">×</button>
-                </div>
-                
-                <div class="report-section">
-                    <h3>Available Training Modules</h3>
-                    <div class="training-modules">
-                        <div class="training-module" onclick="startTraining('threat-detection')">
-                            <div class="training-module-icon">🎯</div>
-                            <div class="training-module-name">Threat Detection</div>
-                            <div class="training-module-status">Advanced Level</div>
-                        </div>
-                        <div class="training-module" onclick="startTraining('pattern-recognition')">
-                            <div class="training-module-icon">🔍</div>
-                            <div class="training-module-name">Pattern Recognition</div>
-                            <div class="training-module-status">Expert Level</div>
-                        </div>
-                        <div class="training-module" onclick="startTraining('response-optimization')">
-                            <div class="training-module-icon">⚡</div>
-                            <div class="training-module-name">Response Speed</div>
-                            <div class="training-module-status">Optimizing</div>
-                        </div>
-                        <div class="training-module" onclick="startTraining('quantum-defense')">
-                            <div class="training-module-icon">🔐</div>
-                            <div class="training-module-name">Quantum Defense</div>
-                            <div class="training-module-status">Cutting Edge</div>
-                        </div>
-                        <div class="training-module" onclick="startTraining('zero-day')">
-                            <div class="training-module-icon">🛡️</div>
-                            <div class="training-module-name">Zero-Day Protection</div>
-                            <div class="training-module-status">Learning</div>
-                        </div>
-                        <div class="training-module" onclick="startTraining('behavioral')">
-                            <div class="training-module-icon">👁️</div>
-                            <div class="training-module-name">Behavioral Analysis</div>
-                            <div class="training-module-status">Enhanced</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="report-section">
-                    <h3>Training Statistics</h3>
-                    <div class="stats-grid">
-                        <div class="stat-card" style="cursor: default;">
-                            <div class="stat-value">87%</div>
-                            <div class="stat-title">Overall Progress</div>
-                        </div>
-                        <div class="stat-card" style="cursor: default;">
-                            <div class="stat-value">12.4K</div>
-                            <div class="stat-title">Patterns Learned</div>
-                        </div>
-                        <div class="stat-card" style="cursor: default;">
-                            <div class="stat-value">99.8%</div>
-                            <div class="stat-title">Accuracy Rate</div>
-                        </div>
-                        <div class="stat-card" style="cursor: default;">
-                            <div class="stat-value">247</div>
-                            <div class="stat-title">Hours Trained</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            showModal(content);
-        }
-
-        // New autonomous functions
-        function startNetworkScan() {
-            const devices = [
-                { name: 'Web Server', ip: '192.168.1.10', status: 'Secure', ports: '80, 443' },
-                { name: 'Database', ip: '192.168.1.20', status: 'Secure', ports: '3306' },
-                { name: 'IoT Device', ip: '192.168.1.45', status: 'Vulnerable', ports: '22, 80, 8080' },
-                { name: 'Workstation', ip: '192.168.1.101', status: 'Secure', ports: '445' },
-                { name: 'Printer', ip: '192.168.1.200', status: 'Warning', ports: '9100' }
-            ];
-            
-            let progress = 0;
-            const progressBar = document.getElementById('scanProgress');
-            const deviceList = document.getElementById('deviceList');
-            
-            const scanInterval = setInterval(() => {
-                progress += 10;
-                progressBar.style.width = progress + '%';
-                progressBar.textContent = progress + '%';
-                
-                if (progress === 50) {
-                    deviceList.innerHTML = '';
-                }
-                
-                if (progress >= 20 && progress < 100) {
-                    const deviceIndex = Math.floor((progress - 20) / 20);
-                    if (deviceIndex < devices.length && !document.getElementById('device-' + deviceIndex)) {
-                        const device = devices[deviceIndex];
-                        const statusColor = device.status === 'Secure' ? '#10b981' : device.status === 'Warning' ? '#f59e0b' : '#ef4444';
-                        
-                        deviceList.innerHTML += `
-                            <div class="threat-detail-card" id="device-${deviceIndex}">
-                                <h4>${device.name}</h4>
-                                <p>IP: ${device.ip}</p>
-                                <p>Ports: ${device.ports}</p>
-                                <p style="color: ${statusColor};">Status: ${device.status}</p>
-                                <button class="threat-action-btn" onclick="scanDevice('${device.ip}')">Deep Scan</button>
-                            </div>
-                        `;
-                        
-                        // Add to network map
-                        const map = document.getElementById('networkMap');
-                        const node = document.createElement('div');
-                        node.className = 'network-node';
-                        node.style.top = (20 + Math.random() * 60) + '%';
-                        node.style.left = (10 + Math.random() * 80) + '%';
-                        node.innerHTML = `<span style="font-size: 10px;">${device.name}</span>`;
-                        node.style.borderColor = statusColor;
-                        map.appendChild(node);
-                    }
-                }
-                
-                if (progress >= 100) {
-                    clearInterval(scanInterval);
-                    addConsoleMessage('[SCAN]', 'Network scan complete. 5 devices discovered, 1 vulnerable.');
-                    showNotification('Scan Complete', '1 vulnerable device found');
-                }
-            }, 500);
-        }
-
-        function startTraining(module) {
-            addConsoleMessage('[TRAIN]', `Starting training module: ${module}`);
-            showNotification('Training Started', `AI agent is learning ${module} techniques`);
-            
-            // Simulate training progress
-            let progress = 0;
-            const trainingInterval = setInterval(() => {
-                progress += 5;
-                addConsoleMessage('[TRAIN]', `${module} training progress: ${progress}%`);
-                
-                if (progress >= 100) {
-                    clearInterval(trainingInterval);
-                    addConsoleMessage('[TRAIN]', `Training complete for ${module}. Agent capabilities enhanced.`);
-                    showNotification('Training Complete', 'AI agent has learned new skills');
-                    
-                    // Update learning progress
-                    const learningProgress = document.getElementById('learningProgress');
-                    const current = parseInt(learningProgress.textContent);
-                    learningProgress.textContent = Math.min(100, current + 2) + '%';
-                }
-            }, 1000);
-        }
-
-        function drawThreatGraphs() {
-            const timeline = document.getElementById('threatTimeline');
-            const categories = document.getElementById('threatCategories');
-            
-            if (timeline) {
-                const ctx = timeline.getContext('2d');
-                timeline.width = timeline.offsetWidth;
-                timeline.height = timeline.offsetHeight;
-                
-                // Draw simple line graph
-                ctx.strokeStyle = '#10b981';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                for (let i = 0; i < 10; i++) {
-                    const x = (i / 9) * timeline.width;
-                    const y = timeline.height / 2 + Math.sin(i) * 50;
-                    if (i === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                }
-                ctx.stroke();
-            }
-        }
-
-        function drawSecurityGraphs() {
-            // Similar implementation for security graphs
-            const graphs = ['scoreGraph', 'vectorGraph', 'responseGraph', 'loadGraph'];
-            graphs.forEach(id => {
-                const canvas = document.getElementById(id);
-                if (canvas) {
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = canvas.offsetWidth;
-                    canvas.height = canvas.offsetHeight;
-                    
-                    // Draw random data
-                    ctx.strokeStyle = '#7c3aed';
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    for (let i = 0; i < 20; i++) {
-                        const x = (i / 19) * canvas.width;
-                        const y = canvas.height - (Math.random() * canvas.height * 0.8 + canvas.height * 0.1);
-                        if (i === 0) ctx.moveTo(x, y);
-                        else ctx.lineTo(x, y);
-                    }
-                    ctx.stroke();
-                }
-            });
-        }
-
-        function drawPerformanceGraph() {
-            const canvas = document.getElementById('performanceCanvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
-                
-                // Draw performance visualization
-                const centerX = canvas.width / 2;
-                const centerY = canvas.height / 2;
-                
-                for (let i = 0; i < 50; i++) {
-                    const angle = (i / 50) * Math.PI * 2;
-                    const radius = 50 + Math.random() * 100;
-                    
-                    ctx.beginPath();
-                    ctx.arc(
-                        centerX + Math.cos(angle) * radius,
-                        centerY + Math.sin(angle) * radius,
-                        3 + Math.random() * 5,
-                        0,
-                        Math.PI * 2
-                    );
-                    ctx.fillStyle = `rgba(16, 185, 129, ${Math.random() * 0.8})`;
-                    ctx.fill();
-                }
-            }
-        }
-
-        // Additional helper functions
-        function analyzeThreatDeep(threatType) {
-            addConsoleMessage('[ANALYSIS]', `Deep analysis initiated for ${threatType}`);
-            closeModal();
-            showNotification('Deep Analysis', `Analyzing ${threatType} patterns`);
-        }
-
-        function exportThreatReport() {
-            addConsoleMessage('[EXPORT]', 'Exporting threat report...');
-            showNotification('Export Started', 'Generating downloadable report');
-        }
-
-        function scheduleThreatScan() {
-            showNotification('Scan Scheduled', 'Daily threat scans configured');
-        }
-
-        function updateThreatDb() {
-            addConsoleMessage('[UPDATE]', 'Updating threat signature database...');
-            showNotification('Database Update', 'Downloading latest threat signatures');
-        }
-
-        function toggleReportSection(element) {
-            const status = element.querySelector('.training-module-status');
-            if (status.textContent.includes('✓')) {
-                status.textContent = '✗ Excluded';
-                element.style.opacity = '0.5';
-            } else {
-                status.textContent = '✓ Included';
-                element.style.opacity = '1';
-            }
-        }
-
-        function generateReportNow() {
-            closeModal();
-            addConsoleMessage('[REPORT]', 'Generating comprehensive security report...');
-            showNotification('Report Generation', 'Your report is being created');
-            
-            setTimeout(() => {
-                showNotification('Report Ready', 'Security report has been generated');
-                addConsoleMessage('[REPORT]', 'Report generated successfully. Download ready.');
-            }, 3000);
-        }
-
-        function scanDevice(ip) {
-            addConsoleMessage('[SCAN]', `Deep scanning device at ${ip}...`);
-            showNotification('Device Scan', `Analyzing ${ip}`);
-        }
-
-        function optimizePerformance() {
-            addConsoleMessage('[OPTIMIZE]', 'Optimizing AI agent performance...');
-            showNotification('Optimization', 'Enhancing system performance');
-            
-            setTimeout(() => {
-                const responseTime = document.getElementById('responseTime');
-                responseTime.textContent = '0.2ms';
-                showNotification('Optimization Complete', 'Performance improved by 33%');
             }, 2000);
         }
 
-        function scheduleMaintenanceModal() {
-            showNotification('Maintenance', 'Opening maintenance scheduler');
-        }
-
-        function viewNeutralizationDetails() {
-            showNotification('Details', 'Loading neutralization details');
-        }
-
-        function scheduleReport() {
-            showNotification('Scheduler', 'Report scheduling configured');
-        }
-
-        function viewPastReports() {
-            showNotification('History', 'Loading report history');
-        }
-
-        function recalculateScore() {
-            addConsoleMessage('[CALC]', 'Recalculating security score based on current threats...');
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initMatrix();
             
-            setTimeout(() => {
-                const score = 100 - (threats * 1.5) - (Math.random() * 2);
-                document.getElementById('securityScore').textContent = score.toFixed(1) + '%';
-                document.querySelector('.score-value').textContent = score.toFixed(1) + '%';
-                
-                // Animate score circle
-                const scoreFill = document.querySelector('.score-fill');
-                const dashOffset = 440 - (440 * score / 100);
-                scoreFill.style.strokeDashoffset = dashOffset;
-                
-                addConsoleMessage('[CALC]', `Security score updated: ${score.toFixed(1)}%`);
-            }, 1500);
-        }
-
-        function resetNeural() {
-            addConsoleMessage('[NEURAL]', 'Resetting neural network visualization...');
-            initNeuralNetwork();
-        }
-
-        // Neural network visualization
-        function startNeuralVisualization() {
-            const canvas = document.getElementById('neuralCanvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-
-            const nodes = [];
-            const connections = [];
-
-            // Create layered neural network
-            const layers = 4;
-            const nodesPerLayer = [5, 8, 8, 3];
-            const layerSpacing = canvas.width / (layers + 1);
-
-            for (let layer = 0; layer < layers; layer++) {
-                const nodeCount = nodesPerLayer[layer];
-                const ySpacing = canvas.height / (nodeCount + 1);
-                
-                for (let i = 0; i < nodeCount; i++) {
-                    nodes.push({
-                        x: layerSpacing * (layer + 1),
-                        y: ySpacing * (i + 1),
-                        layer: layer,
-                        activation: Math.random(),
-                        pulsePhase: Math.random() * Math.PI * 2
-                    });
+            // Check if already authenticated
+            const auth = localStorage.getItem('sentinel_auth');
+            if (auth) {
+                const authData = JSON.parse(auth);
+                // Check if auth is less than 24 hours old
+                if (Date.now() - authData.timestamp < 24 * 60 * 60 * 1000) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    localStorage.removeItem('sentinel_auth');
                 }
-            }
-
-            // Create connections
-            for (let i = 0; i < nodes.length; i++) {
-                for (let j = i + 1; j < nodes.length; j++) {
-                    if (nodes[j].layer === nodes[i].layer + 1) {
-                        connections.push({
-                            from: i,
-                            to: j,
-                            strength: Math.random()
-                        });
-                    }
-                }
-            }
-
-            // Animation loop
-            function animate() {
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Update and draw connections
-                connections.forEach(conn => {
-                    const from = nodes[conn.from];
-                    const to = nodes[conn.to];
-                    
-                    ctx.beginPath();
-                    ctx.moveTo(from.x, from.y);
-                    ctx.lineTo(to.x, to.y);
-                    ctx.strokeStyle = `rgba(124, 58, 237, ${conn.strength * 0.5})`;
-                    ctx.lineWidth = conn.strength * 2;
-                    ctx.stroke();
-                    
-                    // Pulse effect
-                    conn.strength = 0.5 + Math.sin(Date.now() / 1000 + conn.from) * 0.5;
-                });
-
-                // Update and draw nodes
-                nodes.forEach((node, i) => {
-                    node.pulsePhase += 0.05;
-                    node.activation = 0.5 + Math.sin(node.pulsePhase) * 0.5;
-                    
-                    const radius = 5 + node.activation * 5;
-                    
-                    ctx.beginPath();
-                    ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(16, 185, 129, ${0.5 + node.activation * 0.5})`;
-                    ctx.fill();
-                    
-                    ctx.beginPath();
-                    ctx.arc(node.x, node.y, radius + 5, 0, Math.PI * 2);
-                    ctx.strokeStyle = `rgba(124, 58, 237, ${node.activation * 0.3})`;
-                    ctx.stroke();
-                });
-
-                requestAnimationFrame(animate);
-            }
-
-            animate();
-        }
-
-        // Initialize neural network
-        function initNeuralNetwork() {
-            const canvas = document.getElementById('neuralCanvas');
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-            startNeuralVisualization();
-        }
-
-        // Agent activity simulation
-        function startAgentActivity() {
-            const activities = [
-                { agent: '[SCAN]', message: 'Continuous network monitoring active...' },
-                { agent: '[AI]', message: 'Pattern recognition algorithm updated.' },
-                { agent: '[DEFENSE]', message: 'Firewall rules optimized based on traffic analysis.' },
-                { agent: '[QUANTUM]', message: 'Quantum encryption keys rotated successfully.' },
-                { agent: '[LEARN]', message: 'Learned new threat signature from global database.' },
-                { agent: '[MONITOR]', message: 'System resource usage within normal parameters.' },
-                { agent: '[ALERT]', message: 'Suspicious activity detected on port 8080.' },
-                { agent: '[BLOCK]', message: 'Blocked 47 connection attempts from blacklisted IPs.' },
-                { agent: '[UPDATE]', message: 'Threat intelligence feed synchronized.' },
-                { agent: '[OPTIMIZE]', message: 'Response time improved by 12% through optimization.' }
-            ];
-
-            setInterval(() => {
-                if (isAgentActive && Math.random() > 0.3) {
-                    const activity = activities[Math.floor(Math.random() * activities.length)];
-                    addConsoleMessage(activity.agent, activity.message);
-                    
-                    // Occasionally add timeline events
-                    if (Math.random() > 0.7) {
-                        const timelineIcons = ['🔍', '🛡️', '⚡', '🧠', '🔐'];
-                        const icon = timelineIcons[Math.floor(Math.random() * timelineIcons.length)];
-                        addTimelineEvent(icon, 'Automated Action', activity.message);
-                    }
-                }
-            }, 5000);
-        }
-
-        // Metric updates
-        function startMetricUpdates() {
-            setInterval(() => {
-                if (!isAgentActive) return;
-                
-                // Update decisions per minute
-                const decisions = document.getElementById('decisionsPerMin');
-                const currentDecisions = parseInt(decisions.textContent);
-                decisions.textContent = Math.max(100, currentDecisions + Math.floor(Math.random() * 20 - 5));
-                
-                // Update response time
-                const responseTime = document.getElementById('responseTime');
-                const time = (Math.random() * 0.5 + 0.1).toFixed(1);
-                responseTime.textContent = time + 'ms';
-                
-                // Update agent performance
-                const performance = document.getElementById('agentPerformance');
-                const perf = (99 + Math.random()).toFixed(1);
-                performance.textContent = perf + '%';
-                
-                // Update blocked threats
-                const blocked = document.getElementById('threatsBlocked');
-                const currentBlocked = parseInt(blocked.textContent.replace(',', ''));
-                blocked.textContent = (currentBlocked + Math.floor(Math.random() * 10)).toLocaleString();
-            }, 3000);
-        }
-
-        // Threat simulation
-        function startThreatSimulation() {
-            setInterval(() => {
-                if (isAgentActive && Math.random() > 0.8 && threats < 6) {
-                    addNewThreat();
-                }
-            }, 15000);
-        }
-
-        // Initialize on load
-        window.addEventListener('load', () => {
-            if (checkApiKeys()) {
-                document.getElementById('setupModal').style.display = 'none';
-                initializeSystem();
             }
         });
 
-        // Window resize handler
+        // Handle window resize
         window.addEventListener('resize', () => {
-            const canvas = document.getElementById('neuralCanvas');
-            if (canvas) {
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
-            }
+            document.getElementById('matrixBg').innerHTML = '';
+            initMatrix();
         });
     </script>
 </body>
