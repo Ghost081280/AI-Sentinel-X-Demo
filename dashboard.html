@@ -246,6 +246,91 @@
             50% { opacity: 0.3; }
         }
 
+        /* Agent Status Indicator */
+        .agent-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-status::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.3), transparent);
+            animation: agentScan 3s linear infinite;
+        }
+
+        @keyframes agentScan {
+            to { left: 100%; }
+        }
+
+        .agent-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            animation: agentPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes agentPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 255, 136, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(0, 255, 136, 0.8); }
+        }
+
+        .agent-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .agent-title {
+            font-weight: bold;
+            font-size: 12px;
+            color: var(--primary);
+        }
+
+        .agent-status-text {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .agent-toggle {
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 20px;
+            padding: 5px 15px;
+            color: var(--bg-darker);
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .agent-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 10px rgba(0, 255, 136, 0.3);
+        }
+
+        .agent-toggle.off {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
         /* Logout Button */
         .logout-btn {
             background: rgba(255, 0, 68, 0.1);
@@ -493,64 +578,86 @@
             color: var(--bg-darker);
         }
 
-        /* Quantum Key Display */
-        .quantum-key-display {
+        /* Enhanced Threat Map with World Map */
+        .threat-map {
+            position: relative;
+            height: 400px;
             background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-family: 'Courier New', monospace;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        .key-label {
+        .world-map-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.2;
+        }
+
+        .world-map-svg path {
+            fill: var(--primary);
+            stroke: var(--border);
+            stroke-width: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .world-map-svg path:hover {
+            fill: rgba(0, 255, 136, 0.3);
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 15px;
+            border-radius: 6px;
             font-size: 12px;
-            color: var(--text-secondary);
-            margin-bottom: 5px;
+            z-index: 10;
         }
 
-        .key-value {
-            font-size: 14px;
-            color: var(--primary);
-            word-break: break-all;
-            animation: keyGlow 3s ease-in-out infinite;
+        .threat-point {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: threatPulse 2s ease-in-out infinite;
+            cursor: pointer;
+            z-index: 5;
         }
 
-        @keyframes keyGlow {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; text-shadow: 0 0 10px currentColor; }
+        @keyframes threatPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 0, 68, 0.7);
+            }
+            50% { 
+                transform: scale(1.2);
+                box-shadow: 0 0 0 20px rgba(255, 0, 68, 0);
+            }
         }
 
-        /* Quantum Metrics */
-        .quantum-metrics {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .quantum-metric {
-            background: rgba(0, 255, 136, 0.05);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .metric-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .metric-label {
+        .threat-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--danger);
+            border-radius: 6px;
+            padding: 10px;
             font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
+            white-space: nowrap;
+            display: none;
+            z-index: 20;
+            pointer-events: none;
         }
 
-        /* Quick Actions Grid */
+        .threat-point:hover + .threat-tooltip {
+            display: block;
+        }
+
+        /* Quick Actions */
         .quick-actions {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -593,48 +700,6 @@
             color: var(--text-secondary);
         }
 
-        /* Threat Map */
-        .threat-map {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            height: 400px;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .map-overlay {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-size: 12px;
-            z-index: 10;
-        }
-
-        .threat-point {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--danger);
-            border-radius: 50%;
-            animation: threatPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes threatPulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 0, 68, 0.7);
-            }
-            50% { 
-                transform: scale(1.2);
-                box-shadow: 0 0 0 20px rgba(255, 0, 68, 0);
-            }
-        }
-
         /* System Metrics */
         .system-metrics {
             display: grid;
@@ -655,6 +720,63 @@
             height: 100px;
             margin-bottom: 15px;
             position: relative;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        /* Quantum Key Display */
+        .quantum-key-display {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .key-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .key-value {
+            font-size: 14px;
+            color: var(--primary);
+            word-break: break-all;
+            animation: keyGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes keyGlow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; text-shadow: 0 0 10px currentColor; }
+        }
+
+        /* Quantum Metrics */
+        .quantum-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .quantum-metric {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
         }
 
         /* Mobile Responsive */
@@ -719,6 +841,10 @@
             .status-indicator {
                 padding: 6px 12px;
                 font-size: 11px;
+            }
+            
+            .agent-status {
+                padding: 8px 15px;
             }
         }
 
@@ -795,6 +921,14 @@
                 </div>
             </div>
             <div class="header-right">
+                <div class="agent-status" id="agentStatus">
+                    <div class="agent-icon">🤖</div>
+                    <div class="agent-info">
+                        <div class="agent-title">SENTINEL AGENT</div>
+                        <div class="agent-status-text" id="agentStatusText">Running continuously</div>
+                    </div>
+                    <button class="agent-toggle" id="agentToggle" onclick="toggleAgent()">PAUSE</button>
+                </div>
                 <div class="system-status">
                     <div class="status-indicator">
                         <div class="status-dot"></div>
@@ -806,7 +940,7 @@
                     </div>
                     <div class="status-indicator" style="border-color: rgba(255, 170, 0, 0.3);">
                         <div class="status-dot" style="background: var(--warning);"></div>
-                        <span>3 Threats</span>
+                        <span id="threatCount">3 Threats</span>
                     </div>
                 </div>
                 <button class="logout-btn" onclick="logout()">🚪 Logout</button>
@@ -868,15 +1002,70 @@
 
             <!-- Central Dashboard -->
             <main class="central-dashboard" id="mainContent">
-                <!-- Threat Map -->
+                <!-- Enhanced Threat Map with World Map -->
                 <div class="threat-map" id="threatMap">
                     <div class="map-overlay">
                         <div style="color: var(--primary); font-weight: bold;">GLOBAL THREAT MAP</div>
                         <div style="color: var(--text-secondary);">Real-time monitoring</div>
                     </div>
-                    <div class="threat-point" style="top: 30%; left: 20%;"></div>
-                    <div class="threat-point" style="top: 60%; left: 70%;"></div>
-                    <div class="threat-point" style="top: 45%; left: 50%;"></div>
+                    
+                    <!-- Simplified World Map SVG -->
+                    <svg class="world-map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Simplified continent paths -->
+                        <!-- North America -->
+                        <path d="M150 150 Q200 100 250 120 L280 140 L300 180 L280 220 L240 240 L200 220 L180 180 Z"/>
+                        <!-- South America -->
+                        <path d="M220 280 L240 300 L250 350 L240 400 L220 420 L200 400 L190 350 L200 300 Z"/>
+                        <!-- Europe -->
+                        <path d="M480 120 L520 110 L540 130 L530 150 L500 160 L480 140 Z"/>
+                        <!-- Africa -->
+                        <path d="M480 200 L520 190 L540 250 L530 300 L500 320 L470 300 L460 250 Z"/>
+                        <!-- Asia -->
+                        <path d="M600 100 L700 110 L750 140 L740 180 L700 200 L650 190 L620 160 L600 130 Z"/>
+                        <!-- Australia -->
+                        <path d="M700 350 L750 340 L770 370 L750 390 L720 380 L700 360 Z"/>
+                    </svg>
+                    
+                    <!-- Threat Points with Tooltips -->
+                    <div class="threat-point" style="top: 30%; left: 20%;" data-location="New York, USA" data-threat="DDoS Attack"></div>
+                    <div class="threat-tooltip" style="top: 30%; left: 20%;">
+                        <strong>New York, USA</strong><br>
+                        Type: DDoS Attack<br>
+                        Severity: High<br>
+                        Source: 45.12.78.*
+                    </div>
+                    
+                    <div class="threat-point" style="top: 35%; left: 48%;" data-location="London, UK" data-threat="Malware"></div>
+                    <div class="threat-tooltip" style="top: 35%; left: 48%;">
+                        <strong>London, UK</strong><br>
+                        Type: Malware<br>
+                        Severity: Critical<br>
+                        Source: 89.45.67.123
+                    </div>
+                    
+                    <div class="threat-point" style="top: 40%; left: 70%;" data-location="Tokyo, Japan" data-threat="Port Scan"></div>
+                    <div class="threat-tooltip" style="top: 40%; left: 70%;">
+                        <strong>Tokyo, Japan</strong><br>
+                        Type: Port Scan<br>
+                        Severity: Medium<br>
+                        Source: 10.0.0.54
+                    </div>
+                    
+                    <div class="threat-point" style="top: 60%; left: 52%;" data-location="Cape Town, SA" data-threat="Brute Force" style="background: var(--warning);"></div>
+                    <div class="threat-tooltip" style="top: 60%; left: 52%;">
+                        <strong>Cape Town, SA</strong><br>
+                        Type: Brute Force<br>
+                        Severity: Medium<br>
+                        Source: 192.168.1.105
+                    </div>
+                    
+                    <div class="threat-point" style="top: 75%; left: 74%;" data-location="Sydney, AU" data-threat="SQL Injection" style="background: var(--danger);"></div>
+                    <div class="threat-tooltip" style="top: 75%; left: 74%;">
+                        <strong>Sydney, AU</strong><br>
+                        Type: SQL Injection<br>
+                        Severity: Critical<br>
+                        Source: Multiple IPs
+                    </div>
                 </div>
 
                 <!-- Quick Actions -->
@@ -922,7 +1111,7 @@
                     </div>
                     <div class="metric-card">
                         <div class="metric-chart" id="threatsChart"></div>
-                        <div class="metric-value">1,847</div>
+                        <div class="metric-value" id="threatsBlocked">1,847</div>
                         <div class="metric-label">Threats Blocked</div>
                     </div>
                 </div>
@@ -986,6 +1175,108 @@
                 localStorage.removeItem('sentinel_auth');
                 window.location.href = 'index.html';
             }
+        }
+
+        // Agent Status Management
+        let agentRunning = true;
+        let agentInterval = null;
+        let threatUpdateInterval = null;
+
+        function toggleAgent() {
+            const agentStatus = document.getElementById('agentStatus');
+            const agentToggle = document.getElementById('agentToggle');
+            const agentStatusText = document.getElementById('agentStatusText');
+            const agentIcon = document.querySelector('.agent-icon');
+            
+            agentRunning = !agentRunning;
+            
+            if (agentRunning) {
+                agentToggle.textContent = 'PAUSE';
+                agentToggle.classList.remove('off');
+                agentStatusText.textContent = 'Running continuously';
+                agentIcon.style.animation = 'agentPulse 2s ease-in-out infinite';
+                agentStatus.style.borderColor = 'var(--primary)';
+                
+                // Resume continuous operations
+                startContinuousOperations();
+                addAIMessage('SENTINEL AI', 'Agent resumed. All defense systems reactivated.');
+            } else {
+                agentToggle.textContent = 'RESUME';
+                agentToggle.classList.add('off');
+                agentStatusText.textContent = 'Paused - Manual mode';
+                agentIcon.style.animation = 'none';
+                agentStatus.style.borderColor = 'var(--danger)';
+                
+                // Pause continuous operations
+                stopContinuousOperations();
+                addAIMessage('SENTINEL AI', 'Agent paused. Entering manual control mode. Automatic defenses suspended.');
+            }
+        }
+
+        function startContinuousOperations() {
+            // Agent activity simulation
+            agentInterval = setInterval(() => {
+                if (agentRunning) {
+                    // Simulate threat detection and response
+                    if (Math.random() > 0.8) {
+                        const threats = ['Port scan', 'Malware signature', 'Suspicious login', 'DDoS pattern', 'SQL injection'];
+                        const threat = threats[Math.floor(Math.random() * threats.length)];
+                        addAIMessage('SENTINEL AI', `Detected ${threat}. Analyzing and responding...`);
+                        
+                        // Update threat count occasionally
+                        updateThreatCount();
+                    }
+                    
+                    // Update blocked threats
+                    const blockedElement = document.getElementById('threatsBlocked');
+                    const currentBlocked = parseInt(blockedElement.textContent.replace(',', ''));
+                    blockedElement.textContent = (currentBlocked + Math.floor(Math.random() * 5)).toLocaleString();
+                }
+            }, 10000);
+            
+            // Threat map updates
+            threatUpdateInterval = setInterval(() => {
+                if (agentRunning) {
+                    updateThreatMap();
+                }
+            }, 15000);
+        }
+
+        function stopContinuousOperations() {
+            clearInterval(agentInterval);
+            clearInterval(threatUpdateInterval);
+        }
+
+        function updateThreatCount() {
+            const threatCount = document.getElementById('threatCount');
+            const currentCount = parseInt(threatCount.textContent.split(' ')[0]);
+            const newCount = Math.max(0, currentCount + Math.floor(Math.random() * 3 - 1));
+            threatCount.textContent = `${newCount} Threats`;
+        }
+
+        function updateThreatMap() {
+            // Randomly move threat points
+            const threatPoints = document.querySelectorAll('.threat-point');
+            threatPoints.forEach((point, index) => {
+                if (Math.random() > 0.7) {
+                    const currentTop = parseInt(point.style.top);
+                    const currentLeft = parseInt(point.style.left);
+                    
+                    // Small movements
+                    const newTop = Math.max(10, Math.min(90, currentTop + (Math.random() * 10 - 5)));
+                    const newLeft = Math.max(5, Math.min(95, currentLeft + (Math.random() * 10 - 5)));
+                    
+                    point.style.top = newTop + '%';
+                    point.style.left = newLeft + '%';
+                    
+                    // Update tooltip position
+                    const tooltip = point.nextElementSibling;
+                    if (tooltip && tooltip.classList.contains('threat-tooltip')) {
+                        tooltip.style.top = newTop + '%';
+                        tooltip.style.left = newLeft + '%';
+                    }
+                }
+            });
         }
 
         // Logout function
@@ -1159,15 +1450,58 @@
         // Auto-update AI messages
         function autoUpdateAI() {
             setInterval(() => {
-                const randomMessage = aiMessages[Math.floor(Math.random() * aiMessages.length)];
-                addAIMessage('SENTINEL AI', randomMessage);
-                
-                // Keep only last 10 messages
-                const chat = document.getElementById('aiChat');
-                while (chat.children.length > 10) {
-                    chat.removeChild(chat.firstChild);
+                if (agentRunning) {
+                    const randomMessage = aiMessages[Math.floor(Math.random() * aiMessages.length)];
+                    addAIMessage('SENTINEL AI', randomMessage);
+                    
+                    // Keep only last 10 messages
+                    const chat = document.getElementById('aiChat');
+                    while (chat.children.length > 10) {
+                        chat.removeChild(chat.firstChild);
+                    }
                 }
             }, 30000); // Every 30 seconds
+        }
+
+        // Initialize enhanced threat point interactions
+        function initThreatPoints() {
+            const threatPoints = document.querySelectorAll('.threat-point');
+            
+            threatPoints.forEach((point, index) => {
+                point.addEventListener('mouseenter', function(e) {
+                    const tooltip = this.nextElementSibling;
+                    if (tooltip && tooltip.classList.contains('threat-tooltip')) {
+                        tooltip.style.display = 'block';
+                        
+                        // Position tooltip to avoid edge overflow
+                        const rect = this.getBoundingClientRect();
+                        const mapRect = document.getElementById('threatMap').getBoundingClientRect();
+                        
+                        if (rect.left > mapRect.width / 2) {
+                            tooltip.style.left = 'auto';
+                            tooltip.style.right = (mapRect.width - rect.left) + 'px';
+                        }
+                        
+                        if (rect.top > mapRect.height / 2) {
+                            tooltip.style.top = 'auto';
+                            tooltip.style.bottom = (mapRect.height - rect.top) + 'px';
+                        }
+                    }
+                });
+                
+                point.addEventListener('mouseleave', function(e) {
+                    const tooltip = this.nextElementSibling;
+                    if (tooltip && tooltip.classList.contains('threat-tooltip')) {
+                        tooltip.style.display = 'none';
+                    }
+                });
+                
+                point.addEventListener('click', function(e) {
+                    const location = this.getAttribute('data-location');
+                    const threat = this.getAttribute('data-threat');
+                    addAIMessage('SENTINEL AI', `Analyzing threat in ${location}: ${threat}. Deploying countermeasures...`);
+                });
+            });
         }
 
         // Initialize
@@ -1175,6 +1509,8 @@
             initMatrixRain();
             populateEncryptionChannels();
             autoUpdateAI();
+            initThreatPoints();
+            startContinuousOperations();
             
             // Enter key for AI chat
             document.getElementById('aiInput').addEventListener('keypress', (e) => {
