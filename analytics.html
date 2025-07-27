@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | AI Sentinel-X</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --secondary: #00ccff;
+            --accent: #7c3aed;
+            --danger: #ff0044;
+            --warning: #ffaa00;
+            --success: #00ff88;
+            --bg-dark: #0a0e1a;
+            --bg-darker: #060912;
+            --bg-card: rgba(10, 20, 40, 0.8);
+            --border: rgba(0, 255, 136, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: #8892b0;
+            --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+            --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
+            --gradient-analytics: linear-gradient(135deg, #00ccff 0%, #7c3aed 50%, #00ff88 100%);
+        }
+
+        body {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background: var(--bg-darker);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Analytics Background */
+        .analytics-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(0, 204, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+        }
+
+        .data-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.02) 1px, transparent 1px);
+            background-size: 100px 100px;
+            animation: dataFlow 20s linear infinite;
+        }
+
+        @keyframes dataFlow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 100px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .page-header {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analytics-pulse {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 204, 255, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: analyticsPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes analyticsPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0.2;
+            }
+        }
+
+        .page-title {
+            font-size: 36px;
+            font-weight: bold;
+            background: var(--gradient-analytics);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        /* Time Range Selector */
+        .time-range-selector {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .time-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .time-btn:hover {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .time-btn.active {
+            background: var(--gradient-1);
+            color: var(--bg-darker);
+            font-weight: bold;
+        }
+
+        /* Analytics Grid */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Chart Panel */
+        .chart-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            flex: 1;
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Fake Charts */
+        .line-chart {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            height: 70%;
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: var(--gradient-1);
+            border-radius: 4px 4px 0 0;
+            transition: height 1s ease;
+            position: relative;
+        }
+
+        .chart-bar::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 15px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .stat-change {
+            font-size: 14px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .change-positive {
+            color: var(--success);
+        }
+
+        .change-negative {
+            color: var(--danger);
+        }
+
+        /* Activity Map */
+        .activity-map {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            height: 100%;
+            position: relative;
+        }
+
+        .activity-point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: activityPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes activityPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
+            }
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 0 20px rgba(0, 255, 136, 0);
+            }
+        }
+
+        /* Performance Metrics */
+        .performance-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-info {
+            flex: 1;
+        }
+
+        .metric-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            transition: width 1s ease;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            color: var(--bg-darker);
+            transform: translateX(-5px);
+        }
+
+        /* Export Button */
+        .export-btn {
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            color: var(--bg-darker);
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Check authentication
+        const auth = localStorage.getItem('sentinel_auth');
+        if (!auth) {
+            window.location.href = 'index.html';
+        } else {
+            const authData = JSON.parse(auth);
+            if (Date.now() - authData.timestamp > 24 * 60 * 60 * 1000) {
+                localStorage.removeItem('sentinel_auth');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+
+    <!-- Back Button -->
+    <a href="dashboard.html" class="back-btn">
+        <span>←</span>
+        <span>Back to Dashboard</span>
+    </a>
+
+    <!-- Analytics Background -->
+    <div class="analytics-bg">
+        <div class="data-grid"></div>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="analytics-pulse"></div>
+            <h1 class="page-title">ANALYTICS</h1>
+            <p class="page-subtitle">Security Intelligence & Performance Metrics</p>
+        </div>
+
+        <!-- Time Range Selector -->
+        <div class="time-range-selector">
+            <button class="time-btn" onclick="selectTimeRange('1h')">1 Hour</button>
+            <button class="time-btn active" onclick="selectTimeRange('24h')">24 Hours</button>
+            <button class="time-btn" onclick="selectTimeRange('7d')">7 Days</button>
+            <button class="time-btn" onclick="selectTimeRange('30d')">30 Days</button>
+            <button class="time-btn" onclick="selectTimeRange('90d')">90 Days</button>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🛡️</div>
+                <div class="stat-value" id="totalBlocked">45.8K</div>
+                <div class="stat-label">Threats Blocked</div>
+                <div class="stat-change change-positive">
+                    <span>↑</span>
+                    <span>12.5%</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-value" id="avgResponse">0.3ms</div>
+                <div class="stat-label">Avg Response Time</div>
+                <div class="stat-change change-positive">
+                    <span>↓</span>
+                    <span>8.2%</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔐</div>
+                <div class="stat-value" id="encryptionRate">100%</div>
+                <div class="stat-label">Encryption Coverage</div>
+                <div class="stat-change" style="color: var(--text-secondary);">
+                    <span>→</span>
+                    <span>0%</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value" id="accuracy">99.8%</div>
+                <div class="stat-label">AI Accuracy</div>
+                <div class="stat-change change-positive">
+                    <span>↑</span>
+                    <span>0.2%</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🌐</div>
+                <div class="stat-value" id="endpoints">1,247</div>
+                <div class="stat-label">Active Endpoints</div>
+                <div class="stat-change change-positive">
+                    <span>↑</span>
+                    <span>47</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="dataProcessed">2.3TB</div>
+                <div class="stat-label">Data Processed</div>
+                <div class="stat-change change-negative">
+                    <span>↑</span>
+                    <span>18.7%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Grid -->
+        <div class="analytics-grid">
+            <!-- Threat Timeline -->
+            <div class="chart-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Threat Activity</h2>
+                    <button class="export-btn" onclick="exportData('threats')">Export</button>
+                </div>
+                <div class="chart-container">
+                    <div class="line-chart" id="threatChart">
+                        <!-- Bars will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Response Performance -->
+            <div class="chart-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Response Times</h2>
+                    <button class="export-btn" onclick="exportData('response')">Export</button>
+                </div>
+                <div class="chart-container">
+                    <div class="line-chart" id="responseChart">
+                        <!-- Bars will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Traffic -->
+            <div class="chart-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Network Traffic</h2>
+                    <button class="export-btn" onclick="exportData('network')">Export</button>
+                </div>
+                <div class="chart-container">
+                    <div class="line-chart" id="networkChart">
+                        <!-- Bars will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Map -->
+        <div class="activity-map">
+            <div class="panel-header">
+                <h2 class="panel-title">Global Threat Activity</h2>
+            </div>
+            <div class="map-container" id="activityMap">
+                <!-- Activity points will be generated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="performance-section">
+            <div class="panel-header">
+                <h2 class="panel-title">System Performance</h2>
+            </div>
+            <div class="metric-row">
+                <div class="metric-info">
+                    <div class="metric-name">CPU Usage</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: 23%;"></div>
+                    </div>
+                </div>
+                <div class="metric-value">23%</div>
+            </div>
+            <div class="metric-row">
+                <div class="metric-info">
+                    <div class="metric-name">Memory Utilization</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: 47%;"></div>
+                    </div>
+                </div>
+                <div class="metric-value">4.7GB</div>
+            </div>
+            <div class="metric-row">
+                <div class="metric-info">
+                    <div class="metric-name">Network Bandwidth</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: 68%;"></div>
+                    </div>
+                </div>
+                <div class="metric-value">847Mb/s</div>
+            </div>
+            <div class="metric-row">
+                <div class="metric-info">
+                    <div class="metric-name">Storage Usage</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: 35%;"></div>
+                    </div>
+                </div>
+                <div class="metric-value">350GB</div>
+            </div>
+            <div class="metric-row">
+                <div class="metric-info">
+                    <div class="metric-name">AI Model Efficiency</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: 94%; background: var(--gradient-2);"></div>
+                    </div>
+                </div>
+                <div class="metric-value">94%</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate chart bars
+        function generateChart(chartId, color) {
+            const chart = document.getElementById(chartId);
+            chart.innerHTML = '';
+            
+            for (let i = 0; i < 24; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                const height = Math.random() * 80 + 20;
+                bar.style.height = height + '%';
+                
+                if (color) {
+                    bar.style.background = color;
+                }
+                
+                // Animate bars
+                bar.style.height = '0';
+                setTimeout(() => {
+                    bar.style.height = height + '%';
+                }, i * 50);
+                
+                chart.appendChild(bar);
+            }
+        }
+
+        // Generate activity points
+        function generateActivityPoints() {
+            const map = document.getElementById('activityMap');
+            
+            for (let i = 0; i < 15; i++) {
+                const point = document.createElement('div');
+                point.className = 'activity-point';
+                point.style.left = Math.random() * 90 + 5 + '%';
+                point.style.top = Math.random() * 80 + 10 + '%';
+                point.style.animationDelay = Math.random() * 2 + 's';
+                
+                // Random colors for severity
+                const colors = ['var(--danger)', 'var(--warning)', 'var(--primary)'];
+                point.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                map.appendChild(point);
+            }
+        }
+
+        // Time range selection
+        function selectTimeRange(range) {
+            // Update active button
+            document.querySelectorAll('.time-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Regenerate charts with new data
+            generateChart('threatChart');
+            generateChart('responseChart', 'linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)');
+            generateChart('networkChart', 'linear-gradient(135deg, var(--warning) 0%, var(--secondary) 100%)');
+            
+            // Update stats
+            updateStats();
+        }
+
+        // Update stats with random variations
+        function updateStats() {
+            const stats = {
+                totalBlocked: Math.floor(Math.random() * 20000 + 40000),
+                avgResponse: (Math.random() * 0.5 + 0.1).toFixed(1),
+                accuracy: (Math.random() * 0.5 + 99.5).toFixed(1),
+                endpoints: Math.floor(Math.random() * 200 + 1100),
+                dataProcessed: (Math.random() * 1 + 2).toFixed(1)
+            };
+            
+            document.getElementById('totalBlocked').textContent = (stats.totalBlocked / 1000).toFixed(1) + 'K';
+            document.getElementById('avgResponse').textContent = stats.avgResponse + 'ms';
+            document.getElementById('accuracy').textContent = stats.accuracy + '%';
+            document.getElementById('endpoints').textContent = stats.endpoints.toLocaleString();
+            document.getElementById('dataProcessed').textContent = stats.dataProcessed + 'TB';
+        }
+
+        // Export data
+        function exportData(type) {
+            alert(`Exporting ${type} data to CSV format...`);
+            
+            // Simulate export
+            setTimeout(() => {
+                alert(`${type}_analytics_${new Date().toISOString().split('T')[0]}.csv downloaded successfully!`);
+            }, 1000);
+        }
+
+        // Auto-update data
+        function autoUpdate() {
+            setInterval(() => {
+                // Update random metrics
+                const metrics = document.querySelectorAll('.metric-fill');
+                metrics.forEach(metric => {
+                    const currentWidth = parseInt(metric.style.width);
+                    const newWidth = Math.max(10, Math.min(95, currentWidth + (Math.random() * 10 - 5)));
+                    metric.style.width = newWidth + '%';
+                });
+                
+                // Update a random stat
+                const statValues = document.querySelectorAll('.stat-value');
+                const randomStat = statValues[Math.floor(Math.random() * statValues.length)];
+                const currentValue = parseFloat(randomStat.textContent);
+                
+                if (randomStat.id === 'avgResponse') {
+                    randomStat.textContent = (Math.random() * 0.5 + 0.1).toFixed(1) + 'ms';
+                } else if (randomStat.id === 'accuracy' || randomStat.id === 'encryptionRate') {
+                    randomStat.textContent = (Math.random() * 0.5 + 99.5).toFixed(1) + '%';
+                }
+            }, 5000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            generateChart('threatChart');
+            generateChart('responseChart', 'linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)');
+            generateChart('networkChart', 'linear-gradient(135deg, var(--warning) 0%, var(--secondary) 100%)');
+            generateActivityPoints();
+            autoUpdate();
+        });
+    </script>
+</body>
+</html>
