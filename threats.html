@@ -9,7 +9,289 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+    </style>
+</head>
+<body>
+    <script>
+        // Check authentication
+        const auth = localStorage.getItem('sentinel_auth');
+        if (!auth) {
+            window.location.href = 'index.html';
+        } else {
+            const authData = JSON.parse(auth);
+            if (Date.now() - authData.timestamp > 24 * 60 * 60 * 1000) {
+                localStorage.removeItem('sentinel_auth');
+                window.location.href = 'index.html';
+            }
         }
+    </script>
+
+    <!-- Back Button -->
+    <a href="dashboard.html" class="back-btn">
+        <span>←</span>
+        <span>Back to Dashboard</span>
+    </a>
+
+    <!-- Threat Background -->
+    <div class="threat-bg">
+        <div class="scan-line"></div>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="alert-strip"></div>
+            <div class="header-content">
+                <div>
+                    <h1 class="page-title">THREAT MONITOR</h1>
+                    <p style="color: var(--text-secondary); margin-top: 5px;">Autonomous threat detection and neutralization</p>
+                </div>
+                <div class="threat-summary">
+                    <div class="summary-item">
+                        <div class="summary-value" id="activeThreats">7</div>
+                        <div class="summary-label">Active Threats</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value" style="color: var(--warning);" id="pendingThreats">3</div>
+                        <div class="summary-label">Processing</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value" style="color: var(--success);" id="neutralizedThreats">124</div>
+                        <div class="summary-label">Neutralized</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Autonomous Alert -->
+        <div class="autonomous-alert">
+            <div class="autonomous-alert-icon">🤖</div>
+            <div class="autonomous-alert-text">
+                <div class="autonomous-alert-title">Autonomous Protection Active</div>
+                <div class="autonomous-alert-desc">All threats are being handled automatically. No manual intervention required.</div>
+            </div>
+        </div>
+
+        <!-- Threat Grid -->
+        <div class="threat-grid" id="threatGrid">
+            <!-- Threats will be populated by JavaScript -->
+        </div>
+
+        <!-- Real-time Feed -->
+        <div class="feed-section">
+            <div class="feed-header">
+                <h2 class="feed-title">Live Autonomous Actions</h2>
+                <span style="color: var(--danger); font-size: 12px;">● LIVE</span>
+            </div>
+            <div class="feed-content" id="threatFeed">
+                <!-- Feed items will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample threats data
+        const threats = [
+            {
+                id: 1,
+                name: 'DDoS Attack Detected',
+                type: 'Network Attack',
+                severity: 'critical',
+                source: '45.12.78.* (Multiple IPs)',
+                target: 'API Gateway',
+                status: 'AI Mitigating',
+                duration: '12 minutes',
+                attempts: '45,892'
+            },
+            {
+                id: 2,
+                name: 'SQL Injection Attempt',
+                type: 'Web Application',
+                severity: 'high',
+                source: '192.168.1.105',
+                target: '/api/users endpoint',
+                status: 'Blocked by AI',
+                duration: '3 minutes',
+                attempts: '127'
+            },
+            {
+                id: 3,
+                name: 'Brute Force Login',
+                type: 'Authentication',
+                severity: 'high',
+                source: '89.45.67.123',
+                target: 'Admin Panel',
+                status: 'AI Analyzing',
+                duration: '8 minutes',
+                attempts: '1,024'
+            },
+            {
+                id: 4,
+                name: 'Port Scanning Activity',
+                type: 'Reconnaissance',
+                severity: 'medium',
+                source: '10.0.0.54',
+                target: 'Internal Network',
+                status: 'Auto-Blocked',
+                duration: '5 minutes',
+                attempts: '22'
+            },
+            {
+                id: 5,
+                name: 'Malware Communication',
+                type: 'Malware',
+                severity: 'critical',
+                source: 'Internal Host',
+                target: 'C&C Server',
+                status: 'Isolated by AI',
+                duration: '1 minute',
+                attempts: '3'
+            },
+            {
+                id: 6,
+                name: 'Data Exfiltration Attempt',
+                type: 'Data Breach',
+                severity: 'critical',
+                source: 'Process: svchost.exe',
+                target: 'Database Server',
+                status: 'Neutralized',
+                duration: '30 seconds',
+                attempts: '1'
+            },
+            {
+                id: 7,
+                name: 'Suspicious DNS Queries',
+                type: 'Network',
+                severity: 'medium',
+                source: 'Multiple Hosts',
+                target: 'External Domains',
+                status: 'AI Learning',
+                duration: '15 minutes',
+                attempts: '892'
+            }
+        ];
+
+        // Populate threats
+        function populateThreats() {
+            const grid = document.getElementById('threatGrid');
+            grid.innerHTML = '';
+            
+            threats.forEach(threat => {
+                const card = document.createElement('div');
+                card.className = `threat-card ${threat.severity}`;
+                card.innerHTML = `
+                    <div class="threat-header">
+                        <div>
+                            <div class="threat-title">${threat.name}</div>
+                            <div class="threat-type">${threat.type}</div>
+                        </div>
+                        <span class="threat-severity severity-${threat.severity}">${threat.severity}</span>
+                    </div>
+                    <div class="threat-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Source:</span>
+                            <span class="detail-value">${threat.source}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Target:</span>
+                            <span class="detail-value">${threat.target}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">${threat.duration}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Attempts:</span>
+                            <span class="detail-value">${threat.attempts}</span>
+                        </div>
+                    </div>
+                    <div class="threat-status">
+                        <span class="status-badge">🤖 ${threat.status}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Add feed item
+        function addFeedItem(message) {
+            const feed = document.getElementById('threatFeed');
+            const item = document.createElement('div');
+            item.className = 'feed-item';
+            
+            const time = new Date().toLocaleTimeString();
+            item.innerHTML = `
+                <div class="feed-time">${time}</div>
+                <div class="feed-message">${message}</div>
+            `;
+            
+            feed.insertBefore(item, feed.firstChild);
+            
+            // Keep only last 20 items
+            while (feed.children.length > 20) {
+                feed.removeChild(feed.lastChild);
+            }
+        }
+
+        // Update threat counts
+        function updateThreatCounts() {
+            const active = document.getElementById('activeThreats');
+            const neutralized = document.getElementById('neutralizedThreats');
+            
+            active.textContent = Math.max(0, parseInt(active.textContent) - 1);
+            neutralized.textContent = parseInt(neutralized.textContent) + 1;
+            
+            // Remove a threat card randomly
+            const cards = document.querySelectorAll('.threat-card');
+            if (cards.length > 0) {
+                const randomCard = cards[Math.floor(Math.random() * cards.length)];
+                randomCard.style.transition = 'all 0.5s ease';
+                randomCard.style.opacity = '0';
+                randomCard.style.transform = 'scale(0.8)';
+                setTimeout(() => randomCard.remove(), 500);
+            }
+        }
+
+        // Auto-generate feed items
+        const feedMessages = [
+            '🤖 AI blocked suspicious connection from IP 192.168.1.45',
+            '🛡️ Firewall rules updated automatically. 127 malicious IPs blocked.',
+            '🔍 AI detected SQL injection pattern. Attack neutralized.',
+            '⚡ DDoS mitigation activated. Traffic normalized.',
+            '🧠 Machine learning model updated with new threat signatures.',
+            '🔐 Encryption keys rotated. All channels secure.',
+            '📊 Behavioral anomaly detected and contained.',
+            '✅ Port scan blocked. Source IP added to blacklist.',
+            '🎯 Malware signature identified. Quarantine successful.',
+            '🚀 System optimization complete. Performance increased by 15%.'
+        ];
+
+        function autoGenerateFeed() {
+            setInterval(() => {
+                const message = feedMessages[Math.floor(Math.random() * feedMessages.length)];
+                addFeedItem(message);
+                
+                // Occasionally update threat counts
+                if (Math.random() > 0.7) {
+                    updateThreatCounts();
+                }
+            }, 5000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            populateThreats();
+            autoGenerateFeed();
+            
+            // Initial feed items
+            addFeedItem('🤖 Autonomous threat monitoring system online.');
+            addFeedItem('🧠 AI threat analysis engine active. No manual intervention required.');
+            addFeedItem('🛡️ All defense systems operating autonomously.');
+        });
+    </script>
+</body>
+</html>
 
         :root {
             --primary: #00ff88;
@@ -29,7 +311,7 @@
         }
 
         body {
-            font-family: 'Consolas', 'Monaco', monospace;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Consolas', 'Monaco', monospace;
             background: var(--bg-darker);
             color: var(--text-primary);
             min-height: 100vh;
@@ -140,50 +422,41 @@
             text-transform: uppercase;
         }
 
-        /* Control Bar */
-        .control-bar {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
+        /* Autonomous Alert */
+        .autonomous-alert {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
             padding: 15px 20px;
             margin-bottom: 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             gap: 15px;
         }
 
-        .filter-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
+        .autonomous-alert-icon {
+            font-size: 24px;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .filter-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 8px 16px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 1px;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
-        .filter-btn:hover {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
-            color: var(--primary);
+        .autonomous-alert-text {
+            flex: 1;
         }
 
-        .filter-btn.active {
-            background: var(--gradient-1);
-            color: var(--bg-darker);
+        .autonomous-alert-title {
             font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .autonomous-alert-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
         }
 
         /* Threat Grid */
@@ -286,40 +559,22 @@
             font-weight: bold;
         }
 
-        .threat-actions {
-            display: flex;
-            gap: 10px;
+        .threat-status {
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
         }
 
-        .action-btn {
-            flex: 1;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 8px 12px;
-            color: var(--primary);
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--gradient-1);
+            color: var(--bg-darker);
+            border-radius: 20px;
+            font-weight: bold;
             font-size: 12px;
             text-transform: uppercase;
-        }
-
-        .action-btn:hover {
-            background: var(--primary);
-            color: var(--bg-darker);
-        }
-
-        .action-btn.danger {
-            border-color: var(--danger);
-            color: var(--danger);
-        }
-
-        .action-btn.danger:hover {
-            background: var(--danger);
-            color: white;
         }
 
         /* Real-time Feed */
@@ -433,10 +688,6 @@
                 grid-template-columns: 1fr;
             }
             
-            .control-bar {
-                justify-content: center;
-            }
-            
             .threat-summary {
                 justify-content: center;
             }
@@ -446,6 +697,11 @@
                 left: 10px;
                 padding: 8px 15px;
                 font-size: 14px;
+            }
+            
+            .autonomous-alert {
+                flex-direction: column;
+                text-align: center;
             }
         }
 
@@ -458,17 +714,20 @@
                 font-size: 24px;
             }
             
-            .filter-btn {
-                padding: 6px 12px;
-                font-size: 11px;
-            }
-            
             .threat-card {
                 padding: 15px;
             }
             
             .threat-title {
                 font-size: 16px;
+            }
+            
+            .back-btn span {
+                display: none;
+            }
+            
+            .back-btn::after {
+                content: 'Back';
             }
         }
 
@@ -490,378 +749,3 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--warning);
         }
-    </style>
-</head>
-<body>
-    <script>
-        // Check authentication
-        const auth = localStorage.getItem('sentinel_auth');
-        if (!auth) {
-            window.location.href = 'index.html';
-        } else {
-            const authData = JSON.parse(auth);
-            if (Date.now() - authData.timestamp > 24 * 60 * 60 * 1000) {
-                localStorage.removeItem('sentinel_auth');
-                window.location.href = 'index.html';
-            }
-        }
-    </script>
-
-    <!-- Back Button -->
-    <a href="dashboard.html" class="back-btn">
-        <span>←</span>
-        <span>Back to Dashboard</span>
-    </a>
-
-    <!-- Threat Background -->
-    <div class="threat-bg">
-        <div class="scan-line"></div>
-    </div>
-
-    <!-- Container -->
-    <div class="container">
-        <!-- Page Header -->
-        <div class="page-header">
-            <div class="alert-strip"></div>
-            <div class="header-content">
-                <div>
-                    <h1 class="page-title">THREAT MONITOR</h1>
-                    <p style="color: var(--text-secondary); margin-top: 5px;">Real-time threat detection and analysis</p>
-                </div>
-                <div class="threat-summary">
-                    <div class="summary-item">
-                        <div class="summary-value" id="activeThreats">7</div>
-                        <div class="summary-label">Active Threats</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-value" style="color: var(--warning);" id="pendingThreats">3</div>
-                        <div class="summary-label">Pending</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-value" style="color: var(--success);" id="neutralizedThreats">24</div>
-                        <div class="summary-label">Neutralized</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Control Bar -->
-        <div class="control-bar">
-            <div class="filter-group">
-                <button class="filter-btn active" onclick="filterThreats('all')">All Threats</button>
-                <button class="filter-btn" onclick="filterThreats('critical')">Critical</button>
-                <button class="filter-btn" onclick="filterThreats('high')">High</button>
-                <button class="filter-btn" onclick="filterThreats('medium')">Medium</button>
-            </div>
-            <div class="filter-group">
-                <button class="filter-btn" onclick="startThreatHunt()" style="border-color: var(--danger); color: var(--danger);">
-                    🎯 Start Hunt
-                </button>
-                <button class="filter-btn" onclick="deployDefenses()" style="border-color: var(--success); color: var(--success);">
-                    🛡️ Deploy Defenses
-                </button>
-            </div>
-        </div>
-
-        <!-- Threat Grid -->
-        <div class="threat-grid" id="threatGrid">
-            <!-- Threats will be populated by JavaScript -->
-        </div>
-
-        <!-- Real-time Feed -->
-        <div class="feed-section">
-            <div class="feed-header">
-                <h2 class="feed-title">Live Threat Feed</h2>
-                <span style="color: var(--danger); font-size: 12px;">● LIVE</span>
-            </div>
-            <div class="feed-content" id="threatFeed">
-                <!-- Feed items will be populated by JavaScript -->
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Sample threats data
-        const threats = [
-            {
-                id: 1,
-                name: 'DDoS Attack Detected',
-                type: 'Network Attack',
-                severity: 'critical',
-                source: '45.12.78.* (Multiple IPs)',
-                target: 'API Gateway',
-                status: 'Active',
-                duration: '12 minutes',
-                attempts: '45,892'
-            },
-            {
-                id: 2,
-                name: 'SQL Injection Attempt',
-                type: 'Web Application',
-                severity: 'high',
-                source: '192.168.1.105',
-                target: '/api/users endpoint',
-                status: 'Monitoring',
-                duration: '3 minutes',
-                attempts: '127'
-            },
-            {
-                id: 3,
-                name: 'Brute Force Login',
-                type: 'Authentication',
-                severity: 'high',
-                source: '89.45.67.123',
-                target: 'Admin Panel',
-                status: 'Blocking',
-                duration: '8 minutes',
-                attempts: '1,024'
-            },
-            {
-                id: 4,
-                name: 'Port Scanning Activity',
-                type: 'Reconnaissance',
-                severity: 'medium',
-                source: '10.0.0.54',
-                target: 'Internal Network',
-                status: 'Tracking',
-                duration: '5 minutes',
-                attempts: '22'
-            },
-            {
-                id: 5,
-                name: 'Malware Communication',
-                type: 'Malware',
-                severity: 'critical',
-                source: 'Internal Host',
-                target: 'C&C Server',
-                status: 'Isolated',
-                duration: '1 minute',
-                attempts: '3'
-            },
-            {
-                id: 6,
-                name: 'Data Exfiltration Attempt',
-                type: 'Data Breach',
-                severity: 'critical',
-                source: 'Process: svchost.exe',
-                target: 'Database Server',
-                status: 'Blocked',
-                duration: '30 seconds',
-                attempts: '1'
-            },
-            {
-                id: 7,
-                name: 'Suspicious DNS Queries',
-                type: 'Network',
-                severity: 'medium',
-                source: 'Multiple Hosts',
-                target: 'External Domains',
-                status: 'Analyzing',
-                duration: '15 minutes',
-                attempts: '892'
-            }
-        ];
-
-        // Populate threats
-        function populateThreats(filter = 'all') {
-            const grid = document.getElementById('threatGrid');
-            grid.innerHTML = '';
-            
-            const filteredThreats = filter === 'all' 
-                ? threats 
-                : threats.filter(t => t.severity === filter);
-            
-            filteredThreats.forEach(threat => {
-                const card = document.createElement('div');
-                card.className = `threat-card ${threat.severity}`;
-                card.innerHTML = `
-                    <div class="threat-header">
-                        <div>
-                            <div class="threat-title">${threat.name}</div>
-                            <div class="threat-type">${threat.type}</div>
-                        </div>
-                        <span class="threat-severity severity-${threat.severity}">${threat.severity}</span>
-                    </div>
-                    <div class="threat-details">
-                        <div class="detail-row">
-                            <span class="detail-label">Source:</span>
-                            <span class="detail-value">${threat.source}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Target:</span>
-                            <span class="detail-value">${threat.target}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Duration:</span>
-                            <span class="detail-value">${threat.duration}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Attempts:</span>
-                            <span class="detail-value">${threat.attempts}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Status:</span>
-                            <span class="detail-value" style="color: var(--warning);">${threat.status}</span>
-                        </div>
-                    </div>
-                    <div class="threat-actions">
-                        <button class="action-btn" onclick="analyzeThreat(${threat.id})">Analyze</button>
-                        <button class="action-btn" onclick="blockThreat(${threat.id})">Block</button>
-                        <button class="action-btn danger" onclick="neutralizeThreat(${threat.id})">Neutralize</button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // Filter threats
-        function filterThreats(filter) {
-            // Update active button
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Populate filtered threats
-            populateThreats(filter);
-        }
-
-        // Threat actions
-        function analyzeThreat(id) {
-            addFeedItem(`Analyzing threat #${id}. Running deep packet inspection...`);
-            setTimeout(() => {
-                addFeedItem(`Analysis complete. Threat pattern identified. Updating defense rules.`);
-            }, 2000);
-        }
-
-        function blockThreat(id) {
-            addFeedItem(`Blocking threat #${id}. Updating firewall rules...`);
-            setTimeout(() => {
-                addFeedItem(`Threat source blocked. All connections terminated.`);
-                updateThreatCounts();
-            }, 1000);
-        }
-
-        function neutralizeThreat(id) {
-            addFeedItem(`NEUTRALIZING THREAT #${id}. Deploying containment measures...`);
-            
-            // Remove threat card with animation
-            const cards = document.querySelectorAll('.threat-card');
-            cards.forEach((card, index) => {
-                if (threats[index].id === id) {
-                    card.style.transition = 'all 0.5s ease';
-                    card.style.opacity = '0';
-                    card.style.transform = 'scale(0.8)';
-                    setTimeout(() => card.remove(), 500);
-                }
-            });
-            
-            setTimeout(() => {
-                addFeedItem(`Threat neutralized successfully. System secured.`);
-                updateThreatCounts();
-            }, 1500);
-        }
-
-        // Start threat hunt
-        function startThreatHunt() {
-            addFeedItem('🎯 THREAT HUNT INITIATED. Scanning all network segments...');
-            setTimeout(() => {
-                addFeedItem('Scanning internal networks... 2,847 hosts identified.');
-                setTimeout(() => {
-                    addFeedItem('Analyzing traffic patterns... Anomalies detected on 3 hosts.');
-                    setTimeout(() => {
-                        addFeedItem('Threat hunt complete. 1 new threat discovered. Updating threat grid.');
-                    }, 2000);
-                }, 2000);
-            }, 1000);
-        }
-
-        // Deploy defenses
-        function deployDefenses() {
-            addFeedItem('🛡️ DEPLOYING ACTIVE DEFENSES! Activating all protective measures.');
-            document.body.style.animation = 'defenseFlash 0.5s ease 3';
-            
-            setTimeout(() => {
-                addFeedItem('Deploying honeypots and deception systems...');
-                setTimeout(() => {
-                    addFeedItem('Isolating suspicious connections...');
-                    setTimeout(() => {
-                        addFeedItem('Active defense protocols engaged. System hardened.');
-                    }, 1000);
-                }, 1000);
-            }, 1000);
-        }
-
-        // Add feed item
-        function addFeedItem(message) {
-            const feed = document.getElementById('threatFeed');
-            const item = document.createElement('div');
-            item.className = 'feed-item';
-            
-            const time = new Date().toLocaleTimeString();
-            item.innerHTML = `
-                <div class="feed-time">${time}</div>
-                <div class="feed-message">${message}</div>
-            `;
-            
-            feed.insertBefore(item, feed.firstChild);
-            
-            // Keep only last 20 items
-            while (feed.children.length > 20) {
-                feed.removeChild(feed.lastChild);
-            }
-        }
-
-        // Update threat counts
-        function updateThreatCounts() {
-            const active = document.getElementById('activeThreats');
-            const neutralized = document.getElementById('neutralizedThreats');
-            
-            active.textContent = Math.max(0, parseInt(active.textContent) - 1);
-            neutralized.textContent = parseInt(neutralized.textContent) + 1;
-        }
-
-        // Auto-generate feed items
-        const feedMessages = [
-            'Network scan detected from IP 192.168.1.45',
-            'Firewall blocked 127 connection attempts',
-            'Unusual traffic pattern on port 8080',
-            'AI classifier identified potential malware signature',
-            'Quantum encryption keys rotated successfully',
-            'OpenAI threat analysis complete. No new threats.',
-            'Shodan scan revealed 2 exposed services',
-            'Behavioral analysis detected anomaly in user session',
-            'Database access pattern analysis in progress',
-            'System health check: All services operational'
-        ];
-
-        function autoGenerateFeed() {
-            setInterval(() => {
-                const message = feedMessages[Math.floor(Math.random() * feedMessages.length)];
-                addFeedItem(message);
-            }, 10000);
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            populateThreats();
-            autoGenerateFeed();
-            
-            // Initial feed items
-            addFeedItem('Threat monitoring system online. All sensors active.');
-            addFeedItem('Connected to global threat intelligence network.');
-            addFeedItem('AI-powered analysis engine started.');
-        });
-
-        // Add defense flash animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes defenseFlash {
-                0%, 100% { filter: brightness(1); }
-                50% { filter: brightness(1.3) hue-rotate(120deg); }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
-</body>
-</html>
