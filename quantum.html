@@ -155,8 +155,8 @@
             letter-spacing: 1px;
         }
 
-        /* Key Exchange Visualizer */
-        .key-exchange-viz {
+        /* Enhanced Quantum Activity Visualizer */
+        .quantum-activity-viz {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
             padding: 20px;
@@ -165,55 +165,147 @@
             overflow: hidden;
         }
 
-        .exchange-node {
+        /* Quantum Network Visualization */
+        .quantum-network {
             position: absolute;
-            width: 80px;
-            height: 80px;
-            background: var(--gradient-1);
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .quantum-node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .node-alice {
-            top: 50%;
-            left: 20%;
-            transform: translate(-50%, -50%);
+        .quantum-node:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 50px rgba(124, 58, 237, 0.8);
         }
 
-        .node-bob {
-            top: 50%;
-            right: 20%;
-            transform: translate(50%, -50%);
+        .quantum-node.active {
+            animation: nodeActivity 2s ease-in-out infinite;
         }
 
-        .quantum-channel {
+        @keyframes nodeActivity {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 30px rgba(124, 58, 237, 0.5);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 50px rgba(0, 255, 136, 0.8);
+            }
+        }
+
+        .quantum-connection {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40%;
             height: 2px;
-            background: var(--gradient-1);
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            transform-origin: left center;
+            animation: dataFlow 3s linear infinite;
+        }
+
+        @keyframes dataFlow {
+            0% {
+                opacity: 0;
+                background-position: -100% 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                background-position: 200% 0;
+            }
+        }
+
+        .quantum-packet {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+            animation: packetTravel 2s linear infinite;
+        }
+
+        @keyframes packetTravel {
+            0% {
+                transform: translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(200px);
+                opacity: 0;
+            }
+        }
+
+        /* Activity Monitor */
+        .activity-monitor {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 12px;
+        }
+
+        .activity-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .activity-label {
+            color: var(--text-secondary);
+        }
+
+        .activity-value {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .activity-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
             overflow: hidden;
         }
 
-        .photon {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: photonTravel 3s infinite;
-            box-shadow: 0 0 20px var(--primary);
+        .activity-progress {
+            height: 100%;
+            background: var(--gradient-1);
+            width: 0;
+            animation: activityPulse 2s ease-in-out infinite;
         }
 
-        @keyframes photonTravel {
-            0% { left: -20px; }
-            100% { left: 100%; }
+        @keyframes activityPulse {
+            0% { width: 0; }
+            50% { width: 100%; }
+            100% { width: 0; }
         }
 
         /* Key Display */
@@ -415,12 +507,8 @@
                 grid-template-columns: 1fr;
             }
             
-            .key-exchange-viz {
-                height: 200px;
-            }
-            
-            .quantum-channel {
-                width: 60%;
+            .quantum-activity-viz {
+                height: 250px;
             }
             
             .back-btn {
@@ -440,10 +528,10 @@
                 font-size: 12px;
             }
             
-            .exchange-node {
-                width: 60px;
-                height: 60px;
-                font-size: 12px;
+            .quantum-node {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
             }
             
             .quantum-metrics {
@@ -488,24 +576,43 @@
 
         <!-- Main Grid -->
         <div class="quantum-grid">
-            <!-- Quantum Key Exchange -->
+            <!-- Enhanced Quantum Activity -->
             <div class="quantum-panel">
                 <div class="panel-header">
-                    <h2 class="panel-title">Quantum Key Exchange</h2>
+                    <h2 class="panel-title">Quantum Network Activity</h2>
                 </div>
                 
-                <div class="key-exchange-viz">
-                    <div class="exchange-node node-alice">ALICE</div>
-                    <div class="quantum-channel">
-                        <div class="photon"></div>
+                <div class="quantum-activity-viz">
+                    <div class="quantum-network" id="quantumNetwork">
+                        <!-- Quantum nodes -->
+                        <div class="quantum-node active" style="top: 50%; left: 10%;" data-node="gateway">🌐</div>
+                        <div class="quantum-node" style="top: 20%; left: 50%;" data-node="server1">🖥️</div>
+                        <div class="quantum-node" style="top: 50%; left: 90%;" data-node="cloud">☁️</div>
+                        <div class="quantum-node" style="top: 80%; left: 50%;" data-node="database">🗄️</div>
+                        <div class="quantum-node active" style="top: 50%; left: 50%;" data-node="core">🔐</div>
+                        
+                        <!-- Connections will be added dynamically -->
                     </div>
-                    <div class="exchange-node node-bob">BOB</div>
+                    
+                    <div class="activity-monitor">
+                        <div class="activity-status">
+                            <span class="activity-label">Quantum Channel Status:</span>
+                            <span class="activity-value" id="channelStatus">ACTIVE</span>
+                        </div>
+                        <div class="activity-bar">
+                            <div class="activity-progress"></div>
+                        </div>
+                        <div class="activity-status" style="margin-top: 5px;">
+                            <span class="activity-label">Packets/sec:</span>
+                            <span class="activity-value" id="packetsPerSec">1,247</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="key-display">
                     <div class="key-row">
                         <span class="key-label">Protocol:</span>
-                        <span class="key-value">BB84</span>
+                        <span class="key-value" id="activeProtocol">BB84</span>
                     </div>
                     <div class="key-row">
                         <span class="key-label">Current Key:</span>
@@ -539,27 +646,27 @@
 
                 <div class="quantum-metrics">
                     <div class="metric-box">
-                        <div class="metric-value">0.97</div>
+                        <div class="metric-value" id="entanglement">0.97</div>
                         <div class="metric-label">Entanglement</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value">99.8%</div>
+                        <div class="metric-value" id="fidelity">99.8%</div>
                         <div class="metric-label">Fidelity</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value">12ms</div>
+                        <div class="metric-value" id="latency">12ms</div>
                         <div class="metric-label">Latency</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value">1024</div>
+                        <div class="metric-value" id="qubits">1024</div>
                         <div class="metric-label">Qubits</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value">8.4</div>
+                        <div class="metric-value" id="qber">8.4</div>
                         <div class="metric-label">QBER %</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value">Active</div>
+                        <div class="metric-value" style="color: var(--success);">Active</div>
                         <div class="metric-label">Status</div>
                     </div>
                 </div>
@@ -684,6 +791,87 @@
             }
         }
 
+        // Initialize quantum network visualization
+        function initQuantumNetwork() {
+            const network = document.getElementById('quantumNetwork');
+            const nodes = network.querySelectorAll('.quantum-node');
+            
+            // Create connections between nodes
+            const connections = [
+                { from: 'gateway', to: 'core' },
+                { from: 'core', to: 'server1' },
+                { from: 'core', to: 'cloud' },
+                { from: 'core', to: 'database' },
+                { from: 'server1', to: 'cloud' },
+                { from: 'database', to: 'gateway' }
+            ];
+            
+            connections.forEach((conn, index) => {
+                const fromNode = network.querySelector(`[data-node="${conn.from}"]`);
+                const toNode = network.querySelector(`[data-node="${conn.to}"]`);
+                
+                if (fromNode && toNode) {
+                    const fromRect = fromNode.getBoundingClientRect();
+                    const toRect = toNode.getBoundingClientRect();
+                    const networkRect = network.getBoundingClientRect();
+                    
+                    const fromX = fromRect.left - networkRect.left + fromRect.width / 2;
+                    const fromY = fromRect.top - networkRect.top + fromRect.height / 2;
+                    const toX = toRect.left - networkRect.left + toRect.width / 2;
+                    const toY = toRect.top - networkRect.top + toRect.height / 2;
+                    
+                    const distance = Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2));
+                    const angle = Math.atan2(toY - fromY, toX - fromX) * 180 / Math.PI;
+                    
+                    const connection = document.createElement('div');
+                    connection.className = 'quantum-connection';
+                    connection.style.width = distance + 'px';
+                    connection.style.left = fromX + 'px';
+                    connection.style.top = fromY + 'px';
+                    connection.style.transform = `rotate(${angle}deg)`;
+                    connection.style.animationDelay = index * 0.5 + 's';
+                    
+                    network.appendChild(connection);
+                    
+                    // Add quantum packets
+                    if (Math.random() > 0.5) {
+                        const packet = document.createElement('div');
+                        packet.className = 'quantum-packet';
+                        packet.style.left = fromX + 'px';
+                        packet.style.top = fromY + 'px';
+                        packet.style.animationDelay = index * 0.3 + 's';
+                        network.appendChild(packet);
+                    }
+                }
+            });
+            
+            // Node click interactions
+            nodes.forEach(node => {
+                node.addEventListener('click', function() {
+                    const nodeName = this.getAttribute('data-node');
+                    this.classList.toggle('active');
+                    addQuantumEvent(`Quantum node ${nodeName} ${this.classList.contains('active') ? 'activated' : 'deactivated'}`);
+                    updateMetrics();
+                });
+            });
+        }
+
+        // Update quantum metrics
+        function updateMetrics() {
+            // Randomly adjust metrics
+            const entanglement = (0.95 + Math.random() * 0.04).toFixed(2);
+            const fidelity = (99.5 + Math.random() * 0.4).toFixed(1) + '%';
+            const latency = Math.floor(10 + Math.random() * 5) + 'ms';
+            const qber = (7 + Math.random() * 3).toFixed(1);
+            const packets = Math.floor(1000 + Math.random() * 500);
+            
+            document.getElementById('entanglement').textContent = entanglement;
+            document.getElementById('fidelity').textContent = fidelity;
+            document.getElementById('latency').textContent = latency;
+            document.getElementById('qber').textContent = qber;
+            document.getElementById('packetsPerSec').textContent = packets.toLocaleString();
+        }
+
         // Generate quantum key
         function generateQuantumKey() {
             const chars = '0123456789ABCDEF';
@@ -714,31 +902,47 @@
             const keyElement = document.getElementById('currentKey');
             keyElement.style.opacity = '0.3';
             
+            // Change protocol occasionally
+            const protocols = ['BB84', 'E91', 'B92', 'SARG04', 'COW'];
+            if (Math.random() > 0.7) {
+                const newProtocol = protocols[Math.floor(Math.random() * protocols.length)];
+                document.getElementById('activeProtocol').textContent = newProtocol;
+            }
+            
             setTimeout(() => {
                 keyElement.textContent = generateQuantumKey();
                 keyElement.style.opacity = '1';
                 addQuantumEvent('Quantum keys rotated successfully');
+                updateMetrics();
             }, 500);
         }
 
         // Initiate key exchange
         function initiateKeyExchange() {
-            addQuantumEvent('Initiating BB84 quantum key exchange protocol...');
+            addQuantumEvent('Initiating quantum key exchange protocol...');
+            document.getElementById('channelStatus').textContent = 'EXCHANGING';
             
-            // Animate photon
-            const photon = document.querySelector('.photon');
-            photon.style.animation = 'none';
-            setTimeout(() => {
-                photon.style.animation = 'photonTravel 1s ease-out';
-            }, 10);
+            // Activate all nodes temporarily
+            document.querySelectorAll('.quantum-node').forEach(node => {
+                node.classList.add('active');
+            });
             
             setTimeout(() => {
                 addQuantumEvent('Quantum channel established. Entanglement verified.');
+                document.getElementById('channelStatus').textContent = 'SECURED';
                 setTimeout(() => {
                     addQuantumEvent('Key exchange complete. 256-bit key generated.');
                     rotateKeys();
+                    document.getElementById('channelStatus').textContent = 'ACTIVE';
+                    
+                    // Deactivate some nodes
+                    document.querySelectorAll('.quantum-node').forEach((node, index) => {
+                        if (index % 2 === 0) {
+                            node.classList.remove('active');
+                        }
+                    });
                 }, 1000);
-            }, 1000);
+            }, 1500);
         }
 
         // Test quantum resistance
@@ -751,6 +955,7 @@
                     addQuantumEvent('Testing against Grover\'s algorithm... PASSED');
                     setTimeout(() => {
                         addQuantumEvent('All quantum resistance tests passed. System secure.');
+                        updateMetrics();
                     }, 1000);
                 }, 1000);
             }, 1000);
@@ -764,6 +969,7 @@
                 addQuantumEvent('Downloading latest NIST PQC standards...');
                 setTimeout(() => {
                     addQuantumEvent('Algorithms updated. System using latest quantum-resistant protocols.');
+                    updateMetrics();
                 }, 2000);
             }, 1000);
         }
@@ -796,14 +1002,42 @@
             }
         }
 
+        // Auto-update quantum activity
+        function autoUpdateActivity() {
+            setInterval(() => {
+                // Random node activation
+                const nodes = document.querySelectorAll('.quantum-node');
+                const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
+                randomNode.classList.toggle('active');
+                
+                // Update metrics
+                updateMetrics();
+                
+                // Occasional events
+                if (Math.random() > 0.8) {
+                    const events = [
+                        'Quantum channel optimization complete',
+                        'Entanglement pair generated',
+                        'Qubit coherence maintained',
+                        'Quantum error correction applied',
+                        'Photon detection confirmed'
+                    ];
+                    addQuantumEvent(events[Math.floor(Math.random() * events.length)]);
+                }
+            }, 5000);
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initQuantumParticles();
+            initQuantumNetwork();
             setInterval(updateRotationCountdown, 1000);
+            autoUpdateActivity();
             
             // Add initial events
             addQuantumEvent('Quantum security module initialized');
             addQuantumEvent('All encryption channels secured with post-quantum algorithms');
+            addQuantumEvent('Quantum network topology established');
         });
 
         // Add slide-in animation
