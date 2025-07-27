@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Sentinel-X | Login</title>
+    <title>AI Sentinel-X | Autonomous Security Agent</title>
     <style>
         * {
             margin: 0;
@@ -29,7 +29,7 @@
         }
 
         body {
-            font-family: 'Consolas', 'Monaco', monospace;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Consolas', 'Monaco', monospace;
             background: var(--bg-darker);
             color: var(--text-primary);
             min-height: 100vh;
@@ -37,6 +37,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            overflow-x: hidden;
         }
 
         /* Matrix Background */
@@ -59,6 +60,7 @@
             animation: matrixFall 20s linear infinite;
             opacity: 0.1;
             font-family: 'Courier New', monospace;
+            white-space: nowrap;
         }
 
         @keyframes matrixFall {
@@ -117,6 +119,9 @@
             position: relative;
             animation: shieldPulse 3s ease-in-out infinite;
             box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .logo-eye {
@@ -128,7 +133,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+            box-shadow: inset 0 0 20px rgba(0, 255, 136, 0.3);
         }
 
         .logo-iris {
@@ -139,6 +144,9 @@
             position: relative;
             overflow: hidden;
             animation: irisGlow 2s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .logo-iris::before {
@@ -148,30 +156,7 @@
             height: 12px;
             background: var(--bg-darker);
             border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
         }
-
-        .logo-circuits {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-
-        .circuit {
-            position: absolute;
-            background: var(--primary);
-            opacity: 0.6;
-            animation: circuitGlow 2s ease-in-out infinite;
-        }
-
-        .circuit-1 { width: 25px; height: 2px; top: 50%; left: -25px; }
-        .circuit-2 { width: 25px; height: 2px; top: 50%; right: -25px; }
-        .circuit-3 { width: 2px; height: 25px; top: -25px; left: 50%; transform: translateX(-50%); }
-        .circuit-4 { width: 2px; height: 25px; bottom: -25px; left: 50%; transform: translateX(-50%); }
 
         @keyframes shieldPulse {
             0%, 100% { 
@@ -187,11 +172,6 @@
         @keyframes irisGlow {
             0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.5); }
             50% { box-shadow: 0 0 40px rgba(0, 204, 255, 0.8); }
-        }
-
-        @keyframes circuitGlow {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
         }
 
         .login-title {
@@ -233,19 +213,19 @@
         }
 
         .input-icon {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             background: rgba(0, 255, 136, 0.2);
             border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 12px;
         }
 
         .input-field {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 16px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
@@ -270,7 +250,7 @@
         /* Login Button */
         .login-btn {
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             background: var(--gradient-1);
             border: none;
             border-radius: 8px;
@@ -362,6 +342,8 @@
             border-radius: 50%;
             border-top-color: var(--primary);
             animation: spin 1s ease-in-out infinite;
+            vertical-align: middle;
+            margin-right: 10px;
         }
 
         @keyframes spin {
@@ -370,8 +352,13 @@
 
         /* Mobile Responsive */
         @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            
             .login-container {
                 padding: 30px 20px;
+                border-radius: 15px;
             }
             
             .login-title {
@@ -393,8 +380,20 @@
                 height: 28px;
             }
             
-            .circuit-1, .circuit-2 { width: 20px; }
-            .circuit-3, .circuit-4 { height: 20px; }
+            .logo-iris::before {
+                width: 10px;
+                height: 10px;
+            }
+            
+            .input-field {
+                padding: 12px 14px;
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+            
+            .login-btn {
+                padding: 14px;
+                font-size: 14px;
+            }
         }
 
         @media (max-width: 400px) {
@@ -408,10 +407,65 @@
             
             .login-title {
                 font-size: 20px;
+                letter-spacing: 2px;
             }
             
             .login-subtitle {
-                font-size: 12px;
+                font-size: 11px;
+            }
+            
+            .input-label {
+                font-size: 11px;
+            }
+            
+            .demo-info {
+                font-size: 11px;
+            }
+        }
+
+        /* Landscape Mobile */
+        @media (max-height: 600px) and (orientation: landscape) {
+            body {
+                padding: 10px;
+            }
+            
+            .login-container {
+                padding: 20px 30px;
+            }
+            
+            .sentinel-logo {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 10px;
+            }
+            
+            .logo-eye {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .logo-iris {
+                width: 20px;
+                height: 20px;
+            }
+            
+            .login-title {
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+            
+            .input-group {
+                margin-bottom: 12px;
+            }
+            
+            .login-btn {
+                padding: 12px;
+                margin-top: 15px;
+            }
+            
+            .demo-info {
+                margin-top: 15px;
+                padding-top: 15px;
             }
         }
     </style>
@@ -424,15 +478,10 @@
     <div class="login-container">
         <div class="logo-section">
             <div class="sentinel-logo">
-                <div class="logo-shield"></div>
-                <div class="logo-eye">
-                    <div class="logo-iris"></div>
-                </div>
-                <div class="logo-circuits">
-                    <div class="circuit circuit-1"></div>
-                    <div class="circuit circuit-2"></div>
-                    <div class="circuit circuit-3"></div>
-                    <div class="circuit circuit-4"></div>
+                <div class="logo-shield">
+                    <div class="logo-eye">
+                        <div class="logo-iris"></div>
+                    </div>
                 </div>
             </div>
             <h1 class="login-title">AI SENTINEL-X</h1>
@@ -451,6 +500,7 @@
                     id="openaiKey"
                     placeholder="Enter your OpenAI API key"
                     required
+                    autocomplete="off"
                 >
             </div>
 
@@ -465,6 +515,7 @@
                     id="shodanKey"
                     placeholder="Enter your Shodan API key"
                     required
+                    autocomplete="off"
                 >
             </div>
 
@@ -479,11 +530,12 @@
                     id="sentinelKey"
                     placeholder="Enter your Sentinel-X API key"
                     required
+                    autocomplete="off"
                 >
             </div>
 
             <button type="submit" class="login-btn" id="loginBtn">
-                ACTIVATE AGENT
+                ACTIVATE AUTONOMOUS AGENT
             </button>
 
             <div class="status-message" id="statusMessage"></div>
@@ -548,27 +600,31 @@
             
             // Show loading state
             loginBtn.disabled = true;
-            loginBtn.innerHTML = '<span class="loading"></span> AUTHENTICATING...';
+            loginBtn.innerHTML = '<span class="loading"></span>INITIALIZING AGENT...';
             statusMessage.textContent = 'Verifying credentials...';
             
             // Simulate authentication
             setTimeout(() => {
-                // Store credentials
-                localStorage.setItem('sentinel_auth', JSON.stringify({
-                    openai: openaiKey,
-                    shodan: shodanKey,
-                    sentinel: sentinelKey,
-                    timestamp: Date.now()
-                }));
+                statusMessage.textContent = 'Activating autonomous systems...';
                 
-                statusMessage.className = 'status-message success';
-                statusMessage.textContent = 'Authentication successful! Redirecting...';
-                
-                // Redirect to dashboard
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    // Store credentials
+                    localStorage.setItem('sentinel_auth', JSON.stringify({
+                        openai: openaiKey,
+                        shodan: shodanKey,
+                        sentinel: sentinelKey,
+                        timestamp: Date.now()
+                    }));
+                    
+                    statusMessage.className = 'status-message success';
+                    statusMessage.textContent = 'Agent activated! Redirecting to command center...';
+                    
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
                 }, 1000);
-            }, 2000);
+            }, 1500);
         }
 
         // Initialize
@@ -589,9 +645,13 @@
         });
 
         // Handle window resize
+        let resizeTimeout;
         window.addEventListener('resize', () => {
-            document.getElementById('matrixBg').innerHTML = '';
-            initMatrix();
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                document.getElementById('matrixBg').innerHTML = '';
+                initMatrix();
+            }, 250);
         });
     </script>
 </body>
