@@ -94,6 +94,8 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 4px 30px rgba(0, 255, 136, 0.1);
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .header-left {
@@ -207,12 +209,14 @@
             display: flex;
             gap: 15px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .system-status {
             display: flex;
             gap: 15px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .status-indicator {
@@ -226,6 +230,7 @@
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            white-space: nowrap;
         }
 
         .status-dot {
@@ -271,6 +276,7 @@
             border-radius: 10px;
             border: 1px solid var(--border);
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .nav-tab {
@@ -651,28 +657,90 @@
             position: relative;
         }
 
-        /* Responsive */
-        @media (max-width: 1200px) {
+        /* Mobile Responsive */
+        @media (max-width: 1400px) {
             .main-layout {
                 grid-template-columns: 1fr;
             }
             
-            .ai-assistant {
-                height: 400px;
+            .ai-assistant,
+            .quantum-panel {
+                height: auto;
+                max-height: 400px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-left {
+                flex-direction: column;
+            }
+            
+            .system-status {
+                justify-content: center;
             }
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
             .header {
-                flex-direction: column;
-                gap: 20px;
+                padding: 15px;
+            }
+            
+            .brand-name {
+                font-size: 22px;
             }
             
             .nav-tabs {
-                overflow-x: scroll;
+                padding: 5px;
+                gap: 5px;
+            }
+            
+            .nav-tab {
+                padding: 10px 15px;
+                font-size: 11px;
             }
             
             .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .system-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .status-indicator {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-name {
+                font-size: 18px;
+            }
+            
+            .brand-tagline {
+                font-size: 11px;
+            }
+            
+            .logo-container {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .system-metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .quantum-metrics {
                 grid-template-columns: 1fr;
             }
         }
@@ -762,8 +830,8 @@
             <button class="nav-tab" onclick="switchTab('ai-brain')">
                 <span>🧠</span> AI Brain
             </button>
-            <button class="nav-tab" onclick="switchTab('response')">
-                <span>🛡️</span> Response System
+            <button class="nav-tab" onclick="switchTab('defense')">
+                <span>🛡️</span> Active Defense
             </button>
             <button class="nav-tab" onclick="switchTab('analytics')">
                 <span>📊</span> Analytics
@@ -823,10 +891,10 @@
                         <div class="action-title">Start Threat Hunt</div>
                         <div class="action-description">Deploy AI-powered threat detection</div>
                     </a>
-                    <a href="#" class="action-card" onclick="executeAction('emergency-response')">
-                        <span class="action-icon">🚨</span>
-                        <div class="action-title">Emergency Response</div>
-                        <div class="action-description">Activate all defensive systems</div>
+                    <a href="#" class="action-card" onclick="executeAction('honeypot')">
+                        <span class="action-icon">🍯</span>
+                        <div class="action-title">Deploy Honeypot</div>
+                        <div class="action-description">Set up deception systems</div>
                     </a>
                     <a href="#" class="action-card" onclick="executeAction('network-isolation')">
                         <span class="action-icon">🔒</span>
@@ -968,8 +1036,8 @@
                 case 'ai-brain':
                     window.location.href = 'ai-brain.html';
                     break;
-                case 'response':
-                    window.location.href = 'response.html';
+                case 'defense':
+                    window.location.href = 'defense.html';
                     break;
                 case 'analytics':
                     window.location.href = 'analytics.html';
@@ -989,12 +1057,12 @@
             "Quantum encryption keys rotated successfully. All channels secure.",
             "OpenAI threat analysis complete. 3 potential vulnerabilities identified.",
             "Shodan integration active. Monitoring 45,892 global endpoints.",
-            "Autonomous response system standing by. Ready to neutralize threats.",
+            "Deception systems deployed. Honeypots active on 12 endpoints.",
             "Machine learning models updated. Accuracy improved by 2.3%.",
             "Detected unusual traffic pattern from IP 192.168.1.105. Investigating...",
             "All systems optimal. Quantum entanglement stable at 0.97.",
             "Firewall rules updated. 147 new threat signatures added.",
-            "Emergency protocols loaded. Response time: 0.3ms."
+            "Active defense protocols loaded. Response time: 0.3ms."
         ];
 
         function addAIMessage(sender, message) {
@@ -1056,7 +1124,7 @@
             const actions = {
                 'quantum-exchange': 'Initiating quantum key exchange protocol. Establishing entangled photon pairs...',
                 'threat-hunt': 'Deploying AI threat hunting algorithms. Scanning all network segments...',
-                'emergency-response': 'EMERGENCY MODE ACTIVATED. All defensive systems online. Threat neutralization in progress...',
+                'honeypot': 'Deploying honeypot systems. Creating deceptive services on vulnerable ports...',
                 'network-isolation': 'Isolating suspicious network segments. Quarantine protocols engaged...'
             };
             
