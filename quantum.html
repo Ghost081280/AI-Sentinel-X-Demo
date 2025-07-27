@@ -397,8 +397,20 @@
             transform: translateX(-5px);
         }
 
-        /* Responsive */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .page-header {
+                padding: 20px;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
             .quantum-grid {
                 grid-template-columns: 1fr;
             }
@@ -409,6 +421,33 @@
             
             .quantum-channel {
                 width: 60%;
+            }
+            
+            .back-btn {
+                top: 10px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 24px;
+            }
+            
+            .page-subtitle {
+                font-size: 12px;
+            }
+            
+            .exchange-node {
+                width: 60px;
+                height: 60px;
+                font-size: 12px;
+            }
+            
+            .quantum-metrics {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
