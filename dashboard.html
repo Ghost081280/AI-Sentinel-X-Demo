@@ -946,18 +946,33 @@
             
             // Navigate to appropriate page
             switch(tabName) {
-                case 'quantum':
-                    window.location.href = 'quantum.html';
+                case 'dashboard':
+                    window.location.href = 'dashboard.html';
                     break;
                 case 'threats':
                     window.location.href = 'threats.html';
                     break;
-                case 'dashboard':
-                    window.location.href = 'dashboard.html';
+                case 'quantum':
+                    window.location.href = 'quantum.html';
+                    break;
+                case 'network':
+                    window.location.href = 'network.html';
+                    break;
+                case 'ai-brain':
+                    window.location.href = 'ai-brain.html';
+                    break;
+                case 'response':
+                    window.location.href = 'response.html';
+                    break;
+                case 'analytics':
+                    window.location.href = 'analytics.html';
+                    break;
+                case 'settings':
+                    window.location.href = 'settings.html';
                     break;
                 default:
-                    // Show message for unimplemented pages
-                    addAIMessage('SENTINEL AI', `The ${tabName} module is currently being upgraded. Check back soon.`);
+                    // Show message for any unhandled pages
+                    addAIMessage('SENTINEL AI', `The ${tabName} module is loading...`);
             }
         }
 
