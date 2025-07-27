@@ -29,7 +29,7 @@
         }
 
         body {
-            font-family: 'Consolas', 'Monaco', monospace;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Consolas', 'Monaco', monospace;
             background: var(--bg-darker);
             color: var(--text-primary);
             min-height: 100vh;
@@ -118,6 +118,18 @@
             letter-spacing: 2px;
         }
 
+        /* AI Control Notice */
+        .ai-notice {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
         /* Settings Grid */
         .settings-grid {
             display: grid;
@@ -126,18 +138,15 @@
             margin-bottom: 30px;
         }
 
-        @media (max-width: 768px) {
-            .settings-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         /* Settings Sidebar */
         .settings-sidebar {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
         }
 
         .sidebar-title {
@@ -218,6 +227,8 @@
             justify-content: space-between;
             align-items: center;
             transition: all 0.3s ease;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .setting-item:hover {
@@ -227,7 +238,7 @@
 
         .setting-info {
             flex: 1;
-            margin-right: 20px;
+            min-width: 200px;
         }
 
         .setting-name {
@@ -273,23 +284,6 @@
 
         .toggle-switch input:checked ~ .toggle-switch {
             background: rgba(0, 255, 136, 0.3);
-        }
-
-        .input-field {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 10px 15px;
-            color: var(--text-primary);
-            font-family: 'Courier New', monospace;
-            min-width: 200px;
-            transition: all 0.3s ease;
-        }
-
-        .input-field:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: rgba(0, 255, 136, 0.05);
         }
 
         .select-field {
@@ -340,62 +334,9 @@
             color: var(--text-secondary);
         }
 
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* API Keys Section */
-        .api-key-input {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .key-input {
-            flex: 1;
-            font-family: 'Courier New', monospace;
-        }
-
-        .key-visibility {
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 8px 12px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .key-visibility:hover {
-            background: rgba(0, 255, 136, 0.1);
-            color: var(--primary);
-        }
-
-        /* Alert Box */
-        .alert-box {
-            background: rgba(255, 170, 0, 0.1);
-            border: 1px solid rgba(255, 170, 0, 0.3);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .alert-icon {
-            font-size: 20px;
-        }
-
-        .alert-text {
-            flex: 1;
-            font-size: 14px;
         }
 
         /* Back Button */
@@ -455,6 +396,15 @@
                 font-size: 28px;
             }
             
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .settings-sidebar {
+                position: static;
+                margin-bottom: 20px;
+            }
+            
             .settings-content {
                 padding: 20px;
             }
@@ -462,11 +412,6 @@
             .setting-item {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 15px;
-            }
-            
-            .setting-info {
-                margin-right: 0;
             }
             
             .action-buttons {
@@ -498,13 +443,12 @@
                 font-size: 20px;
             }
             
-            .api-key-input {
-                flex-direction: column;
-                width: 100%;
+            .back-btn span {
+                display: none;
             }
             
-            .key-input {
-                width: 100%;
+            .back-btn::after {
+                content: 'Back';
             }
         }
     </style>
@@ -547,7 +491,12 @@
         <!-- Page Header -->
         <div class="page-header">
             <h1 class="page-title">SETTINGS</h1>
-            <p class="page-subtitle">System Configuration & Preferences</p>
+            <p class="page-subtitle">Configure Autonomous Agent Behavior</p>
+        </div>
+
+        <!-- AI Control Notice -->
+        <div class="ai-notice">
+            🤖 Most settings are managed autonomously by the AI. Only critical parameters can be manually adjusted.
         </div>
 
         <!-- Settings Grid -->
@@ -555,25 +504,13 @@
             <!-- Sidebar -->
             <aside class="settings-sidebar">
                 <div class="sidebar-title">Configuration</div>
-                <a class="sidebar-item active" onclick="showSection('general')">
-                    <span>⚙️</span>
-                    <span>General</span>
+                <a class="sidebar-item active" onclick="showSection('ai')">
+                    <span>🧠</span>
+                    <span>AI Control</span>
                 </a>
                 <a class="sidebar-item" onclick="showSection('security')">
                     <span>🔐</span>
                     <span>Security</span>
-                </a>
-                <a class="sidebar-item" onclick="showSection('ai')">
-                    <span>🧠</span>
-                    <span>AI Settings</span>
-                </a>
-                <a class="sidebar-item" onclick="showSection('network')">
-                    <span>🌐</span>
-                    <span>Network</span>
-                </a>
-                <a class="sidebar-item" onclick="showSection('api')">
-                    <span>🔑</span>
-                    <span>API Keys</span>
                 </a>
                 <a class="sidebar-item" onclick="showSection('notifications')">
                     <span>🔔</span>
@@ -587,17 +524,28 @@
 
             <!-- Content -->
             <main class="settings-content" id="settingsContent">
-                <!-- General Settings -->
-                <div class="settings-section" id="general-section">
-                    <h2 class="section-title">General Settings</h2>
+                <!-- AI Control Settings -->
+                <div class="settings-section" id="ai-section">
+                    <h2 class="section-title">AI Control Settings</h2>
                     
                     <div class="setting-group">
-                        <h3 class="group-title">System Preferences</h3>
+                        <h3 class="group-title">Autonomous Operation</h3>
                         
                         <div class="setting-item">
                             <div class="setting-info">
-                                <div class="setting-name">Dark Mode</div>
-                                <div class="setting-description">Enable dark theme for the interface</div>
+                                <div class="setting-name">Full Autonomous Mode</div>
+                                <div class="setting-description">Allow AI to operate without any human intervention</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked disabled>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-name">Auto-Learning</div>
+                                <div class="setting-description">AI continuously learns from new threats and adapts defenses</div>
                             </div>
                             <label class="toggle-switch">
                                 <input type="checkbox" checked>
@@ -607,60 +555,24 @@
 
                         <div class="setting-item">
                             <div class="setting-info">
-                                <div class="setting-name">Auto-Start Protection</div>
-                                <div class="setting-description">Automatically activate all defense systems on startup</div>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" checked>
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
-
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <div class="setting-name">System Language</div>
-                                <div class="setting-description">Select your preferred language</div>
+                                <div class="setting-name">Decision Authority Level</div>
+                                <div class="setting-description">How much authority the AI has to make critical decisions</div>
                             </div>
                             <select class="select-field">
-                                <option>English</option>
-                                <option>中文</option>
-                                <option>Español</option>
-                                <option>日本語</option>
+                                <option value="full" selected>Full Authority</option>
+                                <option value="high">High Authority</option>
+                                <option value="moderate">Moderate Authority</option>
+                                <option value="supervised">Supervised Only</option>
                             </select>
                         </div>
 
                         <div class="setting-item">
                             <div class="setting-info">
-                                <div class="setting-name">Time Zone</div>
-                                <div class="setting-description">Set your local time zone for accurate logging</div>
-                            </div>
-                            <select class="select-field">
-                                <option>UTC</option>
-                                <option>EST</option>
-                                <option>PST</option>
-                                <option>GMT</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="setting-group">
-                        <h3 class="group-title">Dashboard Configuration</h3>
-                        
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <div class="setting-name">Refresh Rate</div>
-                                <div class="setting-description">How often to update dashboard metrics (seconds)</div>
-                            </div>
-                            <input type="number" class="input-field" value="5" min="1" max="60">
-                        </div>
-
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <div class="setting-name">Show Animations</div>
-                                <div class="setting-description">Enable visual animations and effects</div>
+                                <div class="setting-name">Emergency Override</div>
+                                <div class="setting-description">Allow manual override in critical situations (not recommended)</div>
                             </div>
                             <label class="toggle-switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox">
                                 <span class="toggle-slider"></span>
                             </label>
                         </div>
@@ -693,55 +605,41 @@
                         <div class="settings-section">
                             <h2 class="section-title">Security Settings</h2>
                             
-                            <div class="alert-box">
-                                <span class="alert-icon">⚠️</span>
-                                <span class="alert-text">Changing security settings may affect system protection. Proceed with caution.</span>
-                            </div>
-                            
                             <div class="setting-group">
                                 <h3 class="group-title">Defense Configuration</h3>
                                 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Automatic Threat Response</div>
-                                        <div class="setting-description">Allow AI to automatically respond to detected threats</div>
-                                    </div>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Threat Severity Threshold</div>
-                                        <div class="setting-description">Minimum threat level for automatic response</div>
+                                        <div class="setting-name">Threat Response Speed</div>
+                                        <div class="setting-description">How quickly the AI responds to detected threats</div>
                                     </div>
                                     <select class="select-field">
-                                        <option>Low</option>
-                                        <option selected>Medium</option>
-                                        <option>High</option>
-                                        <option>Critical Only</option>
+                                        <option value="instant" selected>Instant (0ms)</option>
+                                        <option value="fast">Fast (< 100ms)</option>
+                                        <option value="moderate">Moderate (< 500ms)</option>
                                     </select>
                                 </div>
 
                                 <div class="setting-item">
                                     <div class="setting-info">
                                         <div class="setting-name">Quantum Encryption</div>
-                                        <div class="setting-description">Enable post-quantum cryptography for all communications</div>
+                                        <div class="setting-description">Post-quantum cryptography for all communications</div>
                                     </div>
                                     <label class="toggle-switch">
-                                        <input type="checkbox" checked>
+                                        <input type="checkbox" checked disabled>
                                         <span class="toggle-slider"></span>
                                     </label>
                                 </div>
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Key Rotation Interval</div>
-                                        <div class="setting-description">How often to rotate encryption keys (minutes)</div>
+                                        <div class="setting-name">Deception Systems</div>
+                                        <div class="setting-description">Deploy honeypots and decoy systems automatically</div>
                                     </div>
-                                    <input type="number" class="input-field" value="15" min="5" max="60">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
                                 </div>
                             </div>
 
@@ -753,18 +651,18 @@
                     `;
                     break;
                     
-                case 'ai':
+                case 'notifications':
                     content.innerHTML = `
                         <div class="settings-section">
-                            <h2 class="section-title">AI Settings</h2>
+                            <h2 class="section-title">Notification Settings</h2>
                             
                             <div class="setting-group">
-                                <h3 class="group-title">AI Behavior</h3>
+                                <h3 class="group-title">Alert Preferences</h3>
                                 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Learning Mode</div>
-                                        <div class="setting-description">Allow AI to learn from new threats and adapt</div>
+                                        <div class="setting-name">Critical Threats Only</div>
+                                        <div class="setting-description">Only notify for threats the AI cannot handle autonomously</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox" checked>
@@ -774,28 +672,19 @@
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">AI Model</div>
-                                        <div class="setting-description">Select the AI model for threat analysis</div>
+                                        <div class="setting-name">Daily Summary</div>
+                                        <div class="setting-description">Receive a daily report of autonomous actions taken</div>
                                     </div>
-                                    <select class="select-field">
-                                        <option>GPT-4</option>
-                                        <option selected>GPT-4 Turbo</option>
-                                        <option>Custom Model</option>
-                                    </select>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
                                 </div>
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Response Confidence Threshold</div>
-                                        <div class="setting-description">Minimum confidence level for AI decisions (%)</div>
-                                    </div>
-                                    <input type="number" class="input-field" value="85" min="50" max="100">
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Autonomous Decision Making</div>
-                                        <div class="setting-description">Allow AI to make critical security decisions</div>
+                                        <div class="setting-name">System Updates</div>
+                                        <div class="setting-description">Notify when AI updates its defense strategies</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox">
@@ -812,75 +701,9 @@
                     `;
                     break;
                     
-                case 'api':
-                    content.innerHTML = `
-                        <div class="settings-section">
-                            <h2 class="section-title">API Keys</h2>
-                            
-                            <div class="alert-box">
-                                <span class="alert-icon">🔐</span>
-                                <span class="alert-text">API keys are encrypted and stored securely. Never share your keys.</span>
-                            </div>
-                            
-                            <div class="setting-group">
-                                <h3 class="group-title">Service Integration</h3>
-                                
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">OpenAI API Key</div>
-                                        <div class="setting-description">Required for AI-powered threat analysis</div>
-                                    </div>
-                                    <div class="api-key-input">
-                                        <input type="password" class="input-field key-input" placeholder="sk-..." id="openaiKey">
-                                        <button class="key-visibility" onclick="toggleKeyVisibility('openaiKey')">👁️</button>
-                                    </div>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Shodan API Key</div>
-                                        <div class="setting-description">For global threat intelligence and scanning</div>
-                                    </div>
-                                    <div class="api-key-input">
-                                        <input type="password" class="input-field key-input" placeholder="Enter API key" id="shodanKey">
-                                        <button class="key-visibility" onclick="toggleKeyVisibility('shodanKey')">👁️</button>
-                                    </div>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Sentinel-X License Key</div>
-                                        <div class="setting-description">Your product license key</div>
-                                    </div>
-                                    <div class="api-key-input">
-                                        <input type="password" class="input-field key-input" placeholder="SNTL-XXXX-XXXX-XXXX" id="sentinelKey">
-                                        <button class="key-visibility" onclick="toggleKeyVisibility('sentinelKey')">👁️</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="action-buttons">
-                                <button class="btn btn-primary" onclick="saveSettings()">Save Keys</button>
-                                <button class="btn btn-danger" onclick="revokeKeys()">Revoke All Keys</button>
-                            </div>
-                        </div>
-                    `;
-                    break;
-                    
                 default:
-                    content.innerHTML = `
-                        <div class="settings-section">
-                            <h2 class="section-title">${section.charAt(0).toUpperCase() + section.slice(1)} Settings</h2>
-                            <p style="color: var(--text-secondary); margin-top: 20px;">This section is under development. Check back soon!</p>
-                        </div>
-                    `;
+                    // Keep AI section as default
             }
-        }
-
-        // Toggle key visibility
-        function toggleKeyVisibility(keyId) {
-            const input = document.getElementById(keyId);
-            input.type = input.type === 'password' ? 'text' : 'password';
         }
 
         // Save settings
@@ -896,27 +719,10 @@
 
         // Reset settings
         function resetSettings() {
-            if (confirm('Are you sure you want to reset all settings to default?')) {
+            if (confirm('Are you sure you want to reset settings? The AI will return to full autonomous mode.')) {
                 location.reload();
             }
         }
-
-        // Revoke keys
-        function revokeKeys() {
-            if (confirm('WARNING: This will revoke all API keys and you will need to re-enter them. Continue?')) {
-                alert('API keys revoked. Please enter new keys.');
-            }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            // Load saved settings if any
-            const auth = JSON.parse(localStorage.getItem('sentinel_auth'));
-            if (auth) {
-                // Populate API keys if in API section
-                // This would be done in a real app
-            }
-        });
     </script>
 </body>
 </html>
