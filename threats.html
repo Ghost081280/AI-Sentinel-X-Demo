@@ -103,6 +103,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .page-title {
@@ -119,6 +121,7 @@
             display: flex;
             gap: 30px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .summary-item {
@@ -155,6 +158,7 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .filter-btn {
@@ -406,11 +410,23 @@
             transform: translateX(-5px);
         }
 
-        /* Responsive */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .page-header {
+                padding: 20px;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
             .header-content {
                 flex-direction: column;
-                gap: 20px;
+                text-align: center;
             }
             
             .threat-grid {
@@ -419,6 +435,40 @@
             
             .control-bar {
                 justify-content: center;
+            }
+            
+            .threat-summary {
+                justify-content: center;
+            }
+            
+            .back-btn {
+                top: 10px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 24px;
+            }
+            
+            .summary-value {
+                font-size: 24px;
+            }
+            
+            .filter-btn {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+            
+            .threat-card {
+                padding: 15px;
+            }
+            
+            .threat-title {
+                font-size: 16px;
             }
         }
 
@@ -476,7 +526,7 @@
             <div class="header-content">
                 <div>
                     <h1 class="page-title">THREAT MONITOR</h1>
-                    <p style="color: var(--text-secondary); margin-top: 5px;">Real-time threat detection and response</p>
+                    <p style="color: var(--text-secondary); margin-top: 5px;">Real-time threat detection and analysis</p>
                 </div>
                 <div class="threat-summary">
                     <div class="summary-item">
@@ -507,8 +557,8 @@
                 <button class="filter-btn" onclick="startThreatHunt()" style="border-color: var(--danger); color: var(--danger);">
                     🎯 Start Hunt
                 </button>
-                <button class="filter-btn" onclick="emergencyResponse()" style="border-color: var(--danger); color: var(--danger);">
-                    🚨 Emergency Response
+                <button class="filter-btn" onclick="deployDefenses()" style="border-color: var(--success); color: var(--success);">
+                    🛡️ Deploy Defenses
                 </button>
             </div>
         </div>
@@ -693,7 +743,7 @@
         }
 
         function neutralizeThreat(id) {
-            addFeedItem(`NEUTRALIZING THREAT #${id}. Deploying countermeasures...`);
+            addFeedItem(`NEUTRALIZING THREAT #${id}. Deploying containment measures...`);
             
             // Remove threat card with animation
             const cards = document.querySelectorAll('.threat-card');
@@ -726,17 +776,17 @@
             }, 1000);
         }
 
-        // Emergency response
-        function emergencyResponse() {
-            addFeedItem('🚨 EMERGENCY RESPONSE ACTIVATED! All defensive systems at maximum.');
-            document.body.style.animation = 'emergencyFlash 0.5s ease 3';
+        // Deploy defenses
+        function deployDefenses() {
+            addFeedItem('🛡️ DEPLOYING ACTIVE DEFENSES! Activating all protective measures.');
+            document.body.style.animation = 'defenseFlash 0.5s ease 3';
             
             setTimeout(() => {
-                addFeedItem('Isolating all suspicious connections...');
+                addFeedItem('Deploying honeypots and deception systems...');
                 setTimeout(() => {
-                    addFeedItem('Activating quantum encryption on all channels...');
+                    addFeedItem('Isolating suspicious connections...');
                     setTimeout(() => {
-                        addFeedItem('Emergency protocols engaged. System in lockdown mode.');
+                        addFeedItem('Active defense protocols engaged. System hardened.');
                     }, 1000);
                 }, 1000);
             }, 1000);
@@ -803,12 +853,12 @@
             addFeedItem('AI-powered analysis engine started.');
         });
 
-        // Add emergency flash animation
+        // Add defense flash animation
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes emergencyFlash {
+            @keyframes defenseFlash {
                 0%, 100% { filter: brightness(1); }
-                50% { filter: brightness(1.3) hue-rotate(-20deg); }
+                50% { filter: brightness(1.3) hue-rotate(120deg); }
             }
         `;
         document.head.appendChild(style);
