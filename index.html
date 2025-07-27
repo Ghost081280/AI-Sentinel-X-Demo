@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Sentinel-X | Login</title>
+    <title>Network Scan | AI Sentinel-X</title>
     <style>
         * {
             margin: 0;
@@ -16,6 +16,8 @@
             --secondary: #00ccff;
             --accent: #7c3aed;
             --danger: #ff0044;
+            --warning: #ffaa00;
+            --success: #00ff88;
             --bg-dark: #0a0e1a;
             --bg-darker: #060912;
             --bg-card: rgba(10, 20, 40, 0.8);
@@ -23,7 +25,8 @@
             --text-primary: #ffffff;
             --text-secondary: #8892b0;
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
-            --gradient-shield: linear-gradient(135deg, #1a4d2e 0%, #00ff88 50%, #00ccff 100%);
+            --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
+            --gradient-network: linear-gradient(135deg, #00ccff 0%, #0066ff 100%);
         }
 
         body {
@@ -31,13 +34,10 @@
             background: var(--bg-darker);
             color: var(--text-primary);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        /* Matrix Background */
-        .matrix-bg {
+        /* Network Background */
+        .network-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -45,514 +45,871 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
-            overflow: hidden;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(0, 204, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
         }
 
-        .matrix-column {
+        .grid-overlay {
             position: absolute;
-            top: -100%;
-            font-size: 14px;
-            color: var(--primary);
-            animation: matrixFall 20s linear infinite;
-            opacity: 0.1;
-            font-family: 'Courier New', monospace;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 204, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 204, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 30s linear infinite;
         }
 
-        @keyframes matrixFall {
-            to {
-                top: 100%;
-            }
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
         }
 
-        /* Login Container */
-        .login-container {
+        .container {
             position: relative;
             z-index: 1;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .page-header {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 50px;
-            width: 90%;
-            max-width: 500px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            animation: loginSlideIn 0.5s ease;
-        }
-
-        @keyframes loginSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(50px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        /* Logo */
-        .logo-section {
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
             text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .sentinel-logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 30px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-shield {
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-shield);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            position: relative;
-            animation: shieldPulse 3s ease-in-out infinite;
-            box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
-        }
-
-        .logo-eye {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: var(--bg-darker);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
-        }
-
-        .logo-iris {
-            width: 40px;
-            height: 40px;
-            background: var(--gradient-1);
-            border-radius: 50%;
             position: relative;
             overflow: hidden;
-            animation: irisGlow 2s ease-in-out infinite;
         }
 
-        .logo-iris::before {
-            content: '';
+        .scan-indicator {
             position: absolute;
-            width: 15px;
-            height: 15px;
-            background: var(--bg-darker);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .logo-circuits {
-            position: absolute;
-            width: 100%;
-            height: 100%;
             top: 0;
-            left: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-network);
+            animation: scanProgress 3s linear infinite;
         }
 
-        .circuit {
-            position: absolute;
-            background: var(--primary);
-            opacity: 0.6;
-            animation: circuitGlow 2s ease-in-out infinite;
+        @keyframes scanProgress {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
-        .circuit-1 { width: 30px; height: 2px; top: 50%; left: -30px; }
-        .circuit-2 { width: 30px; height: 2px; top: 50%; right: -30px; }
-        .circuit-3 { width: 2px; height: 30px; top: -30px; left: 50%; transform: translateX(-50%); }
-        .circuit-4 { width: 2px; height: 30px; bottom: -30px; left: 50%; transform: translateX(-50%); }
-
-        @keyframes shieldPulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
-            }
-            50% { 
-                transform: scale(1.05);
-                box-shadow: 0 0 60px rgba(0, 255, 136, 0.8);
-            }
-        }
-
-        @keyframes irisGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(0, 204, 255, 0.8); }
-        }
-
-        @keyframes circuitGlow {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        .login-title {
-            font-size: 32px;
+        .page-title {
+            font-size: 36px;
             font-weight: bold;
-            background: var(--gradient-1);
+            background: var(--gradient-network);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: 3px;
             margin-bottom: 10px;
+            letter-spacing: 3px;
         }
 
-        .login-subtitle {
+        .page-subtitle {
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 16px;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        /* Form */
-        .login-form {
-            margin-top: 30px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-label {
+        /* Control Panel */
+        .control-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .scan-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .scan-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            min-width: 300px;
+        }
+
+        .scan-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 10px rgba(0, 204, 255, 0.3);
+        }
+
+        .scan-btn {
+            background: var(--gradient-network);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--text-secondary);
+            transition: all 0.3s ease;
         }
 
-        .input-icon {
-            width: 20px;
-            height: 20px;
-            background: rgba(0, 255, 136, 0.2);
-            border-radius: 4px;
+        .scan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 204, 255, 0.3);
+        }
+
+        .scan-options {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .option-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .option-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--secondary);
+        }
+
+        /* Main Grid */
+        .network-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1200px) {
+            .network-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Network Map */
+        .network-map-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            height: 500px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .network-visualization {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .network-node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 14px;
-            font-family: 'Courier New', monospace;
-            transition: all 0.3s ease;
-        }
-
-        .input-field:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: rgba(0, 255, 136, 0.05);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
-        }
-
-        .input-field::placeholder {
-            color: var(--text-secondary);
-            opacity: 0.5;
-        }
-
-        /* Login Button */
-        .login-btn {
-            width: 100%;
-            padding: 18px;
-            background: var(--gradient-1);
-            border: none;
-            border-radius: 8px;
-            color: var(--bg-darker);
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            margin-top: 30px;
+            font-size: 24px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
         }
 
-        .login-btn::before {
-            content: '';
-            position: absolute;
+        .network-node:hover {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+
+        .node-router {
+            background: var(--gradient-network);
             top: 50%;
             left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
             transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
         }
 
-        .login-btn:hover::before {
-            width: 300px;
-            height: 300px;
+        .node-device {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
         }
 
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        .node-vulnerable {
+            background: linear-gradient(135deg, var(--danger) 0%, #ff6644 100%);
+            animation: vulnerablePulse 2s ease-in-out infinite;
         }
 
-        .login-btn:active {
-            transform: translateY(0);
+        @keyframes vulnerablePulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 68, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 0, 68, 0.8); }
         }
 
-        /* Status Message */
-        .status-message {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 13px;
-            min-height: 20px;
-            color: var(--text-secondary);
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: rgba(0, 255, 136, 0.3);
+            transform-origin: left center;
         }
 
-        .status-message.error {
-            color: var(--danger);
+        /* Device List */
+        .device-list-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .status-message.success {
-            color: var(--success);
+        .device-list {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
         }
 
-        /* Demo Info */
-        .demo-info {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            font-size: 12px;
-            color: var(--text-secondary);
+        .device-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .demo-info p {
+        .device-item:hover {
+            background: rgba(0, 255, 136, 0.05);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .device-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 10px;
         }
 
-        .demo-credentials {
-            background: rgba(0, 255, 136, 0.05);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 10px;
-            margin-top: 10px;
+        .device-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .device-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-secure {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
+        }
+
+        .status-vulnerable {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .status-warning {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+        }
+
+        .device-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .detail-label {
+            color: var(--text-secondary);
+        }
+
+        .detail-value {
+            color: var(--text-primary);
             font-family: 'Courier New', monospace;
         }
 
+        /* Scan Results */
+        .scan-results {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .result-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        /* Port Scanner */
+        .port-scanner {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .port-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .port-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .port-open {
+            border-color: var(--success);
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .port-closed {
+            opacity: 0.5;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            color: var(--bg-darker);
+            transform: translateX(-5px);
+        }
+
         /* Loading Animation */
-        .loading {
+        .scanning-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            border-radius: 10px;
+        }
+
+        .scanning-overlay.active {
+            display: flex;
+        }
+
+        .scan-loader {
+            text-align: center;
+        }
+
+        .loader-ring {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--bg-darker);
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(0, 204, 255, 0.2);
             border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 1s ease-in-out infinite;
+            border-top-color: var(--secondary);
+            animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
+        .scan-status {
+            margin-top: 20px;
+            color: var(--secondary);
+            font-size: 14px;
+        }
+
         /* Responsive */
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 30px 20px;
+        @media (max-width: 768px) {
+            .control-panel {
+                flex-direction: column;
             }
             
-            .login-title {
-                font-size: 24px;
+            .scan-controls {
+                width: 100%;
+                flex-direction: column;
+            }
+            
+            .scan-input {
+                width: 100%;
+            }
+            
+            .scan-options {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Matrix Background -->
-    <div class="matrix-bg" id="matrixBg"></div>
+    <script>
+        // Check authentication
+        const auth = localStorage.getItem('sentinel_auth');
+        if (!auth) {
+            window.location.href = 'index.html';
+        } else {
+            const authData = JSON.parse(auth);
+            if (Date.now() - authData.timestamp > 24 * 60 * 60 * 1000) {
+                localStorage.removeItem('sentinel_auth');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
 
-    <!-- Login Container -->
-    <div class="login-container">
-        <div class="logo-section">
-            <div class="sentinel-logo">
-                <div class="logo-shield"></div>
-                <div class="logo-eye">
-                    <div class="logo-iris"></div>
-                </div>
-                <div class="logo-circuits">
-                    <div class="circuit circuit-1"></div>
-                    <div class="circuit circuit-2"></div>
-                    <div class="circuit circuit-3"></div>
-                    <div class="circuit circuit-4"></div>
-                </div>
-            </div>
-            <h1 class="login-title">AI SENTINEL-X</h1>
-            <p class="login-subtitle">Autonomous Security Agent</p>
+    <!-- Back Button -->
+    <a href="dashboard.html" class="back-btn">
+        <span>←</span>
+        <span>Back to Dashboard</span>
+    </a>
+
+    <!-- Network Background -->
+    <div class="network-bg">
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="scan-indicator"></div>
+            <h1 class="page-title">NETWORK SCANNER</h1>
+            <p class="page-subtitle">Shodan-Powered Network Discovery & Analysis</p>
         </div>
 
-        <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
-            <div class="input-group">
-                <label class="input-label">
-                    <div class="input-icon">🧠</div>
-                    <span>OpenAI API Key</span>
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="scan-controls">
+                <input type="text" class="scan-input" id="scanTarget" placeholder="Enter IP range or hostname (e.g., 192.168.1.0/24)" value="192.168.1.0/24">
+                <button class="scan-btn" onclick="startNetworkScan()">
+                    🔍 START SCAN
+                </button>
+            </div>
+            <div class="scan-options">
+                <label class="option-checkbox">
+                    <input type="checkbox" id="deepScan" checked>
+                    <span>Deep Scan</span>
                 </label>
-                <input 
-                    type="password" 
-                    class="input-field" 
-                    id="openaiKey"
-                    placeholder="Enter your OpenAI API key"
-                    required
-                >
+                <label class="option-checkbox">
+                    <input type="checkbox" id="portScan" checked>
+                    <span>Port Scan</span>
+                </label>
+                <label class="option-checkbox">
+                    <input type="checkbox" id="vulnScan" checked>
+                    <span>Vulnerability Scan</span>
+                </label>
+                <label class="option-checkbox">
+                    <input type="checkbox" id="shodanIntegration" checked>
+                    <span>Shodan Intel</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="network-grid">
+            <!-- Network Map -->
+            <div class="network-map-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Network Topology</h2>
+                    <button class="scan-btn" style="padding: 5px 15px; font-size: 12px;" onclick="refreshMap()">
+                        Refresh
+                    </button>
+                </div>
+                <div class="network-visualization" id="networkMap">
+                    <div class="scanning-overlay" id="mapScanning">
+                        <div class="scan-loader">
+                            <div class="loader-ring"></div>
+                            <div class="scan-status">Mapping network topology...</div>
+                        </div>
+                    </div>
+                    <!-- Central Router -->
+                    <div class="network-node node-router" style="top: 50%; left: 50%;" title="Router">
+                        🌐
+                    </div>
+                </div>
             </div>
 
-            <div class="input-group">
-                <label class="input-label">
-                    <div class="input-icon">🔍</div>
-                    <span>Shodan API Key</span>
-                </label>
-                <input 
-                    type="password" 
-                    class="input-field" 
-                    id="shodanKey"
-                    placeholder="Enter your Shodan API key"
-                    required
-                >
+            <!-- Device List -->
+            <div class="device-list-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Discovered Devices</h2>
+                    <span style="color: var(--text-secondary); font-size: 14px;">
+                        <span id="deviceCount">0</span> devices
+                    </span>
+                </div>
+                <div class="device-list" id="deviceList">
+                    <!-- Devices will be populated here -->
+                </div>
             </div>
+        </div>
 
-            <div class="input-group">
-                <label class="input-label">
-                    <div class="input-icon">🔐</div>
-                    <span>Sentinel-X API Key</span>
-                </label>
-                <input 
-                    type="password" 
-                    class="input-field" 
-                    id="sentinelKey"
-                    placeholder="Enter your Sentinel-X API key"
-                    required
-                >
+        <!-- Scan Results -->
+        <div class="scan-results">
+            <div class="panel-header">
+                <h2 class="panel-title">Scan Statistics</h2>
             </div>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-value" id="totalDevices">0</div>
+                    <div class="result-label">Total Devices</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value" id="openPorts" style="color: var(--warning);">0</div>
+                    <div class="result-label">Open Ports</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value" id="vulnerabilities" style="color: var(--danger);">0</div>
+                    <div class="result-label">Vulnerabilities</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value" id="secureDevices" style="color: var(--success);">0</div>
+                    <div class="result-label">Secure Devices</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value" id="scanTime">0s</div>
+                    <div class="result-label">Scan Time</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value" id="shodanHits" style="color: var(--secondary);">0</div>
+                    <div class="result-label">Shodan Intel</div>
+                </div>
+            </div>
+        </div>
 
-            <button type="submit" class="login-btn" id="loginBtn">
-                ACTIVATE AGENT
-            </button>
-
-            <div class="status-message" id="statusMessage"></div>
-        </form>
-
-        <div class="demo-info">
-            <p>For demo purposes, you can use any text in the fields</p>
-            <div class="demo-credentials">
-                Example: demo / demo / demo
+        <!-- Port Scanner -->
+        <div class="port-scanner">
+            <div class="panel-header">
+                <h2 class="panel-title">Common Ports Status</h2>
+            </div>
+            <div class="port-list" id="portList">
+                <!-- Ports will be populated here -->
             </div>
         </div>
     </div>
 
     <script>
-        // Initialize Matrix Background
-        function initMatrix() {
-            const matrixBg = document.getElementById('matrixBg');
-            const columns = Math.floor(window.innerWidth / 20);
-            
-            for (let i = 0; i < columns; i++) {
-                const column = document.createElement('div');
-                column.className = 'matrix-column';
-                column.style.left = i * 20 + 'px';
-                column.style.animationDelay = Math.random() * 20 + 's';
-                
-                // Generate random binary/hex characters
-                let content = '';
-                for (let j = 0; j < 100; j++) {
-                    if (Math.random() > 0.5) {
-                        content += Math.random() > 0.5 ? '1' : '0';
-                    } else {
-                        content += Math.floor(Math.random() * 16).toString(16).toUpperCase();
-                    }
-                    if (j % 2 === 1) content += ' ';
-                }
-                column.textContent = content;
-                
-                matrixBg.appendChild(column);
-            }
-        }
+        // Sample devices for demo
+        const sampleDevices = [
+            { name: 'Gateway Router', ip: '192.168.1.1', mac: 'AA:BB:CC:DD:EE:01', type: 'Router', status: 'secure', os: 'RouterOS', ports: [80, 443, 22] },
+            { name: 'Web Server', ip: '192.168.1.10', mac: 'AA:BB:CC:DD:EE:02', type: 'Server', status: 'secure', os: 'Linux', ports: [80, 443, 22, 3306] },
+            { name: 'Database Server', ip: '192.168.1.20', mac: 'AA:BB:CC:DD:EE:03', type: 'Server', status: 'warning', os: 'Linux', ports: [3306, 22] },
+            { name: 'IoT Camera', ip: '192.168.1.45', mac: 'AA:BB:CC:DD:EE:04', type: 'IoT', status: 'vulnerable', os: 'Embedded', ports: [80, 554, 8080] },
+            { name: 'Smart TV', ip: '192.168.1.55', mac: 'AA:BB:CC:DD:EE:05', type: 'IoT', status: 'warning', os: 'Tizen', ports: [8080, 9090] },
+            { name: 'Workstation PC', ip: '192.168.1.101', mac: 'AA:BB:CC:DD:EE:06', type: 'Computer', status: 'secure', os: 'Windows 10', ports: [445, 3389] },
+            { name: 'MacBook Pro', ip: '192.168.1.102', mac: 'AA:BB:CC:DD:EE:07', type: 'Computer', status: 'secure', os: 'macOS', ports: [5900] },
+            { name: 'Network Printer', ip: '192.168.1.200', mac: 'AA:BB:CC:DD:EE:08', type: 'Printer', status: 'warning', os: 'Embedded', ports: [9100, 80] }
+        ];
 
-        // Handle Login
-        function handleLogin(event) {
-            event.preventDefault();
-            
-            const openaiKey = document.getElementById('openaiKey').value;
-            const shodanKey = document.getElementById('shodanKey').value;
-            const sentinelKey = document.getElementById('sentinelKey').value;
-            const loginBtn = document.getElementById('loginBtn');
-            const statusMessage = document.getElementById('statusMessage');
-            
-            // Clear previous status
-            statusMessage.className = 'status-message';
-            statusMessage.textContent = '';
-            
-            // Validate inputs
-            if (!openaiKey || !shodanKey || !sentinelKey) {
-                statusMessage.className = 'status-message error';
-                statusMessage.textContent = 'All API keys are required';
-                return;
-            }
-            
-            // Show loading state
-            loginBtn.disabled = true;
-            loginBtn.innerHTML = '<span class="loading"></span> AUTHENTICATING...';
-            statusMessage.textContent = 'Verifying credentials...';
-            
-            // Simulate authentication
-            setTimeout(() => {
-                // Store credentials
-                localStorage.setItem('sentinel_auth', JSON.stringify({
-                    openai: openaiKey,
-                    shodan: shodanKey,
-                    sentinel: sentinelKey,
-                    timestamp: Date.now()
-                }));
-                
-                statusMessage.className = 'status-message success';
-                statusMessage.textContent = 'Authentication successful! Redirecting...';
-                
-                // Redirect to dashboard
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1000);
-            }, 2000);
-        }
+        const commonPorts = [
+            { port: 21, service: 'FTP', status: 'closed' },
+            { port: 22, service: 'SSH', status: 'open' },
+            { port: 23, service: 'Telnet', status: 'closed' },
+            { port: 25, service: 'SMTP', status: 'closed' },
+            { port: 53, service: 'DNS', status: 'open' },
+            { port: 80, service: 'HTTP', status: 'open' },
+            { port: 110, service: 'POP3', status: 'closed' },
+            { port: 443, service: 'HTTPS', status: 'open' },
+            { port: 445, service: 'SMB', status: 'open' },
+            { port: 1433, service: 'MSSQL', status: 'closed' },
+            { port: 3306, service: 'MySQL', status: 'open' },
+            { port: 3389, service: 'RDP', status: 'open' },
+            { port: 5432, service: 'PostgreSQL', status: 'closed' },
+            { port: 8080, service: 'HTTP-Alt', status: 'open' },
+            { port: 8443, service: 'HTTPS-Alt', status: 'closed' }
+        ];
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            initMatrix();
+        let scanStartTime = 0;
+        let scanInterval = null;
+
+        // Start network scan
+        function startNetworkScan() {
+            const mapScanning = document.getElementById('mapScanning');
+            mapScanning.classList.add('active');
             
-            // Check if already authenticated
-            const auth = localStorage.getItem('sentinel_auth');
-            if (auth) {
-                const authData = JSON.parse(auth);
-                // Check if auth is less than 24 hours old
-                if (Date.now() - authData.timestamp < 24 * 60 * 60 * 1000) {
-                    window.location.href = 'dashboard.html';
+            // Clear existing devices
+            document.getElementById('deviceList').innerHTML = '';
+            document.getElementById('networkMap').querySelectorAll('.node-device').forEach(node => node.remove());
+            document.getElementById('networkMap').querySelectorAll('.connection-line').forEach(line => line.remove());
+            
+            // Reset counters
+            document.getElementById('totalDevices').textContent = '0';
+            document.getElementById('openPorts').textContent = '0';
+            document.getElementById('vulnerabilities').textContent = '0';
+            document.getElementById('secureDevices').textContent = '0';
+            document.getElementById('shodanHits').textContent = '0';
+            
+            // Start scan timer
+            scanStartTime = Date.now();
+            scanInterval = setInterval(updateScanTime, 100);
+            
+            // Simulate progressive device discovery
+            let deviceIndex = 0;
+            const scanProgress = setInterval(() => {
+                if (deviceIndex < sampleDevices.length) {
+                    discoverDevice(sampleDevices[deviceIndex], deviceIndex);
+                    deviceIndex++;
                 } else {
-                    localStorage.removeItem('sentinel_auth');
+                    clearInterval(scanProgress);
+                    clearInterval(scanInterval);
+                    mapScanning.classList.remove('active');
+                    
+                    // Final Shodan simulation
+                    if (document.getElementById('shodanIntegration').checked) {
+                        simulateShodanData();
+                    }
                 }
-            }
-        });
+            }, 800);
+        }
 
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            document.getElementById('matrixBg').innerHTML = '';
-            initMatrix();
+        // Discover device
+        function discoverDevice(device, index) {
+            // Add to device list
+            const deviceList = document.getElementById('deviceList');
+            const deviceElement = document.createElement('div');
+            deviceElement.className = 'device-item';
+            deviceElement.innerHTML = `
+                <div class="device-header">
+                    <div class="device-name">${device.name}</div>
+                    <div class="device-status status-${device.status}">${device.status}</div>
+                </div>
+                <div class="device-details">
+                    <div class="detail-item">
+                        <span class="detail-label">IP:</span>
+                        <span class="detail-value">${device.ip}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">MAC:</span>
+                        <span class="detail-value">${device.mac}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Type:</span>
+                        <span class="detail-value">${device.type}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">OS:</span>
+                        <span class="detail-value">${device.os}</span>
+                    </div>
+                </div>
+            `;
+            deviceElement.style.opacity = '0';
+            deviceElement.style.transform = 'translateX(-20px)';
+            deviceList.appendChild(deviceElement);
+            
+            // Animate in
+            setTimeout(() => {
+                deviceElement.style.transition = 'all 0.5s ease';
+                deviceElement.style.opacity = '1';
+                deviceElement.style.transform = 'translateX(0)';
+            }, 50);
+            
+            // Add to network map
+            addDeviceToMap(device, index);
+            
+            // Update counters
+            updateCounters();
+        }
+
+        // Add device to network map
+        function addDeviceToMap(device, index) {
+            const map = document.getElementById('networkMap');
+            const centerX = map.offsetWidth / 2;
+            const centerY = map.offsetHeight / 2;
+            const radius = 150;
+            const angle = (index / sampleDevices.length) * Math.PI * 2;
+            
+            // Create device node
+            const node = document.createElement('div');
+            node.className = `network-node node-device ${device.status === 'vulnerable' ? 'node-vulnerable' : ''}`;
+            node.style.left = centerX + Math.cos(angle) * radius + 'px';
+            node.style.top = centerY + Math.sin(angle) * radius + 'px';
+            node.title = device.name;
+            
+            // Device icons
+            const icons = {
+                'Router': '🌐',
+                'Server': '🖥️',
+                'Computer': '💻',
+                'IoT': '📹',
+                'Printer': '🖨️'
+            };
+            node.textContent = icons[device.type] || '📱';
+            
+            map.appendChild(node);
+            
+            // Create connection line
+            const line = document.createElement('div');
+            line.className = 'connection-line';
+            const lineLength = radius;
+            const lineAngle = angle * (180 / Math.PI);
+            
+            line.style.width = lineLength + 'px';
+            line.style.left = centerX + 'px';
+            line.style.top = centerY + 'px';
+            line.style.transform = `rotate(${lineAngle}deg)`;
+            
+            map.appendChild(line);
+        }
+
+        // Update counters
+        function updateCounters() {
+            const devices = document.querySelectorAll('.device-item');
+            const vulnerable = document.querySelectorAll('.status-vulnerable').length;
+            const secure = document.querySelectorAll('.status-secure').length;
+            const openPorts = sampleDevices.reduce((total, device) => total + device.ports.length, 0);
+            
+            document.getElementById('deviceCount').textContent = devices.length;
+            document.getElementById('totalDevices').textContent = devices.length;
+            document.getElementById('vulnerabilities').textContent = vulnerable;
+            document.getElementById('secureDevices').textContent = secure;
+            document.getElementById('openPorts').textContent = openPorts;
+        }
+
+        // Update scan time
+        function updateScanTime() {
+            const elapsed = ((Date.now() - scanStartTime) / 1000).toFixed(1);
+            document.getElementById('scanTime').textContent = elapsed + 's';
+        }
+
+        // Simulate Shodan data
+        function simulateShodanData() {
+            const shodanHits = Math.floor(Math.random() * 5) + 3;
+            document.getElementById('shodanHits').textContent = shodanHits;
+            
+            // Add Shodan alert
+            setTimeout(() => {
+                alert(`Shodan Intel: Found ${shodanHits} devices with exposed services in your network range. Recommend immediate security review.`);
+            }, 500);
+        }
+
+        // Refresh map
+        function refreshMap() {
+            const target = document.getElementById('scanTarget').value;
+            if (target) {
+                startNetworkScan();
+            }
+        }
+
+        // Initialize port list
+        function initPortList() {
+            const portList = document.getElementById('portList');
+            commonPorts.forEach(port => {
+                const portElement = document.createElement('div');
+                portElement.className = `port-item ${port.status === 'open' ? 'port-open' : 'port-closed'}`;
+                portElement.innerHTML = `
+                    <span>Port ${port.port}</span>
+                    <span>${port.service}</span>
+                    <span style="color: ${port.status === 'open' ? 'var(--success)' : 'var(--text-secondary)'}">
+                        ${port.status}
+                    </span>
+                `;
+                portList.appendChild(portElement);
+            });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initPortList();
         });
     </script>
 </body>
