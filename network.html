@@ -138,6 +138,7 @@
             display: flex;
             gap: 15px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .scan-input {
@@ -147,7 +148,7 @@
             padding: 10px 15px;
             color: var(--text-primary);
             font-family: 'Courier New', monospace;
-            min-width: 300px;
+            min-width: 250px;
         }
 
         .scan-input:focus {
@@ -178,6 +179,7 @@
             display: flex;
             gap: 20px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .option-checkbox {
@@ -521,8 +523,20 @@
             font-size: 14px;
         }
 
-        /* Responsive */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .page-header {
+                padding: 20px;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
             .control-panel {
                 flex-direction: column;
             }
@@ -534,11 +548,56 @@
             
             .scan-input {
                 width: 100%;
+                min-width: auto;
             }
             
             .scan-options {
-                flex-direction: column;
-                align-items: flex-start;
+                justify-content: center;
+            }
+            
+            .network-map-panel {
+                height: 400px;
+            }
+            
+            .network-visualization {
+                height: 300px;
+            }
+            
+            .back-btn {
+                top: 10px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 24px;
+            }
+            
+            .page-subtitle {
+                font-size: 12px;
+            }
+            
+            .option-checkbox {
+                font-size: 12px;
+            }
+            
+            .network-node {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .node-device {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+            
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
