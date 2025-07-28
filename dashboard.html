@@ -1,9 +1,305 @@
-<!DOCTYPE html>
+<a href="integrations.html" class="nav-tab">
+                <span>🔌</span>
+                <span>Integrations</span>
+            </a>
+            <a href="settings.html" class="nav-tab">
+                <span>⚙️</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Central Dashboard -->
+            <div class="central-dashboard">
+                <!-- Enhanced Autonomous Banner -->
+                <div class="autonomous-banner">
+                    🤖 AI Agent Operating Autonomously | NIST PQC Standards Active | Real-time Threat Mitigation
+                </div>
+
+                <!-- Real-time Security Feed -->
+                <div class="security-feed">
+                    <div class="feed-header">
+                        <h3 class="feed-title">Live Security Activity</h3>
+                        <div class="live-indicator">
+                            <div class="live-dot"></div>
+                            <span>LIVE</span>
+                        </div>
+                    </div>
+                    <div class="feed-content" id="securityFeed">
+                        <!-- Feed items will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Enhanced Quick Actions -->
+                <div class="quick-actions">
+                    <a href="incidents.html" class="action-card">
+                        <div class="action-icon">⚠️</div>
+                        <div class="action-content">
+                            <div class="action-title">Active Incidents</div>
+                            <div class="action-description">3 incidents being investigated by AI</div>
+                        </div>
+                    </a>
+                    <a href="quantum.html" class="action-card">
+                        <div class="action-icon">🔐</div>
+                        <div class="action-content">
+                            <div class="action-title">Quantum Key Status</div>
+                            <div class="action-description">NIST algorithms: Kyber-1024, Dilithium-5</div>
+                        </div>
+                    </a>
+                    <a href="threat-intel.html" class="action-card">
+                        <div class="action-icon">🔍</div>
+                        <div class="action-content">
+                            <div class="action-title">Threat Intelligence</div>
+                            <div class="action-description">247 IoCs analyzed today via Shodan</div>
+                        </div>
+                    </a>
+                    <a href="response.html" class="action-card">
+                        <div class="action-icon">🛡️</div>
+                        <div class="action-content">
+                            <div class="action-title">Automated Response</div>
+                            <div class="action-description">18 playbooks executed autonomously</div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Enhanced System Metrics -->
+                <div class="system-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value" id="eventsAnalyzed">2.4M</div>
+                        <div class="metric-label">Events Analyzed</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="responseTime">12ms</div>
+                        <div class="metric-label">Avg Response Time</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="falsePositives">0.2%</div>
+                        <div class="metric-label">False Positive Rate</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="uptime">99.98%</div>
+                        <div class="metric-label">System Uptime</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="keysRotated">847</div>
+                        <div class="metric-label">Keys Rotated Today</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="compliance">100%</div>
+                        <div class="metric-label">Compliance Score</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced AI Chat Widget -->
+    <div class="ai-chat-widget">
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-chat-header">
+                <span>AI SECURITY ASSISTANT</span>
+                <span class="ai-chat-close" onclick="toggleChat()">×</span>
+            </div>
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="ai-message">
+                    <div class="ai-message-bubble">
+                        Welcome! I'm your AI security assistant. I can help you investigate incidents, analyze logs, manage quantum keys, or execute response playbooks. All systems are currently operating autonomously. How can I assist you?
+                    </div>
+                    <div class="ai-message-time">Just now</div>
+                </div>
+            </div>
+            <div class="ai-chat-input-container">
+                <input 
+                    type="text" 
+                    class="ai-chat-input" 
+                    id="aiChatInput" 
+                    placeholder="Ask about security status or request manual control..."
+                    onkeypress="handleChatKeyPress(event)"
+                >
+                <button class="ai-chat-send" onclick="sendChatMessage()">SEND</button>
+            </div>
+        </div>
+        <div class="ai-chat-toggle" onclick="toggleChat()">🤖</div>
+    </div>
+
+    <script>
+        // Initialize security feed
+        function initSecurityFeed() {
+            const feedItems = [
+                { type: 'success', time: new Date(), message: '✅ Successfully rotated 12 API keys using NIST-approved Kyber-1024 algorithm' },
+                { type: 'normal', time: new Date(), message: '🔍 AI analyzed 147,892 log entries - no anomalies detected' },
+                { type: 'warning', time: new Date(), message: '⚠️ Suspicious login attempt blocked from IP 192.168.1.47' },
+                { type: 'success', time: new Date(), message: '🔐 Quantum key exchange completed with cloud provider using Dilithium-5' },
+                { type: 'normal', time: new Date(), message: '📊 Automated compliance report generated for SOC 2 requirements' },
+                { type: 'danger', time: new Date(), message: '🚨 Potential SQL injection detected and blocked on /api/users endpoint' },
+                { type: 'success', time: new Date(), message: '✅ NIST algorithm update check completed - all systems current' },
+                { type: 'normal', time: new Date(), message: '🤖 AI playbook executed: Isolated suspicious process on server-02' }
+            ];
+
+            const feed = document.getElementById('securityFeed');
+            feedItems.forEach((item, index) => {
+                setTimeout(() => {
+                    addFeedItem(item);
+                }, index * 500);
+            });
+        }
+
+        function addFeedItem(item) {
+            const feed = document.getElementById('securityFeed');
+            const feedItem = document.createElement('div');
+            feedItem.className = `feed-item ${item.type}`;
+            feedItem.innerHTML = `
+                <div class="feed-time">${item.time.toLocaleTimeString()}</div>
+                <div class="feed-message">${item.message}</div>
+            `;
+            feed.insertBefore(feedItem, feed.firstChild);
+            
+            // Keep only last 20 items
+            while (feed.children.length > 20) {
+                feed.removeChild(feed.lastChild);
+            }
+        }
+
+        // Auto-update metrics
+        function updateMetrics() {
+            // Update events analyzed
+            const events = document.getElementById('eventsAnalyzed');
+            const currentEvents = parseFloat(events.textContent);
+            events.textContent = (currentEvents + Math.random() * 0.1).toFixed(1) + 'M';
+
+            // Update response time
+            const responseTime = document.getElementById('responseTime');
+            responseTime.textContent = Math.floor(8 + Math.random() * 8) + 'ms';
+
+            // Update keys rotated
+            const keys = document.getElementById('keysRotated');
+            const currentKeys = parseInt(keys.textContent);
+            keys.textContent = currentKeys + Math.floor(Math.random() * 3);
+
+            // Update false positives occasionally
+            if (Math.random() > 0.8) {
+                const fp = document.getElementById('falsePositives');
+                fp.textContent = (0.1 + Math.random() * 0.3).toFixed(1) + '%';
+            }
+        }
+
+        // Logout handler
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout? The AI agent will continue protecting your systems autonomously.')) {
+                localStorage.removeItem('sentinel_auth');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // AI Chat functionality
+        let chatOpen = false;
+
+        function toggleChat() {
+            chatOpen = !chatOpen;
+            const chatWindow = document.getElementById('aiChatWindow');
+            if (chatOpen) {
+                chatWindow.classList.add('active');
+            } else {
+                chatWindow.classList.remove('active');
+            }
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('aiChatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const messagesContainer = document.getElementById('aiChatMessages');
+            
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'ai-message';
+            userMessage.innerHTML = `
+                <div class="ai-message-bubble user">${message}</div>
+                <div class="ai-message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+            `;
+            messagesContainer.appendChild(userMessage);
+            
+            input.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Simulate AI response
+            setTimeout(() => {
+                const aiResponse = generateAIResponse(message);
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'ai-message';
+                aiMessage.innerHTML = `
+                    <div class="ai-message-bubble">${aiResponse}</div>
+                    <div class="ai-message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                `;
+                messagesContainer.appendChild(aiMessage);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000);
+        }
+
+        function generateAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('quantum') || lowerMessage.includes('key')) {
+                return 'Currently using NIST-approved post-quantum algorithms: Kyber-1024 for key encapsulation and Dilithium-5 for digital signatures. I check NIST daily for updates. 847 keys have been rotated today. Would you like to see the key rotation schedule?';
+            }
+            if (lowerMessage.includes('incident') || lowerMessage.includes('threat')) {
+                return 'I\'m currently tracking 3 active incidents: 1 SQL injection attempt (blocked), 1 suspicious login pattern (investigating), and 1 potential data exfiltration (contained). All are being handled autonomously. Would you like details on any specific incident?';
+            }
+            if (lowerMessage.includes('log') || lowerMessage.includes('analysis')) {
+                return 'I\'ve analyzed 2.4M log entries today using ML pattern recognition. No critical anomalies detected. False positive rate is at 0.2%. The AI model was last retrained 3 hours ago with new threat patterns.';
+            }
+            if (lowerMessage.includes('help') || lowerMessage.includes('what can')) {
+                return 'I can help you: 1) Investigate security incidents, 2) Analyze logs for anomalies, 3) Manage post-quantum cryptography keys, 4) Execute response playbooks, 5) Check compliance status, 6) Provide threat intelligence. What would you like to focus on?';
+            }
+            if (lowerMessage.includes('status') || lowerMessage.includes('health')) {
+                return 'All systems operational. AI agent is running in autonomous mode with 99.98% uptime. Quantum key management is active with NIST compliance. No critical issues detected. Average response time is 12ms.';
+            }
+            if (lowerMessage.includes('manual') || lowerMessage.includes('control')) {
+                return 'To switch to manual control, specify the system: 1) Incident Response, 2) Key Management, 3) Log Analysis, 4) Threat Hunting. Note that autonomous mode has a 99.8% success rate. Are you sure you want to override?';
+            }
+            return 'I\'m analyzing your request. Could you provide more details about what you\'d like to investigate or configure? I can help with incidents, logs, quantum keys, compliance, or threat intelligence.';
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initSecurityFeed();
+            
+            // Update metrics every 5 seconds
+            setInterval(updateMetrics, 5000);
+            
+            // Add new feed items periodically
+            setInterval(() => {
+                const feedTypes = [
+                    { type: 'success', message: '✅ Automated patch applied to vulnerable system' },
+                    { type: 'normal', message: '🔍 Threat intelligence feed updated from Shodan API' },
+                    { type: 'warning', message: '⚠️ Unusual network traffic pattern detected on port 445' },
+                    { type: 'success', message: '🔐 Post-quantum TLS handshake completed successfully' },
+                    { type: 'normal', message: '📊 AI model retrained with latest threat patterns' },
+                    { type: 'success', message: '✅ Compliance scan completed - all controls passed' },
+                    { type: 'normal', message: '🤖 Automated response playbook executed for failed login attempts' },
+                    { type: 'warning', message: '⚠️ Legacy encryption detected - migrating to PQC algorithms' }
+                ];
+                
+                const randomFeed = feedTypes[Math.floor(Math.random() * feedTypes.length)];
+                addFeedItem({ ...randomFeed, time: new Date() });
+            }, 8000);
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Sentinel-X | Quantum Command Center</title>
+    <title>AI Sentinel-X | Security Operations Dashboard</title>
     <style>
         * {
             margin: 0;
@@ -67,43 +363,6 @@
         @keyframes quantumShift {
             0% { transform: translate(0, 0); }
             100% { transform: translate(100px, 100px); }
-        }
-
-        .neural-particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .neural-node {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
-            opacity: 0.6;
-            animation: neuralPulse 8s ease-in-out infinite;
-            box-shadow: 0 0 10px currentColor;
-        }
-
-        @keyframes neuralPulse {
-            0%, 100% {
-                transform: scale(1) translate(0, 0);
-                opacity: 0.6;
-            }
-            25% {
-                transform: scale(1.5) translate(20px, -20px);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1) translate(-20px, 20px);
-                opacity: 0.4;
-            }
-            75% {
-                transform: scale(1.2) translate(-10px, -10px);
-                opacity: 0.8;
-            }
         }
 
         /* Container */
@@ -386,6 +645,7 @@
             flex-shrink: 0;
             position: relative;
             overflow: hidden;
+            text-decoration: none;
         }
 
         .nav-tab::before {
@@ -470,89 +730,106 @@
             to { left: 100%; }
         }
 
-        /* Enhanced Threat Map */
-        .threat-map {
+        /* Real-time Security Feed */
+        .security-feed {
             position: relative;
-            height: 450px;
+            height: 400px;
             background: 
-                linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 100%),
-                radial-gradient(ellipse at center, rgba(0, 204, 255, 0.1) 0%, transparent 70%);
+                linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 100%);
             border-radius: 15px;
             overflow: hidden;
             margin-bottom: 25px;
             border: 1px solid var(--border);
+            padding: 20px;
             box-shadow: 
                 0 10px 40px rgba(0, 0, 0, 0.5),
                 inset 0 0 100px rgba(0, 204, 255, 0.05);
         }
 
-        .threat-map::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background-image: 
-                repeating-linear-gradient(0deg, rgba(0, 255, 136, 0.03) 0px, transparent 2px, transparent 80px, rgba(0, 255, 136, 0.03) 82px),
-                repeating-linear-gradient(90deg, rgba(0, 255, 136, 0.03) 0px, transparent 2px, transparent 80px, rgba(0, 255, 136, 0.03) 82px);
-            animation: gridRotate 60s linear infinite;
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        @keyframes gridRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .feed-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .map-overlay {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 15px 20px;
-            border-radius: 10px;
-            font-size: 13px;
-            z-index: 10;
-            border: 1px solid var(--border);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--danger);
+            font-weight: bold;
         }
 
-        .threat-point {
-            position: absolute;
-            width: 24px;
-            height: 24px;
+        .live-dot {
+            width: 8px;
+            height: 8px;
             background: var(--danger);
             border-radius: 50%;
-            animation: threatPulse 2s ease-in-out infinite;
-            cursor: pointer;
-            z-index: 5;
-            box-shadow: 0 0 30px currentColor;
+            animation: livePulse 2s ease-in-out infinite;
         }
 
-        @keyframes threatPulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 0, 68, 0.7);
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .feed-content {
+            height: calc(100% - 60px);
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .feed-item {
+            background: rgba(0, 255, 136, 0.05);
+            border-left: 3px solid var(--primary);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 0 8px 8px 0;
+            animation: feedSlideIn 0.5s ease;
+        }
+
+        @keyframes feedSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
             }
-            50% { 
-                transform: scale(1.2);
-                box-shadow: 0 0 0 25px rgba(255, 0, 68, 0);
+            to {
+                opacity: 1;
+                transform: translateX(0);
             }
         }
 
-        .threat-line {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--danger), transparent);
-            transform-origin: left center;
-            animation: threatScan 3s ease-in-out infinite;
-            opacity: 0.5;
+        .feed-item.warning {
+            background: rgba(255, 170, 0, 0.05);
+            border-left-color: var(--warning);
         }
 
-        @keyframes threatScan {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
+        .feed-item.danger {
+            background: rgba(255, 0, 68, 0.05);
+            border-left-color: var(--danger);
+        }
+
+        .feed-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .feed-message {
+            font-size: 14px;
+            line-height: 1.4;
         }
 
         /* Enhanced Quick Actions */
@@ -863,46 +1140,7 @@
             box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
         }
 
-        .ai-typing {
-            display: flex;
-            gap: 5px;
-            padding: 10px;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: typingDot 1.4s ease-in-out infinite;
-        }
-
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typingDot {
-            0%, 60%, 100% {
-                transform: translateY(0);
-                opacity: 0.7;
-            }
-            30% {
-                transform: translateY(-10px);
-                opacity: 1;
-            }
-        }
-
         /* Mobile Responsive */
-        @media (max-width: 1400px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-
         @media (max-width: 1200px) {
             .header-content {
                 flex-direction: column;
@@ -960,7 +1198,7 @@
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .threat-map {
+            .security-feed {
                 height: 350px;
             }
             
@@ -981,111 +1219,11 @@
                 right: -20px;
                 bottom: 80px;
             }
-            
-            .autonomous-banner {
-                font-size: 14px;
-                padding: 15px 20px;
-            }
-            
-            .agent-status {
-                padding: 12px 20px;
-            }
-            
-            .agent-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-            }
-            
-            .agent-title {
-                font-size: 13px;
-            }
-            
-            .agent-status-text {
-                font-size: 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .brand-name {
-                font-size: 20px;
-                letter-spacing: 2px;
-            }
-            
-            .brand-tagline {
-                font-size: 11px;
-            }
-            
-            .logo-container {
-                width: 50px;
-                height: 50px;
-            }
-            
-            .logo-eye {
-                width: 30px;
-                height: 30px;
-            }
-            
-            .logo-iris {
-                width: 22px;
-                height: 22px;
-            }
-            
-            .system-metrics {
-                grid-template-columns: 1fr;
-            }
-            
-            .metric-value {
-                font-size: 28px;
-            }
-            
-            .action-icon {
-                font-size: 30px;
-            }
-            
-            .logout-btn {
-                padding: 10px 15px;
-                font-size: 12px;
-            }
-            
-            .ai-chat-window {
-                width: 100vw;
-                height: 100vh;
-                right: 0;
-                bottom: 0;
-                border-radius: 0;
-            }
-            
-            .ai-chat-header {
-                padding: 15px;
-                font-size: 14px;
-            }
-            
-            .ai-chat-input-container {
-                padding: 15px;
-            }
-            
-            .central-dashboard {
-                padding: 20px;
-            }
-            
-            .action-card {
-                padding: 20px;
-            }
-            
-            .action-title {
-                font-size: 15px;
-            }
-            
-            .action-description {
-                font-size: 12px;
-            }
         }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
-            height: 8px;
         }
 
         ::-webkit-scrollbar-track {
@@ -1121,7 +1259,6 @@
     <!-- Enhanced Matrix Background -->
     <div class="matrix-bg">
         <div class="quantum-grid"></div>
-        <div class="neural-particles" id="neuralParticles"></div>
     </div>
 
     <!-- Main Container -->
@@ -1139,15 +1276,15 @@
                     </div>
                     <div class="brand-info">
                         <h1 class="brand-name">AI SENTINEL-X</h1>
-                        <p class="brand-tagline">Quantum Command Center</p>
+                        <p class="brand-tagline">Security Operations Center</p>
                     </div>
                 </div>
                 <div class="header-right">
                     <div class="agent-status">
                         <div class="agent-icon">🤖</div>
                         <div class="agent-info">
-                            <div class="agent-title">Quantum AI Agent</div>
-                            <div class="agent-status-text">Fully Autonomous</div>
+                            <div class="agent-title">AI Defense Agent</div>
+                            <div class="agent-status-text">Autonomous Mode Active</div>
                         </div>
                     </div>
                     <button class="logout-btn" onclick="handleLogout()">Logout</button>
@@ -1161,314 +1298,29 @@
                 <span>🏠</span>
                 <span>Dashboard</span>
             </div>
-            <a href="threats.html" class="nav-tab">
+            <a href="incidents.html" class="nav-tab">
                 <span>⚠️</span>
-                <span>Threats</span>
+                <span>Incidents</span>
             </a>
-            <a href="network.html" class="nav-tab">
-                <span>🌐</span>
-                <span>Network</span>
-            </a>
-            <a href="defense.html" class="nav-tab">
-                <span>🛡️</span>
-                <span>Defense</span>
-            </a>
-            <a href="analytics.html" class="nav-tab">
+            <a href="logs.html" class="nav-tab">
                 <span>📊</span>
-                <span>Analytics</span>
+                <span>Log Analysis</span>
             </a>
-            <a href="ai-brain.html" class="nav-tab">
-                <span>🧠</span>
-                <span>AI Brain</span>
+            <a href="threat-intel.html" class="nav-tab">
+                <span>🔍</span>
+                <span>Threat Intel</span>
+            </a>
+            <a href="response.html" class="nav-tab">
+                <span>🛡️</span>
+                <span>Response</span>
+            </a>
+            <a href="compliance.html" class="nav-tab">
+                <span>📋</span>
+                <span>Compliance</span>
             </a>
             <a href="quantum.html" class="nav-tab">
-                <span>⚛️</span>
-                <span>Quantum</span>
+                <span>🔐</span>
+                <span>Quantum Keys</span>
             </a>
-            <a href="settings.html" class="nav-tab">
-                <span>⚙️</span>
-                <span>Settings</span>
-            </a>
-        </nav>
-
-        <!-- Main Layout -->
-        <div class="main-layout">
-            <!-- Central Dashboard -->
-            <div class="central-dashboard">
-                <!-- Enhanced Autonomous Banner -->
-                <div class="autonomous-banner">
-                    🤖 All Systems Operating Autonomously - No Human Intervention Required
-                </div>
-
-                <!-- Enhanced Threat Map -->
-                <div class="threat-map" id="threatMap">
-                    <div class="map-overlay">
-                        <div style="font-weight: bold; color: var(--primary); margin-bottom: 5px;">LIVE THREAT MAP</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">Real-time quantum scanning</div>
-                    </div>
-                    <!-- Threat points will be added dynamically -->
-                </div>
-
-                <!-- Enhanced Quick Actions -->
-                <div class="quick-actions">
-                    <a href="threats.html" class="action-card">
-                        <div class="action-icon">⚠️</div>
-                        <div class="action-content">
-                            <div class="action-title">Active Threats</div>
-                            <div class="action-description">7 threats being neutralized by AI</div>
-                        </div>
-                    </a>
-                    <a href="network.html" class="action-card">
-                        <div class="action-icon">🌐</div>
-                        <div class="action-content">
-                            <div class="action-title">Network Scanner</div>
-                            <div class="action-description">Continuous quantum scanning active</div>
-                        </div>
-                    </a>
-                    <a href="defense.html" class="action-card">
-                        <div class="action-icon">🛡️</div>
-                        <div class="action-content">
-                            <div class="action-title">Active Defense</div>
-                            <div class="action-description">12 honeypots deployed autonomously</div>
-                        </div>
-                    </a>
-                    <a href="analytics.html" class="action-card">
-                        <div class="action-icon">📊</div>
-                        <div class="action-content">
-                            <div class="action-title">Analytics</div>
-                            <div class="action-description">AI predicting future attack vectors</div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Enhanced System Metrics -->
-                <div class="system-metrics">
-                    <div class="metric-card">
-                        <div class="metric-value" id="threatCount">7</div>
-                        <div class="metric-label">Active Threats</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="responseTime">0.3ms</div>
-                        <div class="metric-label">Response Time</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="accuracy">99.8%</div>
-                        <div class="metric-label">AI Accuracy</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="uptime">100%</div>
-                        <div class="metric-label">System Uptime</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="prevented">2.4K</div>
-                        <div class="metric-label">Attacks Prevented</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="learning">∞</div>
-                        <div class="metric-label">AI Learning</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Enhanced AI Chat Widget -->
-    <div class="ai-chat-widget">
-        <div class="ai-chat-window" id="aiChatWindow">
-            <div class="ai-chat-header">
-                <span>AI ASSISTANT</span>
-                <span class="ai-chat-close" onclick="toggleChat()">×</span>
-            </div>
-            <div class="ai-chat-messages" id="aiChatMessages">
-                <div class="ai-message">
-                    <div class="ai-message-bubble">
-                        Welcome back! I'm your quantum AI assistant. All systems are operating autonomously. Current threat level: MODERATE. How can I assist you today?
-                    </div>
-                    <div class="ai-message-time">Just now</div>
-                </div>
-            </div>
-            <div class="ai-chat-input-container">
-                <input 
-                    type="text" 
-                    class="ai-chat-input" 
-                    id="aiChatInput" 
-                    placeholder="Ask me anything..."
-                    onkeypress="handleChatKeyPress(event)"
-                >
-                <button class="ai-chat-send" onclick="sendChatMessage()">SEND</button>
-            </div>
-        </div>
-        <div class="ai-chat-toggle" onclick="toggleChat()">🤖</div>
-    </div>
-
-    <script>
-        // Initialize neural particles
-        function initNeuralParticles() {
-            const container = document.getElementById('neuralParticles');
-            for (let i = 0; i < 30; i++) {
-                const node = document.createElement('div');
-                node.className = 'neural-node';
-                node.style.left = Math.random() * 100 + '%';
-                node.style.top = Math.random() * 100 + '%';
-                node.style.animationDelay = Math.random() * 8 + 's';
-                container.appendChild(node);
-            }
-        }
-
-        // Initialize threat map
-        function initThreatMap() {
-            const map = document.getElementById('threatMap');
-            const threats = [
-                { x: 30, y: 40 },
-                { x: 70, y: 20 },
-                { x: 50, y: 60 },
-                { x: 20, y: 70 },
-                { x: 80, y: 50 }
-            ];
-
-            threats.forEach((threat, index) => {
-                const point = document.createElement('div');
-                point.className = 'threat-point';
-                point.style.left = threat.x + '%';
-                point.style.top = threat.y + '%';
-                point.style.animationDelay = index * 0.3 + 's';
-                map.appendChild(point);
-
-                // Add connecting lines
-                if (index > 0) {
-                    const line = document.createElement('div');
-                    line.className = 'threat-line';
-                    const prevThreat = threats[index - 1];
-                    const angle = Math.atan2(threat.y - prevThreat.y, threat.x - prevThreat.x) * 180 / Math.PI;
-                    const distance = Math.sqrt(Math.pow(threat.x - prevThreat.x, 2) + Math.pow(threat.y - prevThreat.y, 2));
-                    
-                    line.style.width = distance + '%';
-                    line.style.left = prevThreat.x + '%';
-                    line.style.top = prevThreat.y + '%';
-                    line.style.transform = `rotate(${angle}deg)`;
-                    map.appendChild(line);
-                }
-            });
-        }
-
-        // Auto-update metrics
-        function updateMetrics() {
-            // Update threat count
-            const threatCount = document.getElementById('threatCount');
-            const currentThreats = parseInt(threatCount.textContent);
-            threatCount.textContent = Math.max(0, currentThreats + Math.floor(Math.random() * 3 - 1));
-
-            // Update response time
-            const responseTime = document.getElementById('responseTime');
-            responseTime.textContent = (Math.random() * 0.5 + 0.1).toFixed(1) + 'ms';
-
-            // Update accuracy
-            const accuracy = document.getElementById('accuracy');
-            accuracy.textContent = (99.5 + Math.random() * 0.4).toFixed(1) + '%';
-
-            // Update prevented attacks
-            const prevented = document.getElementById('prevented');
-            const currentPrevented = parseFloat(prevented.textContent);
-            prevented.textContent = (currentPrevented + Math.random() * 0.1).toFixed(1) + 'K';
-        }
-
-        // Logout handler
-        function handleLogout() {
-            if (confirm('Are you sure you want to logout? The AI will continue protecting your systems autonomously.')) {
-                localStorage.removeItem('sentinel_auth');
-                window.location.href = 'index.html';
-            }
-        }
-
-        // AI Chat functionality
-        let chatOpen = false;
-
-        function toggleChat() {
-            chatOpen = !chatOpen;
-            const chatWindow = document.getElementById('aiChatWindow');
-            if (chatOpen) {
-                chatWindow.classList.add('active');
-            } else {
-                chatWindow.classList.remove('active');
-            }
-        }
-
-        function handleChatKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendChatMessage();
-            }
-        }
-
-        function sendChatMessage() {
-            const input = document.getElementById('aiChatInput');
-            const message = input.value.trim();
-            if (!message) return;
-
-            const messagesContainer = document.getElementById('aiChatMessages');
-            
-            // Add user message
-            const userMessage = document.createElement('div');
-            userMessage.className = 'ai-message';
-            userMessage.innerHTML = `
-                <div class="ai-message-bubble user">${message}</div>
-                <div class="ai-message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
-            `;
-            messagesContainer.appendChild(userMessage);
-            
-            input.value = '';
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-            // Show typing indicator
-            const typingIndicator = document.createElement('div');
-            typingIndicator.className = 'ai-typing';
-            typingIndicator.innerHTML = `
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-            `;
-            messagesContainer.appendChild(typingIndicator);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-            // Simulate AI response
-            setTimeout(() => {
-                typingIndicator.remove();
-                
-                const aiResponse = generateAIResponse(message);
-                const aiMessage = document.createElement('div');
-                aiMessage.className = 'ai-message';
-                aiMessage.innerHTML = `
-                    <div class="ai-message-bubble">${aiResponse}</div>
-                    <div class="ai-message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
-                `;
-                messagesContainer.appendChild(aiMessage);
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }, 1500);
-        }
-
-        function generateAIResponse(message) {
-            const lowerMessage = message.toLowerCase();
-            
-            if (lowerMessage.includes('threat') || lowerMessage.includes('attack')) {
-                return 'I\'ve detected 7 active threats. All are being neutralized autonomously using quantum algorithms. Would you like to see the detailed threat analysis?';
-            }
-            if (lowerMessage.includes('status') || lowerMessage.includes('system')) {
-                return 'All systems are operating at peak efficiency. Quantum encryption: Active. AI Learning: Continuous. Zero human intervention required.';
-            }
-            if (lowerMessage.includes('help') || lowerMessage.includes('what can')) {
-                return 'I can help you monitor threats, analyze network activity, configure defenses, view analytics, and control the quantum security systems. What would you like to focus on?';
-            }
-            return 'I\'m processing your request through my quantum neural networks. Is there a specific security concern you\'d like me to address?';
-        }
-
-        // Initialize everything
-        document.addEventListener('DOMContentLoaded', () => {
-            initNeuralParticles();
-            initThreatMap();
-            setInterval(updateMetrics, 5000);
-        });
-
-        // Message for debugging
-        console.log('Dashboard loaded successfully');
-    </script>
-</body>
-</html>
+            <a href="integrations.html" class="nav-tab">
+                <span>🔌</span>
