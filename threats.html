@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Threat Monitor | AI Sentinel-X</title>
+    <title>Quantum Threat Monitor | AI Sentinel-X</title>
     <style>
         * {
             margin: 0;
@@ -26,6 +26,7 @@
             --text-secondary: #8892b0;
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-danger: linear-gradient(135deg, #ff0044 0%, #ff6644 100%);
+            --gradient-hologram: linear-gradient(45deg, #00ff88, #00ccff, #7c3aed, #ff00ff);
         }
 
         body {
@@ -35,7 +36,7 @@
             min-height: 100vh;
         }
 
-        /* Threat Background */
+        /* Enhanced Threat Background */
         .threat-bg {
             position: fixed;
             top: 0;
@@ -45,8 +46,24 @@
             pointer-events: none;
             z-index: 0;
             background: 
-                radial-gradient(circle at 30% 20%, rgba(255, 0, 68, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 70% 80%, rgba(255, 170, 0, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 30% 20%, rgba(255, 0, 68, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(255, 170, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.05) 0%, transparent 70%);
+        }
+
+        .scan-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(255, 0, 68, 0.02) 0px, transparent 2px, transparent 100px, rgba(255, 0, 68, 0.02) 102px),
+                repeating-linear-gradient(90deg, rgba(255, 0, 68, 0.02) 0px, transparent 2px, transparent 100px, rgba(255, 0, 68, 0.02) 102px);
+            animation: gridScan 20s linear infinite;
+        }
+
+        @keyframes gridScan {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 100px); }
         }
 
         .scan-line {
@@ -55,6 +72,7 @@
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--danger), transparent);
             animation: scanDown 4s linear infinite;
+            box-shadow: 0 0 20px var(--danger);
         }
 
         @keyframes scanDown {
@@ -62,6 +80,39 @@
             10% { opacity: 1; }
             90% { opacity: 1; }
             100% { top: 100%; opacity: 0; }
+        }
+
+        .quantum-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .threat-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--danger);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: threatFloat 15s infinite ease-in-out;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        @keyframes threatFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.6;
+            }
+            33% {
+                transform: translate(100px, -100px) scale(1.5);
+                opacity: 1;
+            }
+            66% {
+                transform: translate(-100px, 100px) scale(0.5);
+                opacity: 0.3;
+            }
         }
 
         .container {
@@ -72,16 +123,19 @@
             padding: 20px;
         }
 
-        /* Header */
+        /* Enhanced Header */
         .page-header {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 30px;
+            border-radius: 15px;
+            padding: 35px;
             margin-bottom: 30px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(255, 0, 68, 0.02);
         }
 
         .alert-strip {
@@ -92,6 +146,7 @@
             height: 5px;
             background: var(--gradient-danger);
             animation: alertPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 20px var(--danger);
         }
 
         @keyframes alertPulse {
@@ -108,53 +163,84 @@
         }
 
         .page-title {
-            font-size: 36px;
+            font-size: 40px;
             font-weight: bold;
             background: var(--gradient-danger);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(255, 0, 68, 0.5);
         }
 
         .threat-summary {
             display: flex;
-            gap: 30px;
+            gap: 35px;
             align-items: center;
             flex-wrap: wrap;
         }
 
         .summary-item {
             text-align: center;
+            position: relative;
         }
 
         .summary-value {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: bold;
             color: var(--danger);
+            text-shadow: 0 0 20px currentColor;
+            animation: valueGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes valueGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
         }
 
         .summary-label {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* Autonomous Alert */
+        /* Enhanced Autonomous Alert */
         .autonomous-alert {
             background: rgba(0, 255, 136, 0.1);
-            border: 1px solid var(--primary);
-            border-radius: 8px;
-            padding: 15px 20px;
-            margin-bottom: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 5px 20px rgba(0, 255, 136, 0.2),
+                inset 0 0 30px rgba(0, 255, 136, 0.05);
+        }
+
+        .autonomous-alert::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.3), transparent);
+            animation: alertScan 4s linear infinite;
+        }
+
+        @keyframes alertScan {
+            to { left: 100%; }
         }
 
         .autonomous-alert-icon {
-            font-size: 24px;
+            font-size: 32px;
             animation: pulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px currentColor);
         }
 
         @keyframes pulse {
@@ -170,76 +256,112 @@
             font-weight: bold;
             color: var(--primary);
             margin-bottom: 5px;
+            font-size: 16px;
+            text-shadow: 0 0 10px currentColor;
         }
 
         .autonomous-alert-desc {
             font-size: 14px;
             color: var(--text-secondary);
+            line-height: 1.4;
         }
 
-        /* Threat Grid */
+        /* Enhanced Threat Grid */
         .threat-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
             margin-bottom: 30px;
         }
 
         .threat-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 15px;
+            padding: 25px;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
             cursor: pointer;
+            backdrop-filter: blur(15px);
+        }
+
+        .threat-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--gradient-hologram);
+            border-radius: 15px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .threat-card:hover::before {
+            opacity: 0.3;
         }
 
         .threat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 0, 68, 0.2);
+            box-shadow: 0 15px 40px rgba(255, 0, 68, 0.3);
         }
 
         .threat-card.critical {
             border-color: rgba(255, 0, 68, 0.5);
             background: rgba(255, 0, 68, 0.05);
+            box-shadow: 
+                0 5px 20px rgba(255, 0, 68, 0.2),
+                inset 0 0 50px rgba(255, 0, 68, 0.02);
         }
 
         .threat-card.high {
             border-color: rgba(255, 170, 0, 0.5);
             background: rgba(255, 170, 0, 0.05);
+            box-shadow: 
+                0 5px 20px rgba(255, 170, 0, 0.2),
+                inset 0 0 50px rgba(255, 170, 0, 0.02);
         }
 
         .threat-card.medium {
             border-color: rgba(0, 204, 255, 0.5);
             background: rgba(0, 204, 255, 0.05);
+            box-shadow: 
+                0 5px 20px rgba(0, 204, 255, 0.2),
+                inset 0 0 50px rgba(0, 204, 255, 0.02);
         }
 
         .threat-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .threat-title {
-            font-size: 18px;
+            font-size: 19px;
             font-weight: bold;
             margin-bottom: 5px;
+            line-height: 1.3;
         }
 
         .threat-type {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .threat-severity {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
+            padding: 6px 14px;
+            border-radius: 25px;
+            font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
         }
 
         .severity-critical {
@@ -258,68 +380,120 @@
         }
 
         .threat-details {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .detail-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 13px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .detail-label {
             color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
         }
 
         .detail-value {
             color: var(--text-primary);
             font-weight: bold;
+            text-align: right;
         }
 
         .threat-status {
-            margin-top: 15px;
-            padding-top: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
         }
 
         .status-badge {
             display: inline-block;
-            padding: 8px 16px;
+            padding: 10px 20px;
             background: var(--gradient-1);
             color: var(--bg-darker);
-            border-radius: 20px;
+            border-radius: 25px;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 13px;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 
+                0 5px 20px rgba(0, 255, 136, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+            animation: badgePulse 3s ease-in-out infinite;
         }
 
-        /* Real-time Feed */
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Enhanced Real-time Feed */
         .feed-section {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
-            height: 400px;
+            border-radius: 15px;
+            padding: 25px;
+            height: 450px;
             display: flex;
             flex-direction: column;
+            backdrop-filter: blur(15px);
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(0, 0, 0, 0.2);
         }
 
         .feed-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
             border-bottom: 1px solid var(--border);
         }
 
         .feed-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             color: var(--primary);
             text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 20px currentColor;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--danger);
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: livePulse 2s ease-in-out infinite;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        @keyframes livePulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
         }
 
         .feed-content {
@@ -329,12 +503,30 @@
         }
 
         .feed-item {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             border-left: 3px solid var(--danger);
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            border-radius: 0 6px 6px 0;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 0 10px 10px 0;
             animation: feedSlide 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feed-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 0, 68, 0.1), transparent);
+            animation: feedGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes feedGlow {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
         }
 
         @keyframes feedSlide {
@@ -349,14 +541,17 @@
         }
 
         .feed-time {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-secondary);
-            margin-bottom: 3px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .feed-message {
-            font-size: 13px;
-            line-height: 1.4;
+            font-size: 14px;
+            line-height: 1.5;
+            position: relative;
         }
 
         /* Back Button */
@@ -366,8 +561,8 @@
             left: 20px;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px 20px;
+            border-radius: 10px;
+            padding: 12px 24px;
             color: var(--primary);
             text-decoration: none;
             display: flex;
@@ -375,26 +570,252 @@
             gap: 10px;
             transition: all 0.3s ease;
             z-index: 100;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .back-btn:hover {
             background: var(--primary);
             color: var(--bg-darker);
             transform: translateX(-5px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        /* AI Chat Widget */
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .ai-chat-toggle {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 
+                0 5px 20px rgba(0, 255, 136, 0.4),
+                0 0 40px rgba(0, 255, 136, 0.3);
+            transition: all 0.3s ease;
+            font-size: 32px;
+            animation: chatPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes chatPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 
+                    0 5px 20px rgba(0, 255, 136, 0.4),
+                    0 0 40px rgba(0, 255, 136, 0.3);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 
+                    0 5px 30px rgba(0, 255, 136, 0.6),
+                    0 0 60px rgba(0, 255, 136, 0.5);
+            }
+        }
+
+        .ai-chat-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .ai-chat-window {
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            width: 400px;
+            height: 600px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(0, 255, 136, 0.1);
+            backdrop-filter: blur(20px);
+        }
+
+        .ai-chat-window.active {
+            display: flex;
+            animation: chatSlideIn 0.3s ease;
+        }
+
+        @keyframes chatSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .ai-chat-header {
+            background: var(--gradient-1);
+            color: var(--bg-darker);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ai-chat-close {
+            cursor: pointer;
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .ai-chat-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .ai-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ai-message {
+            animation: messageSlide 0.3s ease;
+        }
+
+        @keyframes messageSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ai-message-bubble {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 15px 20px;
+            max-width: 80%;
+            word-wrap: break-word;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .ai-message-bubble.user {
+            background: rgba(0, 204, 255, 0.1);
+            border-color: var(--secondary);
+            align-self: flex-end;
+        }
+
+        .ai-message-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .ai-chat-input-container {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .ai-chat-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .ai-chat-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(0, 255, 136, 0.05);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .ai-chat-send {
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            color: var(--bg-darker);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ai-chat-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .ai-typing {
+            display: flex;
+            gap: 5px;
+            padding: 10px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: typingDot 1.4s ease-in-out infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingDot {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
         }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .container {
-                padding: 10px;
+                padding: 15px;
             }
             
             .page-header {
-                padding: 20px;
+                padding: 25px;
             }
             
             .page-title {
-                font-size: 28px;
+                font-size: 32px;
             }
             
             .header-content {
@@ -410,34 +831,64 @@
                 justify-content: center;
             }
             
+            .summary-value {
+                font-size: 30px;
+            }
+            
             .back-btn {
                 top: 10px;
                 left: 10px;
-                padding: 8px 15px;
-                font-size: 14px;
+                padding: 10px 18px;
+                font-size: 13px;
             }
             
             .autonomous-alert {
                 flex-direction: column;
                 text-align: center;
             }
+            
+            .feed-section {
+                height: 400px;
+            }
+            
+            .ai-chat-widget {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .ai-chat-toggle {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+            }
+            
+            .ai-chat-window {
+                width: calc(100vw - 40px);
+                height: calc(100vh - 120px);
+                right: -20px;
+                bottom: 80px;
+            }
         }
 
         @media (max-width: 480px) {
             .page-title {
-                font-size: 24px;
+                font-size: 26px;
             }
             
             .summary-value {
-                font-size: 24px;
+                font-size: 26px;
+            }
+            
+            .summary-item {
+                min-width: 80px;
             }
             
             .threat-card {
-                padding: 15px;
+                padding: 20px;
             }
             
             .threat-title {
-                font-size: 16px;
+                font-size: 17px;
             }
             
             .back-btn span {
@@ -446,6 +897,30 @@
             
             .back-btn::after {
                 content: 'Back';
+            }
+            
+            .ai-chat-window {
+                width: 100vw;
+                height: 100vh;
+                right: 0;
+                bottom: 0;
+                border-radius: 0;
+            }
+            
+            .autonomous-alert {
+                padding: 15px 20px;
+            }
+            
+            .autonomous-alert-icon {
+                font-size: 28px;
+            }
+            
+            .autonomous-alert-title {
+                font-size: 15px;
+            }
+            
+            .autonomous-alert-desc {
+                font-size: 13px;
             }
         }
 
@@ -487,23 +962,25 @@
     <!-- Back Button -->
     <a href="dashboard.html" class="back-btn">
         <span>←</span>
-        <span>Back to Dashboard</span>
+        <span>Back</span>
     </a>
 
-    <!-- Threat Background -->
+    <!-- Enhanced Threat Background -->
     <div class="threat-bg">
+        <div class="scan-grid"></div>
         <div class="scan-line"></div>
+        <div class="quantum-particles" id="quantumParticles"></div>
     </div>
 
     <!-- Container -->
     <div class="container">
-        <!-- Page Header -->
+        <!-- Enhanced Page Header -->
         <div class="page-header">
             <div class="alert-strip"></div>
             <div class="header-content">
                 <div>
-                    <h1 class="page-title">THREAT MONITOR</h1>
-                    <p style="color: var(--text-secondary); margin-top: 5px;">Autonomous threat detection and neutralization</p>
+                    <h1 class="page-title">QUANTUM THREAT MONITOR</h1>
+                    <p style="color: var(--text-secondary); margin-top: 5px;">AI-Powered Predictive Threat Neutralization</p>
                 </div>
                 <div class="threat-summary">
                     <div class="summary-item">
@@ -518,29 +995,36 @@
                         <div class="summary-value" style="color: var(--success);" id="neutralizedThreats">124</div>
                         <div class="summary-label">Neutralized</div>
                     </div>
+                    <div class="summary-item">
+                        <div class="summary-value" style="color: var(--accent);" id="predictedThreats">12</div>
+                        <div class="summary-label">Predicted</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Autonomous Alert -->
+        <!-- Enhanced Autonomous Alert -->
         <div class="autonomous-alert">
             <div class="autonomous-alert-icon">🤖</div>
             <div class="autonomous-alert-text">
-                <div class="autonomous-alert-title">Autonomous Protection Active</div>
-                <div class="autonomous-alert-desc">All threats are being handled automatically. No manual intervention required.</div>
+                <div class="autonomous-alert-title">Quantum AI Protection Active</div>
+                <div class="autonomous-alert-desc">All threats are being neutralized autonomously using predictive quantum algorithms. Zero human intervention required.</div>
             </div>
         </div>
 
-        <!-- Threat Grid -->
+        <!-- Enhanced Threat Grid -->
         <div class="threat-grid" id="threatGrid">
             <!-- Threats will be populated by JavaScript -->
         </div>
 
-        <!-- Real-time Feed -->
+        <!-- Enhanced Real-time Feed -->
         <div class="feed-section">
             <div class="feed-header">
-                <h2 class="feed-title">Live Autonomous Actions</h2>
-                <span style="color: var(--danger); font-size: 12px;">● LIVE</span>
+                <h2 class="feed-title">Quantum AI Actions</h2>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>LIVE</span>
+                </div>
             </div>
             <div class="feed-content" id="threatFeed">
                 <!-- Feed items will be populated by JavaScript -->
@@ -548,94 +1032,144 @@
         </div>
     </div>
 
+    <!-- AI Chat Widget -->
+    <div class="ai-chat-widget">
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-chat-header">
+                <span>THREAT ANALYSIS AI</span>
+                <span class="ai-chat-close" onclick="toggleChat()">×</span>
+            </div>
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="ai-message">
+                    <div class="ai-message-bubble">
+                        Welcome to Quantum Threat Analysis. I can provide real-time threat intelligence, predictive analysis, and manual control options. What would you like to know?
+                    </div>
+                    <div class="ai-message-time">Just now</div>
+                </div>
+            </div>
+            <div class="ai-chat-input-container">
+                <input 
+                    type="text" 
+                    class="ai-chat-input" 
+                    id="aiChatInput" 
+                    placeholder="Ask about specific threats or request manual control..."
+                    onkeypress="handleChatKeyPress(event)"
+                >
+                <button class="ai-chat-send" onclick="sendChatMessage()">SEND</button>
+            </div>
+        </div>
+        <div class="ai-chat-toggle" onclick="toggleChat()">🤖</div>
+    </div>
+
     <script>
-        // Sample threats data
+        // Initialize quantum particles
+        function initQuantumParticles() {
+            const container = document.getElementById('quantumParticles');
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'threat-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Enhanced threats data
         const threats = [
             {
                 id: 1,
-                name: 'DDoS Attack Detected',
-                type: 'Network Attack',
+                name: 'Quantum DDoS Attack',
+                type: 'Network Overload',
                 severity: 'critical',
-                source: '45.12.78.* (Multiple IPs)',
-                target: 'API Gateway',
-                status: 'AI Mitigating',
+                source: '45.12.78.* (Quantum Botnet)',
+                target: 'API Gateway Cluster',
+                status: '🤖 AI Mitigating',
                 duration: '12 minutes',
-                attempts: '45,892'
+                attempts: '45,892',
+                prediction: '87% chance of escalation'
             },
             {
                 id: 2,
-                name: 'SQL Injection Attempt',
-                type: 'Web Application',
-                severity: 'high',
-                source: '192.168.1.105',
-                target: '/api/users endpoint',
-                status: 'Blocked by AI',
-                duration: '3 minutes',
-                attempts: '127'
+                name: 'Neural Injection Pattern',
+                type: 'AI Model Attack',
+                severity: 'critical',
+                source: 'Adversarial Network',
+                target: 'ML Training Pipeline',
+                status: '🧠 Learning & Adapting',
+                duration: '7 minutes',
+                attempts: '3,247',
+                prediction: '92% accuracy improvement'
             },
             {
                 id: 3,
-                name: 'Brute Force Login',
-                type: 'Authentication',
+                name: 'Zero-Day Exploit',
+                type: 'Unknown Vector',
                 severity: 'high',
-                source: '89.45.67.123',
-                target: 'Admin Panel',
-                status: 'AI Analyzing',
-                duration: '8 minutes',
-                attempts: '1,024'
+                source: '192.168.1.105',
+                target: 'Kernel Module',
+                status: '🔮 Predicting Variants',
+                duration: '3 minutes',
+                attempts: '127',
+                prediction: '4 variants predicted'
             },
             {
                 id: 4,
-                name: 'Port Scanning Activity',
-                type: 'Reconnaissance',
-                severity: 'medium',
-                source: '10.0.0.54',
-                target: 'Internal Network',
-                status: 'Auto-Blocked',
-                duration: '5 minutes',
-                attempts: '22'
+                name: 'Quantum Key Intercept',
+                type: 'Encryption Attack',
+                severity: 'high',
+                source: 'Quantum Computer Farm',
+                target: 'QKD Channel',
+                status: '🔐 Re-entangling',
+                duration: '8 minutes',
+                attempts: '1,024',
+                prediction: 'Countermeasure deployed'
             },
             {
                 id: 5,
-                name: 'Malware Communication',
-                type: 'Malware',
-                severity: 'critical',
-                source: 'Internal Host',
-                target: 'C&C Server',
-                status: 'Isolated by AI',
-                duration: '1 minute',
-                attempts: '3'
+                name: 'Behavioral Anomaly',
+                type: 'Insider Threat',
+                severity: 'medium',
+                source: 'Internal User',
+                target: 'Database Access',
+                status: '👁️ Monitoring',
+                duration: '15 minutes',
+                attempts: '892',
+                prediction: '73% false positive'
             },
             {
                 id: 6,
-                name: 'Data Exfiltration Attempt',
-                type: 'Data Breach',
-                severity: 'critical',
-                source: 'Process: svchost.exe',
-                target: 'Database Server',
-                status: 'Neutralized',
-                duration: '30 seconds',
-                attempts: '1'
+                name: 'Supply Chain Attack',
+                type: 'Third-Party Vector',
+                severity: 'high',
+                source: 'Compromised Library',
+                target: 'Dependencies',
+                status: '🔄 Isolating',
+                duration: '5 minutes',
+                attempts: '445',
+                prediction: '3 packages affected'
             },
             {
                 id: 7,
-                name: 'Suspicious DNS Queries',
-                type: 'Network',
-                severity: 'medium',
-                source: 'Multiple Hosts',
-                target: 'External Domains',
-                status: 'AI Learning',
-                duration: '15 minutes',
-                attempts: '892'
+                name: 'AI Model Poisoning',
+                type: 'Data Contamination',
+                severity: 'critical',
+                source: 'Training Dataset',
+                target: 'Neural Network',
+                status: '🧬 Self-Healing',
+                duration: '10 minutes',
+                attempts: '2,178',
+                prediction: 'Model integrity: 98.7%'
             }
         ];
 
-        // Populate threats
+        // Populate threats with enhanced features
         function populateThreats() {
             const grid = document.getElementById('threatGrid');
             grid.innerHTML = '';
             
-            threats.forEach(threat => {
+            threats.forEach((threat, index) => {
                 const card = document.createElement('div');
                 card.className = `threat-card ${threat.severity}`;
                 card.innerHTML = `
@@ -648,29 +1182,168 @@
                     </div>
                     <div class="threat-details">
                         <div class="detail-row">
-                            <span class="detail-label">Source:</span>
+                            <span class="detail-label">Source</span>
                             <span class="detail-value">${threat.source}</span>
                         </div>
                         <div class="detail-row">
-                            <span class="detail-label">Target:</span>
+                            <span class="detail-label">Target</span>
                             <span class="detail-value">${threat.target}</span>
                         </div>
                         <div class="detail-row">
-                            <span class="detail-label">Duration:</span>
+                            <span class="detail-label">Duration</span>
                             <span class="detail-value">${threat.duration}</span>
                         </div>
                         <div class="detail-row">
-                            <span class="detail-label">Attempts:</span>
+                            <span class="detail-label">Attempts</span>
                             <span class="detail-value">${threat.attempts}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Prediction</span>
+                            <span class="detail-value" style="color: var(--accent);">${threat.prediction}</span>
                         </div>
                     </div>
                     <div class="threat-status">
-                        <span class="status-badge">🤖 ${threat.status}</span>
+                        <span class="status-badge">${threat.status}</span>
                     </div>
                 `;
+                
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.addEventListener('click', () => showThreatDetails(threat));
                 grid.appendChild(card);
             });
         }
+
+        // Show threat details in chat
+        function showThreatDetails(threat) {
+            if (!chatOpen) {
+                toggleChat();
+            }
+            setTimeout(() => {
+                addChatMessage(`Analyzing ${threat.name}: ${threat.prediction}. Current status: ${threat.status}. Would you like to take manual control of this threat response?`, false);
+            }, 300);
+        }
+
+        // AI Chat System
+        let chatOpen = false;
+        
+        function toggleChat() {
+            chatOpen = !chatOpen;
+            const chatWindow = document.getElementById('aiChatWindow');
+            if (chatOpen) {
+                chatWindow.classList.add('active');
+            } else {
+                chatWindow.classList.remove('active');
+            }
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('aiChatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const messagesContainer = document.getElementById('aiChatMessages');
+            
+            // Add user message
+            addChatMessage(message, true);
+            input.value = '';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            // Simulate AI response
+            setTimeout(() => {
+                removeTypingIndicator();
+                const response = generateAIResponse(message);
+                addChatMessage(response, false);
+            }, 1500 + Math.random() * 1000);
+        }
+
+        function addChatMessage(message, isUser) {
+            const messagesContainer = document.getElementById('aiChatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'ai-message';
+            
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="ai-message-bubble ${isUser ? 'user' : ''}">
+                    ${message}
+                </div>
+                <div class="ai-message-time">${time}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('aiChatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'ai-typing';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function generateAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('ddos') || lowerMessage.includes('attack')) {
+                return '⚡ The Quantum DDoS attack is being handled by distributed AI nodes. Current mitigation: 94% effective. Predicted neutralization in 3.2 minutes. Manual override available if needed.';
+            }
+            
+            if (lowerMessage.includes('manual') || lowerMessage.includes('control')) {
+                return '🎛️ Manual control request acknowledged. Please specify: 1) Target threat ID, 2) Desired action (isolate/redirect/neutralize), 3) Duration of manual control. I\'ll maintain parallel monitoring.';
+            }
+            
+            if (lowerMessage.includes('predict') || lowerMessage.includes('future')) {
+                return '🔮 Predictive analysis shows: 78% probability of coordinated attack in next 6 hours. Primary vectors: API endpoints, quantum channels. I\'ve already deployed preemptive countermeasures.';
+            }
+            
+            if (lowerMessage.includes('status') || lowerMessage.includes('overview')) {
+                return '📊 Current threat landscape: 7 active threats (3 critical, 2 high, 2 medium). AI handling all autonomously with 99.7% success rate. Quantum entanglement stable at 0.97. All systems optimal.';
+            }
+            
+            if (lowerMessage.includes('learn') || lowerMessage.includes('adapt')) {
+                return '🧠 Learning system status: Continuously adapting to new threat patterns. Last update: 2.3 seconds ago. Model accuracy improved by 0.3% in last hour through adversarial training.';
+            }
+            
+            return '🤖 I\'m analyzing your query through quantum neural pathways. Could you provide more specific details about the threat or system you\'d like to investigate?';
+        }
+
+        // Enhanced feed messages
+        const feedMessages = [
+            '🛡️ Quantum shield deflected 1,247 malicious packets using predictive algorithms',
+            '🧠 AI learned new attack pattern: "Polymorphic quantum injection" - countermeasure developed',
+            '⚡ DDoS attack from 45.12.78.* neutralized. Attack vector isolated in quantum sandbox',
+            '🔐 Quantum key rotation completed. New 512-bit entangled keys distributed',
+            '🔍 Behavioral anomaly detected in user account. AI monitoring for 24 hours',
+            '📊 Threat prediction model updated. Accuracy increased to 99.8%',
+            '🎯 Zero-day exploit prevented through predictive analysis. Patch auto-generated',
+            '🧬 Neural network self-healed from poisoning attempt. Integrity: 100%',
+            '🌐 Global threat intelligence synchronized. 14 new attack vectors identified',
+            '⚠️ Supply chain attack detected and isolated. 3 dependencies quarantined',
+            '🤖 Autonomous response time improved by 12ms through quantum optimization',
+            '🔮 Future threat prediction: 92% chance of ransomware attempt in 48 hours'
+        ];
 
         // Add feed item
         function addFeedItem(message) {
@@ -696,56 +1369,51 @@
         function updateThreatCounts() {
             const active = document.getElementById('activeThreats');
             const neutralized = document.getElementById('neutralizedThreats');
+            const predicted = document.getElementById('predictedThreats');
             
-            active.textContent = Math.max(0, parseInt(active.textContent) - 1);
-            neutralized.textContent = parseInt(neutralized.textContent) + 1;
+            // Occasionally neutralize a threat
+            if (Math.random() > 0.7) {
+                active.textContent = Math.max(0, parseInt(active.textContent) - 1);
+                neutralized.textContent = parseInt(neutralized.textContent) + 1;
+            }
             
-            // Remove a threat card randomly
-            const cards = document.querySelectorAll('.threat-card');
-            if (cards.length > 0) {
-                const randomCard = cards[Math.floor(Math.random() * cards.length)];
-                randomCard.style.transition = 'all 0.5s ease';
-                randomCard.style.opacity = '0';
-                randomCard.style.transform = 'scale(0.8)';
-                setTimeout(() => randomCard.remove(), 500);
+            // Update predictions
+            if (Math.random() > 0.8) {
+                predicted.textContent = Math.floor(Math.random() * 5 + 10);
+            }
+            
+            // Sometimes remove a threat card
+            if (Math.random() > 0.9) {
+                const cards = document.querySelectorAll('.threat-card');
+                if (cards.length > 3) {
+                    const randomCard = cards[Math.floor(Math.random() * cards.length)];
+                    randomCard.style.transition = 'all 0.5s ease';
+                    randomCard.style.opacity = '0';
+                    randomCard.style.transform = 'scale(0.8)';
+                    setTimeout(() => randomCard.remove(), 500);
+                }
             }
         }
 
         // Auto-generate feed items
-        const feedMessages = [
-            '🤖 AI blocked suspicious connection from IP 192.168.1.45',
-            '🛡️ Firewall rules updated automatically. 127 malicious IPs blocked.',
-            '🔍 AI detected SQL injection pattern. Attack neutralized.',
-            '⚡ DDoS mitigation activated. Traffic normalized.',
-            '🧠 Machine learning model updated with new threat signatures.',
-            '🔐 Encryption keys rotated. All channels secure.',
-            '📊 Behavioral anomaly detected and contained.',
-            '✅ Port scan blocked. Source IP added to blacklist.',
-            '🎯 Malware signature identified. Quarantine successful.',
-            '🚀 System optimization complete. Performance increased by 15%.'
-        ];
-
         function autoGenerateFeed() {
             setInterval(() => {
                 const message = feedMessages[Math.floor(Math.random() * feedMessages.length)];
                 addFeedItem(message);
-                
-                // Occasionally update threat counts
-                if (Math.random() > 0.7) {
-                    updateThreatCounts();
-                }
+                updateThreatCounts();
             }, 5000);
         }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            initQuantumParticles();
             populateThreats();
             autoGenerateFeed();
             
             // Initial feed items
-            addFeedItem('🤖 Autonomous threat monitoring system online.');
-            addFeedItem('🧠 AI threat analysis engine active. No manual intervention required.');
-            addFeedItem('🛡️ All defense systems operating autonomously.');
+            addFeedItem('🤖 Quantum threat monitoring system online. All AI subsystems operational.');
+            addFeedItem('🧠 Predictive threat analysis engine activated. Learning from global patterns.');
+            addFeedItem('🛡️ Autonomous defense grid established. Zero human intervention required.');
         });
     </script>
 </body>
