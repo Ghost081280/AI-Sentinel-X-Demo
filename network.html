@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Scanner | AI Sentinel-X</title>
+    <title>Quantum Network Scanner | AI Sentinel-X</title>
     <style>
         * {
             margin: 0;
@@ -27,6 +27,7 @@
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
             --gradient-network: linear-gradient(135deg, #00ccff 0%, #0066ff 100%);
+            --gradient-hologram: linear-gradient(45deg, #00ff88, #00ccff, #7c3aed, #ff00ff);
         }
 
         body {
@@ -36,7 +37,7 @@
             min-height: 100vh;
         }
 
-        /* Network Background */
+        /* Enhanced Network Background */
         .network-bg {
             position: fixed;
             top: 0;
@@ -46,8 +47,9 @@
             pointer-events: none;
             z-index: 0;
             background: 
-                radial-gradient(circle at 25% 25%, rgba(0, 204, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 25% 25%, rgba(0, 204, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 255, 136, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
         }
 
         .grid-overlay {
@@ -66,6 +68,65 @@
             100% { transform: translate(50px, 50px); }
         }
 
+        .network-waves {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .wave-circle {
+            position: absolute;
+            border: 2px solid rgba(0, 204, 255, 0.3);
+            border-radius: 50%;
+            animation: waveExpand 4s ease-out infinite;
+        }
+
+        @keyframes waveExpand {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                width: 600px;
+                height: 600px;
+                opacity: 0;
+            }
+        }
+
+        .data-streams {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .data-particle {
+            position: absolute;
+            width: 3px;
+            height: 20px;
+            background: linear-gradient(180deg, transparent, var(--secondary), transparent);
+            animation: dataFlow 3s linear infinite;
+        }
+
+        @keyframes dataFlow {
+            0% {
+                transform: translateY(-100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
         .container {
             position: relative;
             z-index: 1;
@@ -74,17 +135,20 @@
             padding: 20px;
         }
 
-        /* Header */
+        /* Enhanced Header */
         .page-header {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 30px;
+            border-radius: 15px;
+            padding: 35px;
             margin-bottom: 30px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             text-align: center;
             position: relative;
             overflow: hidden;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(0, 204, 255, 0.05);
         }
 
         .scan-indicator {
@@ -95,6 +159,7 @@
             height: 3px;
             background: var(--gradient-network);
             animation: scanProgress 3s linear infinite;
+            box-shadow: 0 0 20px var(--secondary);
         }
 
         @keyframes scanProgress {
@@ -103,7 +168,7 @@
         }
 
         .page-title {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: bold;
             background: var(--gradient-network);
             -webkit-background-clip: text;
@@ -111,6 +176,7 @@
             background-clip: text;
             margin-bottom: 10px;
             letter-spacing: 3px;
+            text-shadow: 0 0 40px rgba(0, 204, 255, 0.5);
         }
 
         .page-subtitle {
@@ -120,66 +186,120 @@
             letter-spacing: 2px;
         }
 
-        /* Auto Scan Alert */
+        /* Enhanced Auto Scan Alert */
         .auto-scan-alert {
             background: rgba(0, 204, 255, 0.1);
-            border: 1px solid var(--secondary);
-            border-radius: 8px;
-            padding: 15px 20px;
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 20px 25px;
             margin-bottom: 30px;
             text-align: center;
             font-weight: bold;
             color: var(--secondary);
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 5px 20px rgba(0, 204, 255, 0.2),
+                inset 0 0 30px rgba(0, 204, 255, 0.05);
+        }
+
+        .auto-scan-alert::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 204, 255, 0.3), transparent);
+            animation: alertScan 4s linear infinite;
+        }
+
+        @keyframes alertScan {
+            to { left: 100%; }
         }
 
         /* Main Grid */
         .network-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 25px;
             margin-bottom: 30px;
         }
 
-        /* Network Map */
+        /* Enhanced Network Map */
         .network-map-panel {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(0, 0, 0, 0.2);
         }
 
         .panel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
             border-bottom: 1px solid var(--border);
         }
 
         .panel-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
+            text-shadow: 0 0 20px currentColor;
+        }
+
+        .panel-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: liveBlink 2s ease-in-out infinite;
+        }
+
+        @keyframes liveBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
         .network-visualization {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            height: 400px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 204, 255, 0.05) 100%);
+            border-radius: 15px;
+            height: 450px;
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .network-canvas {
+            position: absolute;
+            width: 100%;
+            height: 100%;
         }
 
         .network-node {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background: var(--gradient-1);
             border-radius: 50%;
             display: flex;
@@ -187,26 +307,45 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 24px;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            font-size: 28px;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 136, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            z-index: 10;
         }
 
         .network-node:hover {
             transform: scale(1.2);
-            z-index: 10;
+            z-index: 20;
+            box-shadow: 
+                0 0 50px rgba(0, 255, 136, 0.8),
+                inset 0 0 30px rgba(255, 255, 255, 0.2);
         }
 
         .node-router {
             background: var(--gradient-network);
-            width: 80px;
-            height: 80px;
-            font-size: 32px;
+            width: 90px;
+            height: 90px;
+            font-size: 36px;
+            z-index: 15;
+            animation: routerPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes routerPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 40px rgba(0, 204, 255, 0.6);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 60px rgba(0, 204, 255, 0.8);
+            }
         }
 
         .node-device {
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
         }
 
         .node-vulnerable {
@@ -215,26 +354,71 @@
         }
 
         @keyframes vulnerablePulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 68, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(255, 0, 68, 0.8); }
+            0%, 100% { 
+                box-shadow: 0 0 30px rgba(255, 0, 68, 0.5);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 50px rgba(255, 0, 68, 0.8);
+                transform: scale(1.1);
+            }
         }
 
         .connection-line {
             position: absolute;
             height: 2px;
-            background: rgba(0, 255, 136, 0.3);
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.5), transparent);
             transform-origin: left center;
+            z-index: 1;
+            animation: connectionPulse 3s linear infinite;
         }
 
-        /* Device List */
+        @keyframes connectionPulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+
+        .data-flow {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 20px currentColor;
+            animation: dataTransfer 2s linear infinite;
+        }
+
+        @keyframes dataTransfer {
+            0% {
+                transform: translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(200px);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced Device List */
         .device-list-panel {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
-            height: 500px;
+            border-radius: 15px;
+            padding: 25px;
+            height: 550px;
             display: flex;
             flex-direction: column;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(0, 0, 0, 0.2);
         }
 
         .device-list {
@@ -244,113 +428,180 @@
         }
 
         .device-item {
-            background: rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.02) 100%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 10px;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .device-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .device-item:hover::before {
+            left: 100%;
         }
 
         .device-item:hover {
-            background: rgba(0, 255, 136, 0.05);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 204, 255, 0.05) 100%);
             border-color: var(--primary);
             transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.2);
         }
 
         .device-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .device-name {
             font-weight: bold;
-            font-size: 16px;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .device-status {
-            padding: 4px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .status-secure {
             background: rgba(0, 255, 136, 0.2);
             color: var(--success);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
         }
 
         .status-vulnerable {
             background: rgba(255, 0, 68, 0.2);
             color: var(--danger);
+            box-shadow: 0 0 20px rgba(255, 0, 68, 0.3);
+            animation: vulnerableGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes vulnerableGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 68, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 0, 68, 0.5); }
         }
 
         .status-warning {
             background: rgba(255, 170, 0, 0.2);
             color: var(--warning);
+            box-shadow: 0 0 20px rgba(255, 170, 0, 0.3);
         }
 
         .device-details {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            font-size: 13px;
+            gap: 12px;
+            font-size: 14px;
         }
 
         .detail-item {
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 5px;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
         }
 
         .detail-label {
             color: var(--text-secondary);
-            font-size: 11px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .detail-value {
             color: var(--text-primary);
             font-family: 'Courier New', monospace;
+            font-weight: 500;
         }
 
-        /* Scan Results */
+        /* Enhanced Scan Results */
         .scan-results {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(0, 0, 0, 0.2);
         }
 
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
         }
 
         .result-card {
-            background: rgba(0, 255, 136, 0.05);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 255, 0.05) 100%);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 25px;
             text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-1);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .result-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
         }
 
         .result-value {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: bold;
             color: var(--secondary);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px currentColor;
         }
 
         .result-label {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* Back Button */
@@ -360,8 +611,8 @@
             left: 20px;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px 20px;
+            border-radius: 10px;
+            padding: 12px 24px;
             color: var(--primary);
             text-decoration: none;
             display: flex;
@@ -369,12 +620,205 @@
             gap: 10px;
             transition: all 0.3s ease;
             z-index: 100;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .back-btn:hover {
             background: var(--primary);
             color: var(--bg-darker);
             transform: translateX(-5px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        /* AI Chat Widget */
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .ai-chat-toggle {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-network);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 
+                0 5px 20px rgba(0, 204, 255, 0.4),
+                0 0 40px rgba(0, 204, 255, 0.3);
+            transition: all 0.3s ease;
+            font-size: 32px;
+            animation: chatNetworkPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes chatNetworkPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 
+                    0 5px 20px rgba(0, 204, 255, 0.4),
+                    0 0 40px rgba(0, 204, 255, 0.3);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 
+                    0 5px 30px rgba(0, 255, 136, 0.6),
+                    0 0 60px rgba(0, 255, 136, 0.5);
+            }
+        }
+
+        .ai-chat-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .ai-chat-window {
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            width: 400px;
+            height: 600px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(0, 204, 255, 0.1);
+            backdrop-filter: blur(20px);
+        }
+
+        .ai-chat-window.active {
+            display: flex;
+            animation: chatSlideIn 0.3s ease;
+        }
+
+        @keyframes chatSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .ai-chat-header {
+            background: var(--gradient-network);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ai-chat-close {
+            cursor: pointer;
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .ai-chat-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .ai-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ai-message {
+            animation: messageSlide 0.3s ease;
+        }
+
+        @keyframes messageSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ai-message-bubble {
+            background: rgba(0, 204, 255, 0.1);
+            border: 1px solid var(--secondary);
+            border-radius: 15px;
+            padding: 15px 20px;
+            max-width: 80%;
+            word-wrap: break-word;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .ai-message-bubble.user {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--primary);
+            align-self: flex-end;
+        }
+
+        .ai-message-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .ai-chat-input-container {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .ai-chat-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .ai-chat-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: rgba(0, 204, 255, 0.05);
+            box-shadow: 0 0 20px rgba(0, 204, 255, 0.2);
+        }
+
+        .ai-chat-send {
+            background: var(--gradient-network);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ai-chat-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 204, 255, 0.4);
         }
 
         /* Mobile Responsive */
@@ -391,58 +835,76 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 10px;
+                padding: 15px;
             }
             
             .page-header {
-                padding: 20px;
+                padding: 25px;
             }
             
             .page-title {
-                font-size: 28px;
+                font-size: 32px;
             }
             
             .network-visualization {
-                height: 300px;
+                height: 350px;
             }
             
             .network-node {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-            }
-            
-            .node-router {
                 width: 60px;
                 height: 60px;
                 font-size: 24px;
             }
             
+            .node-router {
+                width: 70px;
+                height: 70px;
+                font-size: 28px;
+            }
+            
             .node-device {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
             }
             
             .back-btn {
                 top: 10px;
                 left: 10px;
-                padding: 8px 15px;
-                font-size: 14px;
+                padding: 10px 18px;
+                font-size: 13px;
             }
             
             .device-details {
                 grid-template-columns: 1fr;
             }
+            
+            .ai-chat-widget {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .ai-chat-toggle {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+            }
+            
+            .ai-chat-window {
+                width: calc(100vw - 40px);
+                height: calc(100vh - 120px);
+                right: -20px;
+                bottom: 80px;
+            }
         }
 
         @media (max-width: 480px) {
             .page-title {
-                font-size: 24px;
+                font-size: 26px;
             }
             
             .page-subtitle {
-                font-size: 12px;
+                font-size: 13px;
             }
             
             .results-grid {
@@ -450,7 +912,7 @@
             }
             
             .result-value {
-                font-size: 24px;
+                font-size: 28px;
             }
             
             .back-btn span {
@@ -459,6 +921,22 @@
             
             .back-btn::after {
                 content: 'Back';
+            }
+            
+            .device-item {
+                padding: 15px;
+            }
+            
+            .device-name {
+                font-size: 15px;
+            }
+            
+            .ai-chat-window {
+                width: 100vw;
+                height: 100vh;
+                right: 0;
+                bottom: 0;
+                border-radius: 0;
             }
         }
 
@@ -500,51 +978,57 @@
     <!-- Back Button -->
     <a href="dashboard.html" class="back-btn">
         <span>←</span>
-        <span>Back to Dashboard</span>
+        <span>Back</span>
     </a>
 
-    <!-- Network Background -->
+    <!-- Enhanced Network Background -->
     <div class="network-bg">
         <div class="grid-overlay"></div>
+        <div class="network-waves" id="networkWaves"></div>
+        <div class="data-streams" id="dataStreams"></div>
     </div>
 
     <!-- Container -->
     <div class="container">
-        <!-- Page Header -->
+        <!-- Enhanced Page Header -->
         <div class="page-header">
             <div class="scan-indicator"></div>
-            <h1 class="page-title">NETWORK SCANNER</h1>
-            <p class="page-subtitle">Autonomous Network Discovery & Analysis</p>
+            <h1 class="page-title">QUANTUM NETWORK SCANNER</h1>
+            <p class="page-subtitle">AI-Powered Network Discovery & Vulnerability Analysis</p>
         </div>
 
-        <!-- Auto Scan Alert -->
+        <!-- Enhanced Auto Scan Alert -->
         <div class="auto-scan-alert">
-            🤖 Continuous autonomous scanning active. All network changes are detected and analyzed automatically.
+            🌐 Continuous quantum scanning active. All network changes detected in real-time using AI prediction algorithms.
         </div>
 
         <!-- Main Grid -->
         <div class="network-grid">
-            <!-- Network Map -->
+            <!-- Enhanced Network Map -->
             <div class="network-map-panel">
                 <div class="panel-header">
-                    <h2 class="panel-title">Network Topology</h2>
-                    <span style="color: var(--text-secondary); font-size: 14px;">Auto-mapped</span>
+                    <h2 class="panel-title">Live Network Topology</h2>
+                    <span class="panel-subtitle">
+                        <span class="live-dot"></span>
+                        Auto-mapped
+                    </span>
                 </div>
                 <div class="network-visualization" id="networkMap">
+                    <canvas class="network-canvas" id="networkCanvas"></canvas>
                     <!-- Central Router -->
-                    <div class="network-node node-router" style="top: 50%; left: 50%; transform: translate(-50%, -50%);" title="Gateway Router">
+                    <div class="network-node node-router" style="top: 50%; left: 50%; transform: translate(-50%, -50%);" title="Quantum Gateway Router">
                         🌐
                     </div>
-                    <!-- Devices populated by JavaScript -->
+                    <!-- Devices will be populated by JavaScript -->
                 </div>
             </div>
 
-            <!-- Device List -->
+            <!-- Enhanced Device List -->
             <div class="device-list-panel">
                 <div class="panel-header">
                     <h2 class="panel-title">Discovered Devices</h2>
-                    <span style="color: var(--text-secondary); font-size: 14px;">
-                        <span id="deviceCount">8</span> devices
+                    <span class="panel-subtitle">
+                        <span id="deviceCount">8</span> devices | <span id="newDevices">0</span> new
                     </span>
                 </div>
                 <div class="device-list" id="deviceList">
@@ -553,10 +1037,10 @@
             </div>
         </div>
 
-        <!-- Scan Results -->
+        <!-- Enhanced Scan Results -->
         <div class="scan-results">
             <div class="panel-header">
-                <h2 class="panel-title">Real-time Statistics</h2>
+                <h2 class="panel-title">Real-time Network Intelligence</h2>
             </div>
             <div class="results-grid">
                 <div class="result-card">
@@ -576,36 +1060,93 @@
                     <div class="result-label">Secure Devices</div>
                 </div>
                 <div class="result-card">
-                    <div class="result-value" id="scanTime">∞</div>
-                    <div class="result-label">Continuous</div>
+                    <div class="result-value" id="bandwidth">847</div>
+                    <div class="result-label">Mb/s Traffic</div>
                 </div>
                 <div class="result-card">
-                    <div class="result-value" id="shodanHits" style="color: var(--secondary);">3</div>
-                    <div class="result-label">Shodan Intel</div>
+                    <div class="result-value" id="aiPredictions" style="color: var(--accent);">3</div>
+                    <div class="result-label">AI Predictions</div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- AI Chat Widget -->
+    <div class="ai-chat-widget">
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-chat-header">
+                <span>NETWORK SCANNER AI</span>
+                <span class="ai-chat-close" onclick="toggleChat()">×</span>
+            </div>
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="ai-message">
+                    <div class="ai-message-bubble">
+                        Welcome to Quantum Network Scanner. I continuously monitor your network topology, detect vulnerabilities, and predict potential threats. How can I assist with your network security?
+                    </div>
+                    <div class="ai-message-time">Just now</div>
+                </div>
+            </div>
+            <div class="ai-chat-input-container">
+                <input 
+                    type="text" 
+                    class="ai-chat-input" 
+                    id="aiChatInput" 
+                    placeholder="Ask about devices, vulnerabilities, or request manual scan..."
+                    onkeypress="handleChatKeyPress(event)"
+                >
+                <button class="ai-chat-send" onclick="sendChatMessage()">SEND</button>
+            </div>
+        </div>
+        <div class="ai-chat-toggle" onclick="toggleChat()">🤖</div>
+    </div>
+
     <script>
-        // Sample devices
+        // Enhanced devices data
         const devices = [
-            { name: 'Gateway Router', ip: '192.168.1.1', mac: 'AA:BB:CC:DD:EE:01', type: 'Router', status: 'secure', icon: '🌐' },
-            { name: 'Web Server', ip: '192.168.1.10', mac: 'AA:BB:CC:DD:EE:02', type: 'Server', status: 'secure', icon: '🖥️' },
-            { name: 'Database Server', ip: '192.168.1.20', mac: 'AA:BB:CC:DD:EE:03', type: 'Server', status: 'warning', icon: '🗄️' },
-            { name: 'IoT Camera', ip: '192.168.1.45', mac: 'AA:BB:CC:DD:EE:04', type: 'IoT', status: 'vulnerable', icon: '📹' },
-            { name: 'Smart TV', ip: '192.168.1.55', mac: 'AA:BB:CC:DD:EE:05', type: 'IoT', status: 'warning', icon: '📺' },
-            { name: 'Workstation PC', ip: '192.168.1.101', mac: 'AA:BB:CC:DD:EE:06', type: 'Computer', status: 'secure', icon: '💻' },
-            { name: 'MacBook Pro', ip: '192.168.1.102', mac: 'AA:BB:CC:DD:EE:07', type: 'Computer', status: 'secure', icon: '💻' },
-            { name: 'Network Printer', ip: '192.168.1.200', mac: 'AA:BB:CC:DD:EE:08', type: 'Printer', status: 'warning', icon: '🖨️' }
+            { id: 1, name: 'Quantum Gateway Router', ip: '192.168.1.1', mac: 'AA:BB:CC:DD:EE:01', type: 'Router', status: 'secure', icon: '🌐', ports: '80,443,22', os: 'RouterOS 7.x' },
+            { id: 2, name: 'AI Processing Server', ip: '192.168.1.10', mac: 'AA:BB:CC:DD:EE:02', type: 'Server', status: 'secure', icon: '🖥️', ports: '80,443,3389', os: 'Ubuntu 22.04' },
+            { id: 3, name: 'Database Cluster', ip: '192.168.1.20', mac: 'AA:BB:CC:DD:EE:03', type: 'Server', status: 'warning', icon: '🗄️', ports: '3306,5432', os: 'CentOS 8' },
+            { id: 4, name: 'IoT Security Camera', ip: '192.168.1.45', mac: 'AA:BB:CC:DD:EE:04', type: 'IoT', status: 'vulnerable', icon: '📹', ports: '554,8080', os: 'Embedded Linux' },
+            { id: 5, name: 'Smart TV', ip: '192.168.1.55', mac: 'AA:BB:CC:DD:EE:05', type: 'IoT', status: 'warning', icon: '📺', ports: '9000,7000', os: 'WebOS 5.0' },
+            { id: 6, name: 'Development Workstation', ip: '192.168.1.101', mac: 'AA:BB:CC:DD:EE:06', type: 'Computer', status: 'secure', icon: '💻', ports: '3000,8080', os: 'Windows 11' },
+            { id: 7, name: 'MacBook Pro M2', ip: '192.168.1.102', mac: 'AA:BB:CC:DD:EE:07', type: 'Computer', status: 'secure', icon: '💻', ports: 'Stealth', os: 'macOS Ventura' },
+            { id: 8, name: 'Network Printer', ip: '192.168.1.200', mac: 'AA:BB:CC:DD:EE:08', type: 'Printer', status: 'warning', icon: '🖨️', ports: '9100,631', os: 'Embedded' }
         ];
 
-        // Initialize network map
+        // Initialize network waves
+        function initNetworkWaves() {
+            const container = document.getElementById('networkWaves');
+            setInterval(() => {
+                const wave = document.createElement('div');
+                wave.className = 'wave-circle';
+                wave.style.left = '50%';
+                wave.style.top = '50%';
+                wave.style.transform = 'translate(-50%, -50%)';
+                container.appendChild(wave);
+                
+                setTimeout(() => wave.remove(), 4000);
+            }, 2000);
+        }
+
+        // Initialize data streams
+        function initDataStreams() {
+            const container = document.getElementById('dataStreams');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'data-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Initialize network map with enhanced visualization
         function initNetworkMap() {
             const map = document.getElementById('networkMap');
             const centerX = map.offsetWidth / 2;
             const centerY = map.offsetHeight / 2;
-            const radius = 150;
+            const radius = 160;
             
             // Add device nodes (skip router which is already in HTML)
             devices.slice(1).forEach((device, index) => {
@@ -613,17 +1154,7 @@
                 const x = centerX + Math.cos(angle) * radius;
                 const y = centerY + Math.sin(angle) * radius;
                 
-                // Create node
-                const node = document.createElement('div');
-                node.className = `network-node node-device ${device.status === 'vulnerable' ? 'node-vulnerable' : ''}`;
-                node.style.left = x + 'px';
-                node.style.top = y + 'px';
-                node.style.transform = 'translate(-50%, -50%)';
-                node.title = device.name;
-                node.textContent = device.icon;
-                map.appendChild(node);
-                
-                // Create connection line
+                // Create connection line first (so it appears behind nodes)
                 const line = document.createElement('div');
                 line.className = 'connection-line';
                 const lineLength = radius;
@@ -635,10 +1166,37 @@
                 line.style.transform = `rotate(${lineAngle}deg)`;
                 line.style.transformOrigin = 'left center';
                 map.appendChild(line);
+                
+                // Add data flow animation
+                const dataFlow = document.createElement('div');
+                dataFlow.className = 'data-flow';
+                dataFlow.style.animationDelay = Math.random() * 2 + 's';
+                line.appendChild(dataFlow);
+                
+                // Create node
+                const node = document.createElement('div');
+                node.className = `network-node node-device ${device.status === 'vulnerable' ? 'node-vulnerable' : ''}`;
+                node.style.left = x + 'px';
+                node.style.top = y + 'px';
+                node.style.transform = 'translate(-50%, -50%)';
+                node.title = `${device.name}\n${device.ip}\n${device.os}`;
+                node.textContent = device.icon;
+                node.onclick = () => showDeviceDetails(device);
+                map.appendChild(node);
             });
         }
 
-        // Populate device list
+        // Show device details in chat
+        function showDeviceDetails(device) {
+            if (!chatOpen) {
+                toggleChat();
+            }
+            setTimeout(() => {
+                addChatMessage(`Analyzing ${device.name}: IP ${device.ip}, OS: ${device.os}, Open ports: ${device.ports}. Status: ${device.status.toUpperCase()}. Would you like me to perform a deep vulnerability scan?`, false);
+            }, 300);
+        }
+
+        // Populate device list with enhanced details
         function populateDeviceList() {
             const list = document.getElementById('deviceList');
             list.innerHTML = '';
@@ -648,7 +1206,10 @@
                 item.className = 'device-item';
                 item.innerHTML = `
                     <div class="device-header">
-                        <div class="device-name">${device.icon} ${device.name}</div>
+                        <div class="device-name">
+                            <span style="font-size: 24px;">${device.icon}</span>
+                            <span>${device.name}</span>
+                        </div>
                         <div class="device-status status-${device.status}">${device.status}</div>
                     </div>
                     <div class="device-details">
@@ -665,11 +1226,20 @@
                             <span class="detail-value">${device.type}</span>
                         </div>
                         <div class="detail-item">
-                            <span class="detail-label">AI Status</span>
-                            <span class="detail-value">Auto-monitored</span>
+                            <span class="detail-label">Operating System</span>
+                            <span class="detail-value">${device.os}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Open Ports</span>
+                            <span class="detail-value">${device.ports}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">AI Monitoring</span>
+                            <span class="detail-value" style="color: var(--success);">Active</span>
                         </div>
                     </div>
                 `;
+                item.onclick = () => showDeviceDetails(device);
                 list.appendChild(item);
             });
         }
@@ -679,7 +1249,8 @@
             // Randomly change some values to show autonomous scanning
             const vulnerabilities = document.getElementById('vulnerabilities');
             const openPorts = document.getElementById('openPorts');
-            const shodanHits = document.getElementById('shodanHits');
+            const bandwidth = document.getElementById('bandwidth');
+            const aiPredictions = document.getElementById('aiPredictions');
             
             // Occasionally change vulnerability count
             if (Math.random() > 0.8) {
@@ -693,33 +1264,192 @@
                 openPorts.textContent = Math.max(10, current + Math.floor(Math.random() * 3 - 1));
             }
             
-            // Update Shodan hits
+            // Update bandwidth
+            bandwidth.textContent = Math.floor(700 + Math.random() * 300);
+            
+            // Update AI predictions
             if (Math.random() > 0.9) {
-                const current = parseInt(shodanHits.textContent);
-                shodanHits.textContent = Math.min(10, current + 1);
+                const current = parseInt(aiPredictions.textContent);
+                aiPredictions.textContent = Math.min(10, current + 1);
             }
         }
 
         // Add new device (simulate discovery)
         function discoverNewDevice() {
             if (Math.random() > 0.95 && devices.length < 12) {
+                const deviceTypes = [
+                    { name: 'Smart Speaker', icon: '🔊', type: 'IoT', os: 'Alexa OS' },
+                    { name: 'NAS Server', icon: '💾', type: 'Server', os: 'DSM 7.0' },
+                    { name: 'Gaming Console', icon: '🎮', type: 'Entertainment', os: 'Custom OS' },
+                    { name: 'Smart Thermostat', icon: '🌡️', type: 'IoT', os: 'Embedded' }
+                ];
+                
+                const randomType = deviceTypes[Math.floor(Math.random() * deviceTypes.length)];
                 const newDevice = {
-                    name: 'New Device',
+                    id: devices.length + 1,
+                    name: randomType.name,
                     ip: `192.168.1.${Math.floor(Math.random() * 50 + 150)}`,
                     mac: `AA:BB:CC:DD:EE:${Math.floor(Math.random() * 99).toString().padStart(2, '0')}`,
-                    type: 'Unknown',
-                    status: 'warning',
-                    icon: '❓'
+                    type: randomType.type,
+                    status: Math.random() > 0.7 ? 'secure' : 'warning',
+                    icon: randomType.icon,
+                    ports: Math.random() > 0.5 ? '80,443' : 'Stealth',
+                    os: randomType.os
                 };
+                
                 devices.push(newDevice);
                 document.getElementById('deviceCount').textContent = devices.length;
                 document.getElementById('totalDevices').textContent = devices.length;
+                
+                const newCount = document.getElementById('newDevices');
+                newCount.textContent = parseInt(newCount.textContent) + 1;
+                
                 populateDeviceList();
+                
+                // Reinitialize map to show new device
+                const map = document.getElementById('networkMap');
+                // Clear existing nodes and lines (except router)
+                const nodes = map.querySelectorAll('.network-node:not(.node-router)');
+                const lines = map.querySelectorAll('.connection-line');
+                nodes.forEach(node => node.remove());
+                lines.forEach(line => line.remove());
+                initNetworkMap();
+                
+                // Add chat notification
+                addChatMessage(`🔍 New device discovered: ${newDevice.name} (${newDevice.ip}). Running automatic security assessment...`, false);
             }
+        }
+
+        // AI Chat System
+        let chatOpen = false;
+        
+        function toggleChat() {
+            chatOpen = !chatOpen;
+            const chatWindow = document.getElementById('aiChatWindow');
+            if (chatOpen) {
+                chatWindow.classList.add('active');
+            } else {
+                chatWindow.classList.remove('active');
+            }
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('aiChatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const messagesContainer = document.getElementById('aiChatMessages');
+            
+            // Add user message
+            addChatMessage(message, true);
+            input.value = '';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            // Simulate AI response
+            setTimeout(() => {
+                removeTypingIndicator();
+                const response = generateAIResponse(message);
+                addChatMessage(response, false);
+            }, 1500 + Math.random() * 1000);
+        }
+
+        function addChatMessage(message, isUser) {
+            const messagesContainer = document.getElementById('aiChatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'ai-message';
+            
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="ai-message-bubble ${isUser ? 'user' : ''}">
+                    ${message}
+                </div>
+                <div class="ai-message-time">${time}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('aiChatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'ai-typing';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.style.display = 'flex';
+            typingDiv.style.gap = '5px';
+            typingDiv.style.padding = '10px';
+            
+            for (let i = 0; i < 3; i++) {
+                const dot = document.createElement('div');
+                dot.style.width = '8px';
+                dot.style.height = '8px';
+                dot.style.background = 'var(--secondary)';
+                dot.style.borderRadius = '50%';
+                dot.style.animation = 'typingDot 1.4s ease-in-out infinite';
+                dot.style.animationDelay = `${i * 0.2}s`;
+                typingDiv.appendChild(dot);
+            }
+            
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function generateAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('scan') || lowerMessage.includes('vulnerability')) {
+                return '🔍 Initiating deep vulnerability scan... Found 2 critical vulnerabilities: 1) IoT Camera has default credentials, 2) Database server MySQL port exposed. I can automatically patch these or provide manual remediation steps.';
+            }
+            
+            if (lowerMessage.includes('device') && (lowerMessage.includes('new') || lowerMessage.includes('unknown'))) {
+                return '📡 I detect all new devices within 0.3 seconds of connection. Current monitoring: ' + devices.length + ' devices. Unknown device protocols are analyzed using AI pattern recognition. Shodan integration provides external threat intelligence.';
+            }
+            
+            if (lowerMessage.includes('secure') || lowerMessage.includes('security')) {
+                return '🛡️ Network security status: ' + document.getElementById('secureDevices').textContent + ' devices secure, ' + document.getElementById('vulnerabilities').textContent + ' vulnerabilities detected. Quantum encryption active on critical paths. Would you like a detailed security report?';
+            }
+            
+            if (lowerMessage.includes('manual') || lowerMessage.includes('control')) {
+                return '🎛️ Manual control options: 1) Force network scan, 2) Isolate specific device, 3) Change security policies, 4) Export network map. Please specify your requirement.';
+            }
+            
+            if (lowerMessage.includes('port') || lowerMessage.includes('service')) {
+                return '🔌 Currently monitoring ' + document.getElementById('openPorts').textContent + ' open ports across all devices. Critical services: SSH(22), HTTP(80), HTTPS(443), RDP(3389). Unusual ports are flagged for investigation.';
+            }
+            
+            if (lowerMessage.includes('bandwidth') || lowerMessage.includes('traffic')) {
+                return '📊 Current network traffic: ' + document.getElementById('bandwidth').textContent + ' Mb/s. Traffic analysis shows normal patterns. No DDoS or unusual data exfiltration detected. Peak hours: 9-11 AM, 2-4 PM.';
+            }
+            
+            if (lowerMessage.includes('iot') || lowerMessage.includes('camera') || lowerMessage.includes('printer')) {
+                const iotDevices = devices.filter(d => d.type === 'IoT' || d.type === 'Printer').length;
+                return '📱 IoT device analysis: ' + iotDevices + ' IoT/embedded devices detected. These are high-risk targets. I recommend isolating them on a separate VLAN. The security camera needs immediate firmware update.';
+            }
+            
+            return '🤖 I\'m analyzing your network query. Please specify if you need information about specific devices, vulnerabilities, or network policies.';
         }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            initNetworkWaves();
+            initDataStreams();
+            
             // Wait for layout to complete before positioning nodes
             setTimeout(() => {
                 initNetworkMap();
@@ -727,11 +1457,25 @@
             
             populateDeviceList();
             
-            // Auto-update every 5 seconds
+            // Auto-update every 3 seconds
             setInterval(() => {
                 updateStats();
                 discoverNewDevice();
-            }, 5000);
+            }, 3000);
+            
+            // Add periodic network events to chat
+            setInterval(() => {
+                if (Math.random() > 0.8 && chatOpen) {
+                    const events = [
+                        '🌐 Network topology verified. All connections stable.',
+                        '🔒 Port scan completed. No unauthorized services detected.',
+                        '📡 Bandwidth analysis: Normal usage patterns confirmed.',
+                        '🛡️ Firewall rules updated based on traffic analysis.',
+                        '⚡ Network optimization applied. Latency reduced by 12ms.'
+                    ];
+                    addChatMessage(events[Math.floor(Math.random() * events.length)], false);
+                }
+            }, 25000);
         });
 
         // Handle window resize
@@ -742,8 +1486,24 @@
             const lines = map.querySelectorAll('.connection-line');
             nodes.forEach(node => node.remove());
             lines.forEach(line => line.remove());
-            initNetworkMap();
+            setTimeout(() => initNetworkMap(), 100);
         });
+
+        // Add CSS animation for typing dots
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes typingDot {
+                0%, 60%, 100% {
+                    transform: translateY(0);
+                    opacity: 0.7;
+                }
+                30% {
+                    transform: translateY(-10px);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
