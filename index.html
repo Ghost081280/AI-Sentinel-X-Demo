@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Sentinel-X | Autonomous Security Agent</title>
+    <title>AI Sentinel-X | Next-Gen Autonomous Security</title>
     <style>
         * {
             margin: 0;
@@ -26,6 +26,7 @@
             --text-secondary: #8892b0;
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-shield: linear-gradient(135deg, #1a4d2e 0%, #00ff88 50%, #00ccff 100%);
+            --gradient-hologram: linear-gradient(45deg, #00ff88, #00ccff, #7c3aed, #ff00ff);
         }
 
         body {
@@ -40,7 +41,7 @@
             overflow-x: hidden;
         }
 
-        /* Matrix Background */
+        /* Enhanced Matrix Background */
         .matrix-bg {
             position: fixed;
             top: 0;
@@ -50,6 +51,7 @@
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
+            background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.03) 0%, transparent 70%);
         }
 
         .matrix-column {
@@ -61,6 +63,25 @@
             opacity: 0.1;
             font-family: 'Courier New', monospace;
             white-space: nowrap;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .hologram-grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: hologramShift 30s linear infinite;
+            transform: perspective(1000px) rotateX(60deg) translateZ(0);
+            transform-origin: center;
+        }
+
+        @keyframes hologramShift {
+            0% { transform: perspective(1000px) rotateX(60deg) translateZ(0) translateY(0); }
+            100% { transform: perspective(1000px) rotateX(60deg) translateZ(0) translateY(-50px); }
         }
 
         @keyframes matrixFall {
@@ -80,8 +101,33 @@
             width: 100%;
             max-width: 500px;
             backdrop-filter: blur(20px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(0, 255, 136, 0.02);
             animation: loginSlideIn 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--gradient-hologram);
+            border-radius: 20px;
+            opacity: 0;
+            z-index: -1;
+            animation: hologramBorder 4s linear infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes hologramBorder {
+            0% { opacity: 0; background-position: 0% 50%; }
+            50% { opacity: 0.5; background-position: 100% 50%; }
+            100% { opacity: 0; background-position: 0% 50%; }
         }
 
         @keyframes loginSlideIn {
@@ -95,15 +141,16 @@
             }
         }
 
-        /* Logo */
+        /* Enhanced Logo */
         .logo-section {
             text-align: center;
             margin-bottom: 30px;
+            position: relative;
         }
 
         .sentinel-logo {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             margin: 0 auto 20px;
             position: relative;
             display: flex;
@@ -118,27 +165,64 @@
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             position: relative;
             animation: shieldPulse 3s ease-in-out infinite;
-            box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
+            box-shadow: 
+                0 0 50px rgba(0, 255, 136, 0.5),
+                inset 0 0 30px rgba(0, 255, 136, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
+        .logo-particles {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            top: -25%;
+            left: -25%;
+            pointer-events: none;
+        }
+
+        .particle-orbit {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: particleOrbit 10s linear infinite;
+        }
+
+        @keyframes particleOrbit {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px currentColor;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
         .logo-eye {
             position: absolute;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: var(--bg-darker);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 20px rgba(0, 255, 136, 0.3);
+            box-shadow: 
+                inset 0 0 30px rgba(0, 255, 136, 0.3),
+                0 0 20px rgba(0, 0, 0, 0.5);
         }
 
         .logo-iris {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             background: var(--gradient-1);
             border-radius: 50%;
             position: relative;
@@ -147,15 +231,33 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 136, 0.8),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         .logo-iris::before {
             content: '';
             position: absolute;
-            width: 12px;
-            height: 12px;
+            width: 15px;
+            height: 15px;
             background: var(--bg-darker);
             border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .iris-scan {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            animation: irisScan 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes irisScan {
+            0%, 100% { transform: translateY(-20px); opacity: 0; }
+            50% { transform: translateY(20px); opacity: 1; }
         }
 
         @keyframes shieldPulse {
@@ -170,12 +272,12 @@
         }
 
         @keyframes irisGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(0, 204, 255, 0.8); }
+            0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 136, 0.5); }
+            50% { box-shadow: 0 0 50px rgba(0, 204, 255, 0.8); }
         }
 
         .login-title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
             background: var(--gradient-1);
             -webkit-background-clip: text;
@@ -183,6 +285,7 @@
             background-clip: text;
             letter-spacing: 3px;
             margin-bottom: 8px;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
         }
 
         .login-subtitle {
@@ -192,13 +295,14 @@
             letter-spacing: 2px;
         }
 
-        /* Form */
+        /* Enhanced Form */
         .login-form {
             margin-top: 25px;
         }
 
         .input-group {
             margin-bottom: 18px;
+            position: relative;
         }
 
         .input-label {
@@ -213,33 +317,44 @@
         }
 
         .input-icon {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             background: rgba(0, 255, 136, 0.2);
-            border-radius: 4px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 14px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 255, 136, 0.3); }
+            50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(0, 255, 136, 0.5); }
         }
 
         .input-field {
             width: 100%;
-            padding: 14px 16px;
+            padding: 16px 18px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            border-radius: 10px;
             color: var(--text-primary);
-            font-size: 14px;
+            font-size: 15px;
             font-family: 'Courier New', monospace;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .input-field:focus {
             outline: none;
             border-color: var(--primary);
             background: rgba(0, 255, 136, 0.05);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+            box-shadow: 
+                0 0 30px rgba(0, 255, 136, 0.3),
+                inset 0 0 20px rgba(0, 255, 136, 0.05);
+            transform: translateY(-2px);
         }
 
         .input-field::placeholder {
@@ -247,13 +362,13 @@
             opacity: 0.5;
         }
 
-        /* Login Button */
+        /* Enhanced Login Button */
         .login-btn {
             width: 100%;
-            padding: 16px;
+            padding: 18px;
             background: var(--gradient-1);
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             color: var(--bg-darker);
             font-size: 16px;
             font-weight: bold;
@@ -264,53 +379,58 @@
             position: relative;
             overflow: hidden;
             margin-top: 25px;
+            box-shadow: 
+                0 5px 20px rgba(0, 255, 136, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
         .login-btn::before {
             content: '';
             position: absolute;
             top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
         }
 
         .login-btn:hover::before {
-            width: 300px;
-            height: 300px;
+            left: 100%;
         }
 
         .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 
+                0 10px 30px rgba(0, 255, 136, 0.5),
+                inset 0 0 30px rgba(255, 255, 255, 0.2);
         }
 
         .login-btn:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
         }
 
-        /* Status Message */
+        /* Enhanced Status Message */
         .status-message {
             margin-top: 18px;
             text-align: center;
             font-size: 13px;
             min-height: 20px;
             color: var(--text-secondary);
+            transition: all 0.3s ease;
         }
 
         .status-message.error {
             color: var(--danger);
+            text-shadow: 0 0 10px currentColor;
         }
 
         .status-message.success {
             color: var(--success);
+            text-shadow: 0 0 10px currentColor;
         }
 
-        /* Demo Info */
+        /* Enhanced Demo Info */
         .demo-info {
             margin-top: 25px;
             padding-top: 25px;
@@ -327,27 +447,65 @@
         .demo-credentials {
             background: rgba(0, 255, 136, 0.05);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 12px;
             margin-top: 10px;
             font-family: 'Courier New', monospace;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 5px 20px rgba(0, 255, 136, 0.1),
+                inset 0 0 20px rgba(0, 255, 136, 0.02);
         }
 
-        /* Loading Animation */
+        /* Enhanced Loading Animation */
         .loading {
             display: inline-block;
             width: 20px;
             height: 20px;
             border: 2px solid var(--bg-darker);
             border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 1s ease-in-out infinite;
+            border-top-color: var(--bg-darker);
+            border-right-color: rgba(255, 255, 255, 0.3);
+            animation: quantumSpin 1s ease-in-out infinite;
             vertical-align: middle;
             margin-right: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
         }
 
-        @keyframes spin {
+        @keyframes quantumSpin {
             to { transform: rotate(360deg); }
+        }
+
+        /* Biometric Scanner Effect */
+        .biometric-scanner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .biometric-scanner.active {
+            opacity: 1;
+        }
+
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: biometricScan 2s ease-in-out;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        @keyframes biometricScan {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
         }
 
         /* Mobile Responsive */
@@ -362,7 +520,64 @@
             }
             
             .login-title {
-                font-size: 24px;
+                font-size: 26px;
+            }
+            
+            .sentinel-logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .logo-eye {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .logo-iris {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .logo-iris::before {
+                width: 12px;
+                height: 12px;
+            }
+            
+            .input-field {
+                padding: 14px 16px;
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+            
+            .login-btn {
+                padding: 16px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            body {
+                padding: 10px;
+            }
+            
+            .login-container {
+                padding: 25px 15px;
+            }
+            
+            .login-title {
+                font-size: 22px;
+                letter-spacing: 2px;
+            }
+            
+            .login-subtitle {
+                font-size: 11px;
+            }
+            
+            .input-label {
+                font-size: 11px;
+            }
+            
+            .demo-info {
+                font-size: 11px;
             }
             
             .sentinel-logo {
@@ -379,48 +594,6 @@
                 width: 28px;
                 height: 28px;
             }
-            
-            .logo-iris::before {
-                width: 10px;
-                height: 10px;
-            }
-            
-            .input-field {
-                padding: 12px 14px;
-                font-size: 16px; /* Prevent zoom on iOS */
-            }
-            
-            .login-btn {
-                padding: 14px;
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 400px) {
-            body {
-                padding: 10px;
-            }
-            
-            .login-container {
-                padding: 25px 15px;
-            }
-            
-            .login-title {
-                font-size: 20px;
-                letter-spacing: 2px;
-            }
-            
-            .login-subtitle {
-                font-size: 11px;
-            }
-            
-            .input-label {
-                font-size: 11px;
-            }
-            
-            .demo-info {
-                font-size: 11px;
-            }
         }
 
         /* Landscape Mobile */
@@ -434,23 +607,23 @@
             }
             
             .sentinel-logo {
-                width: 60px;
-                height: 60px;
+                width: 70px;
+                height: 70px;
                 margin-bottom: 10px;
             }
             
             .logo-eye {
-                width: 30px;
-                height: 30px;
+                width: 35px;
+                height: 35px;
             }
             
             .logo-iris {
-                width: 20px;
-                height: 20px;
+                width: 25px;
+                height: 25px;
             }
             
             .login-title {
-                font-size: 20px;
+                font-size: 22px;
                 margin-bottom: 5px;
             }
             
@@ -459,7 +632,7 @@
             }
             
             .login-btn {
-                padding: 12px;
+                padding: 14px;
                 margin-top: 15px;
             }
             
@@ -471,21 +644,41 @@
     </style>
 </head>
 <body>
-    <!-- Matrix Background -->
-    <div class="matrix-bg" id="matrixBg"></div>
+    <!-- Enhanced Matrix Background -->
+    <div class="matrix-bg">
+        <div class="hologram-grid"></div>
+        <div id="matrixBg"></div>
+    </div>
 
     <!-- Login Container -->
     <div class="login-container">
+        <div class="biometric-scanner" id="biometricScanner">
+            <div class="scan-line"></div>
+        </div>
+        
         <div class="logo-section">
             <div class="sentinel-logo">
+                <div class="logo-particles">
+                    <div class="particle-orbit">
+                        <div class="particle"></div>
+                    </div>
+                    <div class="particle-orbit" style="animation-delay: -2.5s;">
+                        <div class="particle"></div>
+                    </div>
+                    <div class="particle-orbit" style="animation-delay: -5s;">
+                        <div class="particle"></div>
+                    </div>
+                </div>
                 <div class="logo-shield">
                     <div class="logo-eye">
-                        <div class="logo-iris"></div>
+                        <div class="logo-iris">
+                            <div class="iris-scan"></div>
+                        </div>
                     </div>
                 </div>
             </div>
             <h1 class="login-title">AI SENTINEL-X</h1>
-            <p class="login-subtitle">Autonomous Security Agent</p>
+            <p class="login-subtitle">Next-Gen Autonomous Security</p>
         </div>
 
         <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
@@ -535,22 +728,22 @@
             </div>
 
             <button type="submit" class="login-btn" id="loginBtn">
-                ACTIVATE AUTONOMOUS AGENT
+                INITIALIZE QUANTUM AI AGENT
             </button>
 
             <div class="status-message" id="statusMessage"></div>
         </form>
 
         <div class="demo-info">
-            <p>For demo purposes, you can use any text in the fields</p>
+            <p>🚀 Experience the future of autonomous security</p>
             <div class="demo-credentials">
-                Example: demo / demo / demo
+                Demo credentials: demo / demo / demo
             </div>
         </div>
     </div>
 
     <script>
-        // Initialize Matrix Background
+        // Enhanced Matrix Background
         function initMatrix() {
             const matrixBg = document.getElementById('matrixBg');
             const columns = Math.floor(window.innerWidth / 20);
@@ -560,15 +753,13 @@
                 column.className = 'matrix-column';
                 column.style.left = i * 20 + 'px';
                 column.style.animationDelay = Math.random() * 20 + 's';
+                column.style.animationDuration = (15 + Math.random() * 10) + 's';
                 
-                // Generate random binary/hex characters
+                // Generate quantum-style characters
                 let content = '';
+                const chars = '01⟨⟩ψφΦ∫∂∇λπΣΩ';
                 for (let j = 0; j < 100; j++) {
-                    if (Math.random() > 0.5) {
-                        content += Math.random() > 0.5 ? '1' : '0';
-                    } else {
-                        content += Math.floor(Math.random() * 16).toString(16).toUpperCase();
-                    }
+                    content += chars[Math.floor(Math.random() * chars.length)];
                     if (j % 2 === 1) content += ' ';
                 }
                 column.textContent = content;
@@ -577,7 +768,7 @@
             }
         }
 
-        // Handle Login
+        // Enhanced Login Handler
         function handleLogin(event) {
             event.preventDefault();
             
@@ -586,6 +777,7 @@
             const sentinelKey = document.getElementById('sentinelKey').value;
             const loginBtn = document.getElementById('loginBtn');
             const statusMessage = document.getElementById('statusMessage');
+            const biometricScanner = document.getElementById('biometricScanner');
             
             // Clear previous status
             statusMessage.className = 'status-message';
@@ -594,37 +786,48 @@
             // Validate inputs
             if (!openaiKey || !shodanKey || !sentinelKey) {
                 statusMessage.className = 'status-message error';
-                statusMessage.textContent = 'All API keys are required';
+                statusMessage.textContent = '⚠️ All API keys are required for quantum initialization';
                 return;
             }
             
             // Show loading state
             loginBtn.disabled = true;
-            loginBtn.innerHTML = '<span class="loading"></span>INITIALIZING AGENT...';
-            statusMessage.textContent = 'Verifying credentials...';
+            loginBtn.innerHTML = '<span class="loading"></span>QUANTUM HANDSHAKE...';
+            statusMessage.textContent = '🔐 Establishing secure quantum channel...';
             
-            // Simulate authentication
+            // Activate biometric scanner
+            biometricScanner.classList.add('active');
+            
+            // Multi-stage authentication simulation
             setTimeout(() => {
-                statusMessage.textContent = 'Activating autonomous systems...';
+                statusMessage.textContent = '🧬 Biometric verification in progress...';
                 
                 setTimeout(() => {
-                    // Store credentials
-                    localStorage.setItem('sentinel_auth', JSON.stringify({
-                        openai: openaiKey,
-                        shodan: shodanKey,
-                        sentinel: sentinelKey,
-                        timestamp: Date.now()
-                    }));
+                    statusMessage.textContent = '🔮 Initializing AI consciousness...';
                     
-                    statusMessage.className = 'status-message success';
-                    statusMessage.textContent = 'Agent activated! Redirecting to command center...';
-                    
-                    // Redirect to dashboard
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 1000);
-                }, 1000);
-            }, 1500);
+                        statusMessage.textContent = '⚡ Activating quantum defense grid...';
+                        
+                        setTimeout(() => {
+                            // Store credentials
+                            localStorage.setItem('sentinel_auth', JSON.stringify({
+                                openai: openaiKey,
+                                shodan: shodanKey,
+                                sentinel: sentinelKey,
+                                timestamp: Date.now()
+                            }));
+                            
+                            statusMessage.className = 'status-message success';
+                            statusMessage.textContent = '✅ QUANTUM AI AGENT ONLINE - FULL AUTONOMY ACHIEVED';
+                            
+                            // Redirect to dashboard
+                            setTimeout(() => {
+                                window.location.href = 'dashboard.html';
+                            }, 1000);
+                        }, 800);
+                    }, 800);
+                }, 800);
+            }, 1000);
         }
 
         // Initialize
@@ -642,6 +845,17 @@
                     localStorage.removeItem('sentinel_auth');
                 }
             }
+            
+            // Add input focus effects
+            const inputs = document.querySelectorAll('.input-field');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.querySelector('.input-icon').style.transform = 'scale(1.2)';
+                });
+                input.addEventListener('blur', () => {
+                    input.parentElement.querySelector('.input-icon').style.transform = 'scale(1)';
+                });
+            });
         });
 
         // Handle window resize
