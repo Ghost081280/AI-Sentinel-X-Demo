@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Sentinel-X | Next-Gen Autonomous Security</title>
+    <title>AI Sentinel-X | Autonomous Cyber Defense Agent</title>
     <style>
         * {
             margin: 0;
@@ -246,20 +246,6 @@
             box-shadow: inset 0 0 10px rgba(0, 255, 136, 0.5);
         }
 
-        .iris-scan {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.8);
-            animation: irisScan 3s ease-in-out infinite;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-        }
-
-        @keyframes irisScan {
-            0%, 100% { transform: translateY(-20px); opacity: 0; }
-            50% { transform: translateY(20px); opacity: 1; }
-        }
-
         @keyframes shieldPulse {
             0%, 100% { 
                 transform: scale(1);
@@ -476,38 +462,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Biometric Scanner Effect */
-        .biometric-scanner {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .biometric-scanner.active {
-            opacity: 1;
-        }
-
-        .scan-line {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            animation: biometricScan 2s ease-in-out;
-            box-shadow: 0 0 20px var(--primary);
-        }
-
-        @keyframes biometricScan {
-            0% { top: 0; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-
         /* Mobile Responsive */
         @media (max-width: 600px) {
             body {
@@ -652,9 +606,6 @@
 
     <!-- Login Container -->
     <div class="login-container">
-        <div class="biometric-scanner" id="biometricScanner">
-            <div class="scan-line"></div>
-        </div>
         
         <div class="logo-section">
             <div class="sentinel-logo">
@@ -671,73 +622,70 @@
                 </div>
                 <div class="logo-shield">
                     <div class="logo-eye">
-                        <div class="logo-iris">
-                            <div class="iris-scan"></div>
-                        </div>
+                        <div class="logo-iris"></div>
                     </div>
                 </div>
             </div>
             <h1 class="login-title">AI SENTINEL-X</h1>
-            <p class="login-subtitle">Next-Gen Autonomous Security</p>
+            <p class="login-subtitle">Autonomous Cyber Defense Platform</p>
         </div>
 
         <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
             <div class="input-group">
                 <label class="input-label">
-                    <div class="input-icon">🧠</div>
-                    <span>OpenAI API Key</span>
-                </label>
-                <input 
-                    type="password" 
-                    class="input-field" 
-                    id="openaiKey"
-                    placeholder="Enter your OpenAI API key"
-                    required
-                    autocomplete="off"
-                >
-            </div>
-
-            <div class="input-group">
-                <label class="input-label">
-                    <div class="input-icon">🔍</div>
-                    <span>Shodan API Key</span>
-                </label>
-                <input 
-                    type="password" 
-                    class="input-field" 
-                    id="shodanKey"
-                    placeholder="Enter your Shodan API key"
-                    required
-                    autocomplete="off"
-                >
-            </div>
-
-            <div class="input-group">
-                <label class="input-label">
                     <div class="input-icon">🔐</div>
-                    <span>Sentinel-X API Key</span>
+                    <span>Organization ID</span>
+                </label>
+                <input 
+                    type="text" 
+                    class="input-field" 
+                    id="orgId"
+                    placeholder="Enter your organization ID"
+                    required
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">
+                    <div class="input-icon">🔑</div>
+                    <span>API Key</span>
                 </label>
                 <input 
                     type="password" 
                     class="input-field" 
-                    id="sentinelKey"
-                    placeholder="Enter your Sentinel-X API key"
+                    id="apiKey"
+                    placeholder="Enter your API key"
                     required
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">
+                    <div class="input-icon">🛡️</div>
+                    <span>Security Token</span>
+                </label>
+                <input 
+                    type="password" 
+                    class="input-field" 
+                    id="securityToken"
+                    placeholder="Enter 2FA token or leave blank"
                     autocomplete="off"
                 >
             </div>
 
             <button type="submit" class="login-btn" id="loginBtn">
-                INITIALIZE QUANTUM AI AGENT
+                INITIALIZE AI DEFENSE AGENT
             </button>
 
             <div class="status-message" id="statusMessage"></div>
         </form>
 
         <div class="demo-info">
-            <p>🚀 Experience the future of autonomous security</p>
+            <p>🚀 Experience autonomous cyber defense powered by AI</p>
             <div class="demo-credentials">
-                Demo credentials: demo / demo / demo
+                Demo credentials: demo / demo123 / (leave token blank)
             </div>
         </div>
     </div>
@@ -755,9 +703,9 @@
                 column.style.animationDelay = Math.random() * 20 + 's';
                 column.style.animationDuration = (15 + Math.random() * 10) + 's';
                 
-                // Generate quantum-style characters
+                // Generate security-themed characters
                 let content = '';
-                const chars = '01⟨⟩ψφΦ∫∂∇λπΣΩ';
+                const chars = '01⟨⟩{}[]()<>/*-+=@#$%&!?;:,.';
                 for (let j = 0; j < 100; j++) {
                     content += chars[Math.floor(Math.random() * chars.length)];
                     if (j % 2 === 1) content += ' ';
@@ -772,61 +720,64 @@
         function handleLogin(event) {
             event.preventDefault();
             
-            const openaiKey = document.getElementById('openaiKey').value;
-            const shodanKey = document.getElementById('shodanKey').value;
-            const sentinelKey = document.getElementById('sentinelKey').value;
+            const orgId = document.getElementById('orgId').value;
+            const apiKey = document.getElementById('apiKey').value;
+            const securityToken = document.getElementById('securityToken').value;
             const loginBtn = document.getElementById('loginBtn');
             const statusMessage = document.getElementById('statusMessage');
-            const biometricScanner = document.getElementById('biometricScanner');
             
             // Clear previous status
             statusMessage.className = 'status-message';
             statusMessage.textContent = '';
             
             // Validate inputs
-            if (!openaiKey || !shodanKey || !sentinelKey) {
+            if (!orgId || !apiKey) {
                 statusMessage.className = 'status-message error';
-                statusMessage.textContent = '⚠️ All API keys are required for quantum initialization';
+                statusMessage.textContent = '⚠️ Organization ID and API key are required';
                 return;
             }
             
             // Show loading state
             loginBtn.disabled = true;
-            loginBtn.innerHTML = '<span class="loading"></span>QUANTUM HANDSHAKE...';
-            statusMessage.textContent = '🔐 Establishing secure quantum channel...';
-            
-            // Activate biometric scanner
-            biometricScanner.classList.add('active');
+            loginBtn.innerHTML = '<span class="loading"></span>AUTHENTICATING...';
+            statusMessage.textContent = '🔐 Establishing secure connection...';
             
             // Multi-stage authentication simulation
             setTimeout(() => {
-                statusMessage.textContent = '🧬 Biometric verification in progress...';
+                statusMessage.textContent = '🔍 Validating credentials...';
                 
                 setTimeout(() => {
-                    statusMessage.textContent = '🔮 Initializing AI consciousness...';
-                    
-                    setTimeout(() => {
-                        statusMessage.textContent = '⚡ Activating quantum defense grid...';
+                    // Check demo credentials
+                    if (orgId === 'demo' && apiKey === 'demo123') {
+                        statusMessage.textContent = '✅ Authentication successful';
                         
                         setTimeout(() => {
-                            // Store credentials
-                            localStorage.setItem('sentinel_auth', JSON.stringify({
-                                openai: openaiKey,
-                                shodan: shodanKey,
-                                sentinel: sentinelKey,
-                                timestamp: Date.now()
-                            }));
+                            statusMessage.textContent = '🚀 Initializing AI defense systems...';
                             
-                            statusMessage.className = 'status-message success';
-                            statusMessage.textContent = '✅ QUANTUM AI AGENT ONLINE - FULL AUTONOMY ACHIEVED';
-                            
-                            // Redirect to dashboard
                             setTimeout(() => {
-                                window.location.href = 'dashboard.html';
-                            }, 1000);
+                                // Store credentials
+                                localStorage.setItem('sentinel_auth', JSON.stringify({
+                                    orgId: orgId,
+                                    timestamp: Date.now(),
+                                    sessionToken: btoa(Math.random().toString(36).substring(7))
+                                }));
+                                
+                                statusMessage.className = 'status-message success';
+                                statusMessage.textContent = '✅ AI DEFENSE AGENT READY';
+                                
+                                // Redirect to dashboard
+                                setTimeout(() => {
+                                    window.location.href = 'dashboard.html';
+                                }, 1000);
+                            }, 800);
                         }, 800);
-                    }, 800);
-                }, 800);
+                    } else {
+                        statusMessage.className = 'status-message error';
+                        statusMessage.textContent = '❌ Invalid credentials. Please try again.';
+                        loginBtn.disabled = false;
+                        loginBtn.innerHTML = 'INITIALIZE AI DEFENSE AGENT';
+                    }
+                }, 1000);
             }, 1000);
         }
 
