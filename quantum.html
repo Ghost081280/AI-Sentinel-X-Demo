@@ -26,6 +26,8 @@
             --text-secondary: #8892b0;
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
+            --gradient-quantum: linear-gradient(135deg, #7c3aed 0%, #ff00ff 50%, #00ccff 100%);
+            --gradient-hologram: linear-gradient(45deg, #00ff88, #00ccff, #7c3aed, #ff00ff);
         }
 
         body {
@@ -35,7 +37,7 @@
             min-height: 100vh;
         }
 
-        /* Quantum Background Animation */
+        /* Enhanced Quantum Background */
         .quantum-bg {
             position: fixed;
             top: 0;
@@ -45,9 +47,40 @@
             pointer-events: none;
             z-index: 0;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(0, 204, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 70%);
+                radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(0, 204, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 0, 255, 0.08) 0%, transparent 70%);
+        }
+
+        .quantum-field {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .quantum-wave {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: repeating-radial-gradient(
+                circle at center,
+                transparent 0px,
+                rgba(124, 58, 237, 0.03) 20px,
+                transparent 40px,
+                rgba(0, 204, 255, 0.03) 60px,
+                transparent 80px
+            );
+            animation: quantumWave 30s linear infinite;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+        }
+
+        @keyframes quantumWave {
+            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.2); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
         }
 
         .quantum-particles {
@@ -60,9 +93,12 @@
             position: absolute;
             width: 4px;
             height: 4px;
-            background: var(--primary);
+            background: var(--accent);
             border-radius: 50%;
             animation: quantumFloat 20s infinite ease-in-out;
+            box-shadow: 
+                0 0 20px currentColor,
+                0 0 40px currentColor;
         }
 
         @keyframes quantumFloat {
@@ -84,6 +120,36 @@
             }
         }
 
+        .entanglement-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            filter: blur(1px);
+        }
+
+        .entanglement {
+            position: absolute;
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.3;
+            animation: entangle 10s linear infinite;
+        }
+
+        @keyframes entangle {
+            0% {
+                transform: rotate(0deg) translateX(-100px);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: rotate(360deg) translateX(100px);
+                opacity: 0;
+            }
+        }
+
         .container {
             position: relative;
             z-index: 1;
@@ -92,26 +158,53 @@
             padding: 20px;
         }
 
-        /* Header */
+        /* Enhanced Header */
         .page-header {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 30px;
+            border-radius: 15px;
+            padding: 35px;
             margin-bottom: 30px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(124, 58, 237, 0.05);
+        }
+
+        .quantum-header-effect {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-quantum);
+            opacity: 0.1;
+            animation: quantumSweep 8s linear infinite;
+        }
+
+        @keyframes quantumSweep {
+            to { left: 100%; }
         }
 
         .page-title {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: bold;
-            background: var(--gradient-1);
+            background: var(--gradient-quantum);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 10px;
             letter-spacing: 3px;
+            text-shadow: 0 0 40px rgba(124, 58, 237, 0.5);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
         }
 
         .page-subtitle {
@@ -121,16 +214,19 @@
             letter-spacing: 2px;
         }
 
-        /* Autonomous Alert */
+        /* Enhanced Autonomous Alert */
         .quantum-alert {
             background: rgba(124, 58, 237, 0.1);
-            border: 1px solid var(--accent);
-            border-radius: 8px;
-            padding: 15px 20px;
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px 25px;
             margin-bottom: 30px;
             text-align: center;
             position: relative;
             overflow: hidden;
+            box-shadow: 
+                0 5px 20px rgba(124, 58, 237, 0.3),
+                inset 0 0 30px rgba(124, 58, 237, 0.05);
         }
 
         .quantum-alert::before {
@@ -140,11 +236,11 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.3), transparent);
-            animation: quantumScan 4s linear infinite;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.3), transparent);
+            animation: quantumAlertScan 4s linear infinite;
         }
 
-        @keyframes quantumScan {
+        @keyframes quantumAlertScan {
             to { left: 100%; }
         }
 
@@ -152,87 +248,158 @@
             position: relative;
             font-weight: bold;
             color: var(--primary);
+            font-size: 16px;
+            text-shadow: 0 0 20px currentColor;
         }
 
         /* Main Grid */
         .quantum-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
             margin-bottom: 30px;
         }
 
-        /* Quantum Panel */
+        /* Enhanced Quantum Panel */
         .quantum-panel {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(124, 58, 237, 0.02);
+        }
+
+        .panel-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+            animation: panelGlow 10s ease-in-out infinite;
+        }
+
+        @keyframes panelGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
 
         .panel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
             border-bottom: 1px solid var(--border);
+            position: relative;
         }
 
         .panel-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
+            text-shadow: 0 0 20px currentColor;
         }
 
-        /* Quantum Visualization */
+        .panel-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: statusPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        /* Enhanced Quantum Visualization */
         .quantum-viz {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            padding: 20px;
-            height: 300px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(124, 58, 237, 0.1) 100%);
+            border-radius: 15px;
+            padding: 25px;
+            height: 350px;
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
         }
 
         .quantum-core {
-            width: 150px;
-            height: 150px;
-            background: var(--gradient-2);
+            width: 180px;
+            height: 180px;
+            background: var(--gradient-quantum);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
+            font-size: 60px;
             color: white;
-            box-shadow: 0 0 50px rgba(124, 58, 237, 0.5);
+            box-shadow: 
+                0 0 80px rgba(124, 58, 237, 0.8),
+                0 0 120px rgba(255, 0, 255, 0.5),
+                inset 0 0 40px rgba(255, 255, 255, 0.2);
             animation: quantumPulse 3s ease-in-out infinite;
+            position: relative;
         }
 
         @keyframes quantumPulse {
             0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 50px rgba(124, 58, 237, 0.5);
+                transform: scale(1) rotate(0deg);
+                box-shadow: 
+                    0 0 80px rgba(124, 58, 237, 0.8),
+                    0 0 120px rgba(255, 0, 255, 0.5);
             }
             50% {
-                transform: scale(1.1);
-                box-shadow: 0 0 100px rgba(0, 255, 136, 0.8);
+                transform: scale(1.1) rotate(180deg);
+                box-shadow: 
+                    0 0 120px rgba(0, 255, 136, 0.8),
+                    0 0 180px rgba(0, 204, 255, 0.5);
             }
         }
 
         .quantum-orbit {
             position: absolute;
-            width: 250px;
-            height: 250px;
+            width: 300px;
+            height: 300px;
             border: 2px solid rgba(0, 255, 136, 0.2);
             border-radius: 50%;
-            animation: orbit 10s linear infinite;
+            animation: orbit 15s linear infinite;
+        }
+
+        .quantum-orbit:nth-child(2) {
+            width: 250px;
+            height: 250px;
+            animation-duration: 10s;
+            animation-direction: reverse;
+            border-color: rgba(0, 204, 255, 0.2);
+        }
+
+        .quantum-orbit:nth-child(3) {
+            width: 350px;
+            height: 350px;
+            animation-duration: 20s;
+            border-color: rgba(255, 0, 255, 0.2);
         }
 
         @keyframes orbit {
@@ -249,90 +416,168 @@
             top: -10px;
             left: 50%;
             transform: translateX(-50%);
-            box-shadow: 0 0 20px var(--primary);
+            box-shadow: 
+                0 0 30px currentColor,
+                0 0 60px currentColor;
         }
 
-        /* Key Display */
+        /* Enhanced Key Display */
         .key-display {
-            background: rgba(0, 0, 0, 0.7);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(124, 58, 237, 0.05) 100%);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 25px;
             font-family: 'Courier New', monospace;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 5px 20px rgba(0, 0, 0, 0.5),
+                inset 0 0 30px rgba(124, 58, 237, 0.05);
+        }
+
+        .key-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 1px;
+            background: var(--gradient-hologram);
+            animation: keyScan 3s linear infinite;
+        }
+
+        @keyframes keyScan {
+            to { left: 100%; }
         }
 
         .key-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
+            margin-bottom: 18px;
+            padding-bottom: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             flex-wrap: wrap;
             gap: 10px;
+            align-items: center;
         }
 
         .key-label {
             color: var(--text-secondary);
             font-size: 14px;
             flex-shrink: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .key-value {
             color: var(--primary);
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             word-break: break-all;
             text-align: right;
             flex: 1;
+            text-shadow: 0 0 10px currentColor;
+            animation: keyGlow 2s ease-in-out infinite;
         }
 
-        /* Quantum Metrics */
+        @keyframes keyGlow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        /* Enhanced Quantum Metrics */
         .quantum-metrics {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
         }
 
         .metric-box {
-            background: rgba(0, 255, 136, 0.05);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 15px;
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .metric-box::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-quantum);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-box:hover::before {
+            transform: scaleX(1);
+        }
+
+        .metric-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
         }
 
         .metric-value {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
             color: var(--primary);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px currentColor;
         }
 
         .metric-label {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* Status Grid */
+        /* Enhanced Status Grid */
         .status-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
 
         .status-item {
-            background: rgba(0, 255, 136, 0.05);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 204, 255, 0.05) 100%);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 15px;
+            border-radius: 12px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+            transform: translate(20px, -20px);
+        }
+
+        .status-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+            border-color: var(--primary);
         }
 
         .status-info {
@@ -341,26 +586,37 @@
 
         .status-name {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 16px;
         }
 
         .status-details {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
+            line-height: 1.4;
         }
 
         .status-indicator {
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             background: var(--success);
             border-radius: 50%;
-            animation: statusPulse 2s ease-in-out infinite;
+            animation: statusIndicatorPulse 2s ease-in-out infinite;
             flex-shrink: 0;
+            box-shadow: 
+                0 0 20px currentColor,
+                0 0 40px currentColor;
         }
 
-        @keyframes statusPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); }
-            50% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+        @keyframes statusIndicatorPulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 0 15px rgba(0, 255, 136, 0);
+                transform: scale(1.2);
+            }
         }
 
         /* Back Button */
@@ -370,8 +626,8 @@
             left: 20px;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px 20px;
+            border-radius: 10px;
+            padding: 12px 24px;
             color: var(--primary);
             text-decoration: none;
             display: flex;
@@ -379,26 +635,219 @@
             gap: 10px;
             transition: all 0.3s ease;
             z-index: 100;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .back-btn:hover {
             background: var(--primary);
             color: var(--bg-darker);
             transform: translateX(-5px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        /* AI Chat Widget */
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .ai-chat-toggle {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-quantum);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 
+                0 5px 20px rgba(124, 58, 237, 0.4),
+                0 0 40px rgba(124, 58, 237, 0.3);
+            transition: all 0.3s ease;
+            font-size: 32px;
+            animation: chatQuantumPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes chatQuantumPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 
+                    0 5px 20px rgba(124, 58, 237, 0.4),
+                    0 0 40px rgba(124, 58, 237, 0.3);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 
+                    0 5px 30px rgba(255, 0, 255, 0.6),
+                    0 0 60px rgba(255, 0, 255, 0.5);
+            }
+        }
+
+        .ai-chat-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .ai-chat-window {
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            width: 400px;
+            height: 600px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(124, 58, 237, 0.1);
+            backdrop-filter: blur(20px);
+        }
+
+        .ai-chat-window.active {
+            display: flex;
+            animation: chatSlideIn 0.3s ease;
+        }
+
+        @keyframes chatSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .ai-chat-header {
+            background: var(--gradient-quantum);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ai-chat-close {
+            cursor: pointer;
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .ai-chat-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .ai-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ai-message {
+            animation: messageSlide 0.3s ease;
+        }
+
+        @keyframes messageSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ai-message-bubble {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 15px;
+            padding: 15px 20px;
+            max-width: 80%;
+            word-wrap: break-word;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .ai-message-bubble.user {
+            background: rgba(0, 204, 255, 0.1);
+            border-color: var(--secondary);
+            align-self: flex-end;
+        }
+
+        .ai-message-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .ai-chat-input-container {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .ai-chat-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .ai-chat-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(124, 58, 237, 0.05);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+        }
+
+        .ai-chat-send {
+            background: var(--gradient-quantum);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ai-chat-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(124, 58, 237, 0.4);
         }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .container {
-                padding: 10px;
+                padding: 15px;
             }
             
             .page-header {
-                padding: 20px;
+                padding: 25px;
             }
             
             .page-title {
-                font-size: 28px;
+                font-size: 32px;
             }
             
             .quantum-grid {
@@ -406,55 +855,93 @@
             }
             
             .quantum-viz {
-                height: 250px;
+                height: 300px;
             }
             
             .quantum-core {
-                width: 120px;
-                height: 120px;
-                font-size: 36px;
+                width: 140px;
+                height: 140px;
+                font-size: 48px;
             }
             
             .quantum-orbit {
-                width: 200px;
-                height: 200px;
+                width: 220px;
+                height: 220px;
+            }
+            
+            .quantum-orbit:nth-child(2) {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .quantum-orbit:nth-child(3) {
+                width: 260px;
+                height: 260px;
             }
             
             .back-btn {
                 top: 10px;
                 left: 10px;
-                padding: 8px 15px;
-                font-size: 14px;
+                padding: 10px 18px;
+                font-size: 13px;
             }
             
             .quantum-metrics {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .ai-chat-widget {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .ai-chat-toggle {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+            }
+            
+            .ai-chat-window {
+                width: calc(100vw - 40px);
+                height: calc(100vh - 120px);
+                right: -20px;
+                bottom: 80px;
             }
         }
 
         @media (max-width: 480px) {
             .page-title {
-                font-size: 24px;
+                font-size: 26px;
             }
             
             .page-subtitle {
-                font-size: 12px;
+                font-size: 13px;
             }
             
             .quantum-core {
-                width: 100px;
-                height: 100px;
-                font-size: 28px;
+                width: 120px;
+                height: 120px;
+                font-size: 40px;
             }
             
             .quantum-orbit {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .quantum-orbit:nth-child(2) {
                 width: 150px;
                 height: 150px;
             }
             
+            .quantum-orbit:nth-child(3) {
+                width: 210px;
+                height: 210px;
+            }
+            
             .quantum-electron {
-                width: 15px;
-                height: 15px;
+                width: 16px;
+                height: 16px;
             }
             
             .back-btn span {
@@ -466,7 +953,27 @@
             }
             
             .key-value {
-                font-size: 12px;
+                font-size: 13px;
+            }
+            
+            .quantum-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .metric-value {
+                font-size: 28px;
+            }
+            
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ai-chat-window {
+                width: 100vw;
+                height: 100vh;
+                right: 0;
+                bottom: 0;
+                border-radius: 0;
             }
         }
     </style>
@@ -489,68 +996,93 @@
     <!-- Back Button -->
     <a href="dashboard.html" class="back-btn">
         <span>←</span>
-        <span>Back to Dashboard</span>
+        <span>Back</span>
     </a>
 
-    <!-- Quantum Background -->
+    <!-- Enhanced Quantum Background -->
     <div class="quantum-bg">
+        <div class="quantum-field">
+            <div class="quantum-wave"></div>
+        </div>
         <div class="quantum-particles" id="quantumParticles"></div>
+        <div class="entanglement-lines" id="entanglementLines"></div>
     </div>
 
     <!-- Container -->
     <div class="container">
-        <!-- Page Header -->
+        <!-- Enhanced Page Header -->
         <div class="page-header">
+            <div class="quantum-header-effect"></div>
             <h1 class="page-title">QUANTUM SECURITY</h1>
-            <p class="page-subtitle">Autonomous Post-Quantum Cryptography</p>
+            <p class="page-subtitle">Post-Quantum Cryptographic Defense System</p>
         </div>
 
-        <!-- Autonomous Alert -->
+        <!-- Enhanced Autonomous Alert -->
         <div class="quantum-alert">
             <div class="quantum-alert-text">
-                🔐 Quantum encryption is fully autonomous. Keys rotate every 15 minutes without manual intervention.
+                🔐 Quantum encryption is fully autonomous. Keys rotate every 15 minutes using quantum entanglement. Manual override available for emergency situations.
             </div>
         </div>
 
         <!-- Main Grid -->
         <div class="quantum-grid">
-            <!-- Quantum Status -->
+            <!-- Quantum Status Panel -->
             <div class="quantum-panel">
+                <div class="panel-glow"></div>
                 <div class="panel-header">
-                    <h2 class="panel-title">Quantum System Status</h2>
+                    <h2 class="panel-title">Quantum System Core</h2>
+                    <div class="panel-status">
+                        <div class="status-dot"></div>
+                        <span>ENTANGLED</span>
+                    </div>
                 </div>
                 
                 <div class="quantum-viz">
                     <div class="quantum-orbit">
                         <div class="quantum-electron"></div>
                     </div>
-                    <div class="quantum-core">🔐</div>
+                    <div class="quantum-orbit">
+                        <div class="quantum-electron"></div>
+                    </div>
+                    <div class="quantum-orbit">
+                        <div class="quantum-electron"></div>
+                    </div>
+                    <div class="quantum-core">⚛️</div>
                 </div>
 
                 <div class="key-display">
                     <div class="key-row">
-                        <span class="key-label">Protocol:</span>
-                        <span class="key-value" id="activeProtocol">BB84</span>
+                        <span class="key-label">Protocol</span>
+                        <span class="key-value" id="activeProtocol">QKD-BB84-Enhanced</span>
                     </div>
                     <div class="key-row">
-                        <span class="key-label">Current Key:</span>
-                        <span class="key-value" id="currentKey">7F3A9B2E4C8D6A1F9E5B3C7A</span>
+                        <span class="key-label">Quantum Key</span>
+                        <span class="key-value" id="currentKey">7F3A9B2E4C8D6A1F9E5B3C7A2D8E</span>
                     </div>
                     <div class="key-row">
-                        <span class="key-label">Key Length:</span>
-                        <span class="key-value">256-bit</span>
+                        <span class="key-label">Key Length</span>
+                        <span class="key-value">512-bit Post-Quantum</span>
                     </div>
                     <div class="key-row">
-                        <span class="key-label">Auto-Rotation:</span>
+                        <span class="key-label">Next Rotation</span>
                         <span class="key-value" id="nextRotation">14:32</span>
+                    </div>
+                    <div class="key-row">
+                        <span class="key-label">Entanglement</span>
+                        <span class="key-value" id="entanglementStatus">0.97 | STABLE</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Quantum Metrics -->
+            <!-- Quantum Metrics Panel -->
             <div class="quantum-panel">
+                <div class="panel-glow"></div>
                 <div class="panel-header">
-                    <h2 class="panel-title">Quantum Metrics</h2>
+                    <h2 class="panel-title">Quantum Performance</h2>
+                    <div class="panel-status">
+                        <div class="status-dot"></div>
+                        <span>OPTIMAL</span>
+                    </div>
                 </div>
 
                 <div class="quantum-metrics">
@@ -563,51 +1095,65 @@
                         <div class="metric-label">Fidelity</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value" id="latency">12ms</div>
-                        <div class="metric-label">Latency</div>
+                        <div class="metric-value" id="coherence">12μs</div>
+                        <div class="metric-label">Coherence</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value" id="qubits">1024</div>
+                        <div class="metric-value" id="qubits">2048</div>
                         <div class="metric-label">Qubits</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value" id="qber">8.4</div>
-                        <div class="metric-label">QBER %</div>
+                        <div class="metric-value" id="qber">2.1%</div>
+                        <div class="metric-label">QBER</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value" style="color: var(--success);">AUTO</div>
-                        <div class="metric-label">Mode</div>
+                        <div class="metric-value" id="throughput">1.2Gb/s</div>
+                        <div class="metric-label">Throughput</div>
                     </div>
                 </div>
 
-                <div style="margin-top: 20px;">
-                    <h3 style="margin-bottom: 15px;">Encryption Channels</h3>
+                <div style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 20px; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">Quantum Encryption Channels</h3>
                     <div class="status-grid">
                         <div class="status-item">
                             <div class="status-info">
                                 <div class="status-name">API Gateway</div>
-                                <div class="status-details">AES-256-GCM + QKD</div>
+                                <div class="status-details">Lattice-based CRYSTALS-Kyber</div>
                             </div>
                             <div class="status-indicator"></div>
                         </div>
                         <div class="status-item">
                             <div class="status-info">
-                                <div class="status-name">Database</div>
-                                <div class="status-details">ChaCha20-Poly1305</div>
+                                <div class="status-name">Database Layer</div>
+                                <div class="status-details">Code-based McEliece</div>
                             </div>
                             <div class="status-indicator"></div>
                         </div>
                         <div class="status-item">
                             <div class="status-info">
                                 <div class="status-name">Cloud Storage</div>
-                                <div class="status-details">NTRU + Kyber-1024</div>
+                                <div class="status-details">Hash-based SPHINCS+</div>
                             </div>
                             <div class="status-indicator"></div>
                         </div>
                         <div class="status-item">
                             <div class="status-info">
                                 <div class="status-name">Network Traffic</div>
-                                <div class="status-details">SIKE + Dilithium</div>
+                                <div class="status-details">Isogeny-based SIKE</div>
+                            </div>
+                            <div class="status-indicator"></div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-info">
+                                <div class="status-name">Quantum Channel</div>
+                                <div class="status-details">QKD with Decoy States</div>
+                            </div>
+                            <div class="status-indicator"></div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-info">
+                                <div class="status-name">Emergency Backup</div>
+                                <div class="status-details">Multivariate RAINBOW</div>
                             </div>
                             <div class="status-indicator"></div>
                         </div>
@@ -617,18 +1163,64 @@
         </div>
     </div>
 
+    <!-- AI Chat Widget -->
+    <div class="ai-chat-widget">
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-chat-header">
+                <span>QUANTUM SECURITY AI</span>
+                <span class="ai-chat-close" onclick="toggleChat()">×</span>
+            </div>
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="ai-message">
+                    <div class="ai-message-bubble">
+                        Welcome to Quantum Security Control. I manage post-quantum cryptography, quantum key distribution, and entanglement protocols. How can I assist with your quantum security needs?
+                    </div>
+                    <div class="ai-message-time">Just now</div>
+                </div>
+            </div>
+            <div class="ai-chat-input-container">
+                <input 
+                    type="text" 
+                    class="ai-chat-input" 
+                    id="aiChatInput" 
+                    placeholder="Ask about quantum encryption or request manual control..."
+                    onkeypress="handleChatKeyPress(event)"
+                >
+                <button class="ai-chat-send" onclick="sendChatMessage()">SEND</button>
+            </div>
+        </div>
+        <div class="ai-chat-toggle" onclick="toggleChat()">🤖</div>
+    </div>
+
     <script>
         // Initialize quantum particles
         function initQuantumParticles() {
             const container = document.getElementById('quantumParticles');
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 50; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.top = Math.random() * 100 + '%';
                 particle.style.animationDelay = Math.random() * 20 + 's';
                 particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                const colors = ['var(--primary)', 'var(--secondary)', 'var(--accent)', '#ff00ff'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
                 container.appendChild(particle);
+            }
+        }
+
+        // Initialize entanglement lines
+        function initEntanglementLines() {
+            const container = document.getElementById('entanglementLines');
+            for (let i = 0; i < 10; i++) {
+                const line = document.createElement('div');
+                line.className = 'entanglement';
+                line.style.top = Math.random() * 100 + '%';
+                line.style.left = Math.random() * 100 + '%';
+                line.style.animationDelay = Math.random() * 10 + 's';
+                line.style.animationDuration = (8 + Math.random() * 4) + 's';
+                line.style.transform = `rotate(${Math.random() * 360}deg)`;
+                container.appendChild(line);
             }
         }
 
@@ -636,7 +1228,7 @@
         function generateQuantumKey() {
             const chars = '0123456789ABCDEF';
             let key = '';
-            for (let i = 0; i < 24; i++) {
+            for (let i = 0; i < 28; i++) {
                 key += chars[Math.floor(Math.random() * chars.length)];
             }
             return key;
@@ -658,28 +1250,213 @@
                 
                 // Change protocol occasionally
                 if (Math.random() > 0.7) {
-                    const protocols = ['BB84', 'E91', 'B92', 'SARG04', 'COW'];
+                    const protocols = ['QKD-BB84-Enhanced', 'E91-Entangled', 'B92-Simplified', 'SARG04-Robust', 'COW-Coherent'];
                     document.getElementById('activeProtocol').textContent = 
                         protocols[Math.floor(Math.random() * protocols.length)];
                 }
+                
+                // Add notification to chat
+                addChatMessage('🔐 Quantum key rotation completed. New 512-bit post-quantum key deployed across all channels.', false);
             }
         }
 
         // Update quantum metrics
         function updateMetrics() {
-            // Randomly adjust metrics slightly
-            document.getElementById('entanglement').textContent = (0.95 + Math.random() * 0.04).toFixed(2);
+            // Entanglement
+            const entanglement = (0.94 + Math.random() * 0.05).toFixed(2);
+            document.getElementById('entanglement').textContent = entanglement;
+            document.getElementById('entanglementStatus').textContent = `${entanglement} | ${parseFloat(entanglement) > 0.95 ? 'STABLE' : 'FLUCTUATING'}`;
+            
+            // Fidelity
             document.getElementById('fidelity').textContent = (99.5 + Math.random() * 0.4).toFixed(1) + '%';
-            document.getElementById('latency').textContent = Math.floor(10 + Math.random() * 5) + 'ms';
-            document.getElementById('qber').textContent = (7 + Math.random() * 3).toFixed(1);
+            
+            // Coherence
+            document.getElementById('coherence').textContent = Math.floor(10 + Math.random() * 5) + 'μs';
+            
+            // QBER
+            document.getElementById('qber').textContent = (1.5 + Math.random() * 2).toFixed(1) + '%';
+            
+            // Throughput
+            document.getElementById('throughput').textContent = (1.0 + Math.random() * 0.5).toFixed(1) + 'Gb/s';
+            
+            // Qubits (occasionally increase)
+            if (Math.random() > 0.95) {
+                const currentQubits = parseInt(document.getElementById('qubits').textContent);
+                document.getElementById('qubits').textContent = Math.min(4096, currentQubits + 128);
+            }
+        }
+
+        // AI Chat System
+        let chatOpen = false;
+        
+        function toggleChat() {
+            chatOpen = !chatOpen;
+            const chatWindow = document.getElementById('aiChatWindow');
+            if (chatOpen) {
+                chatWindow.classList.add('active');
+            } else {
+                chatWindow.classList.remove('active');
+            }
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('aiChatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const messagesContainer = document.getElementById('aiChatMessages');
+            
+            // Add user message
+            addChatMessage(message, true);
+            input.value = '';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            // Simulate AI response
+            setTimeout(() => {
+                removeTypingIndicator();
+                const response = generateAIResponse(message);
+                addChatMessage(response, false);
+            }, 1500 + Math.random() * 1000);
+        }
+
+        function addChatMessage(message, isUser) {
+            const messagesContainer = document.getElementById('aiChatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'ai-message';
+            
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="ai-message-bubble ${isUser ? 'user' : ''}">
+                    ${message}
+                </div>
+                <div class="ai-message-time">${time}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('aiChatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'ai-typing';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function generateAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('quantum') && lowerMessage.includes('key')) {
+                return '🔐 Current quantum key is a 512-bit post-quantum resistant key using lattice-based cryptography. Entanglement coefficient: 0.97. Next rotation in ' + document.getElementById('nextRotation').textContent + '. Manual key rotation available upon request.';
+            }
+            
+            if (lowerMessage.includes('entanglement') || lowerMessage.includes('entangle')) {
+                return '⚛️ Quantum entanglement status: ' + document.getElementById('entanglement').textContent + ' - Currently stable. Bell inequality violation confirmed at 2.82, exceeding classical limit. Decoherence rate: minimal.';
+            }
+            
+            if (lowerMessage.includes('manual') || lowerMessage.includes('control') || lowerMessage.includes('override')) {
+                return '🎛️ Manual control available for: 1) Force key rotation, 2) Change encryption protocol, 3) Adjust entanglement parameters, 4) Emergency quantum channel shutdown. Please specify your requirement.';
+            }
+            
+            if (lowerMessage.includes('protocol') || lowerMessage.includes('algorithm')) {
+                return '📡 Active protocol: ' + document.getElementById('activeProtocol').textContent + '. Available protocols: BB84 (standard), E91 (entanglement-based), B92 (simplified), SARG04 (robust against PNS attacks), COW (coherent one-way).';
+            }
+            
+            if (lowerMessage.includes('threat') || lowerMessage.includes('attack')) {
+                return '⚠️ Quantum threat analysis: No quantum computer attacks detected. Monitoring for: Shor\'s algorithm attempts, Grover\'s algorithm searches, and quantum supremacy demonstrations. All channels protected with post-quantum algorithms.';
+            }
+            
+            if (lowerMessage.includes('performance') || lowerMessage.includes('status')) {
+                return '📊 Quantum system performance: Fidelity ' + document.getElementById('fidelity').textContent + ', QBER ' + document.getElementById('qber').textContent + ', Coherence time ' + document.getElementById('coherence').textContent + '. All parameters within optimal range.';
+            }
+            
+            return '🤖 I\'m analyzing your quantum security query. Please specify if you need information about encryption protocols, entanglement status, or manual control options.';
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('aiChatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'ai-typing';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.style.display = 'flex';
+            typingDiv.style.gap = '5px';
+            typingDiv.style.padding = '10px';
+            
+            for (let i = 0; i < 3; i++) {
+                const dot = document.createElement('div');
+                dot.style.width = '8px';
+                dot.style.height = '8px';
+                dot.style.background = 'var(--accent)';
+                dot.style.borderRadius = '50%';
+                dot.style.animation = 'typingDot 1.4s ease-in-out infinite';
+                dot.style.animationDelay = `${i * 0.2}s`;
+                typingDiv.appendChild(dot);
+            }
+            
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initQuantumParticles();
+            initEntanglementLines();
             setInterval(updateRotationCountdown, 1000);
-            setInterval(updateMetrics, 5000);
+            setInterval(updateMetrics, 3000);
+            
+            // Add periodic quantum events to chat
+            setInterval(() => {
+                if (Math.random() > 0.8 && chatOpen) {
+                    const events = [
+                        '⚛️ Quantum decoherence detected and corrected. System stability maintained.',
+                        '🔐 Quantum random number generator produced new entropy pool.',
+                        '📡 Quantum channel noise level: optimal. No eavesdropping detected.',
+                        '🛡️ Post-quantum algorithm health check completed. All systems secure.',
+                        '⚡ Quantum teleportation protocol verified. Fidelity: 99.7%'
+                    ];
+                    addChatMessage(events[Math.floor(Math.random() * events.length)], false);
+                }
+            }, 30000);
         });
+
+        // Add CSS animation for typing dots
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes typingDot {
+                0%, 60%, 100% {
+                    transform: translateY(0);
+                    opacity: 0.7;
+                }
+                30% {
+                    transform: translateY(-10px);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
