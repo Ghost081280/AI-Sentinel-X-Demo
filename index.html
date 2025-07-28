@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Sentinel-X | Autonomous Cyber Defense Agent</title>
+    <title>AI Sentinel-X | Autonomous Cyber Defense Platform</title>
     <style>
         * {
             margin: 0;
@@ -287,7 +287,7 @@
         }
 
         .input-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             position: relative;
         }
 
@@ -348,6 +348,15 @@
             opacity: 0.5;
         }
 
+        .input-description {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            margin-left: 32px;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
         /* Enhanced Login Button */
         .login-btn {
             width: 100%;
@@ -364,7 +373,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            margin-top: 25px;
+            margin-top: 30px;
             box-shadow: 
                 0 5px 20px rgba(0, 255, 136, 0.3),
                 inset 0 0 20px rgba(255, 255, 255, 0.1);
@@ -633,46 +642,50 @@
         <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
             <div class="input-group">
                 <label class="input-label">
+                    <div class="input-icon">🧠</div>
+                    <span>OpenAI API Key</span>
+                </label>
+                <input 
+                    type="password" 
+                    class="input-field" 
+                    id="openaiKey"
+                    placeholder="Enter your OpenAI API key"
+                    required
+                    autocomplete="off"
+                >
+                <div class="input-description">Powers AI-driven threat analysis, log parsing, and automated response generation</div>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">
+                    <div class="input-icon">🔍</div>
+                    <span>Shodan API Key</span>
+                </label>
+                <input 
+                    type="password" 
+                    class="input-field" 
+                    id="shodanKey"
+                    placeholder="Enter your Shodan API key"
+                    required
+                    autocomplete="off"
+                >
+                <div class="input-description">Enables external threat intelligence and internet-wide vulnerability scanning</div>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">
                     <div class="input-icon">🔐</div>
-                    <span>Organization ID</span>
-                </label>
-                <input 
-                    type="text" 
-                    class="input-field" 
-                    id="orgId"
-                    placeholder="Enter your organization ID"
-                    required
-                    autocomplete="off"
-                >
-            </div>
-
-            <div class="input-group">
-                <label class="input-label">
-                    <div class="input-icon">🔑</div>
-                    <span>API Key</span>
+                    <span>Sentinel-X API Key</span>
                 </label>
                 <input 
                     type="password" 
                     class="input-field" 
-                    id="apiKey"
-                    placeholder="Enter your API key"
+                    id="sentinelKey"
+                    placeholder="Enter your Sentinel-X API key"
                     required
                     autocomplete="off"
                 >
-            </div>
-
-            <div class="input-group">
-                <label class="input-label">
-                    <div class="input-icon">🛡️</div>
-                    <span>Security Token</span>
-                </label>
-                <input 
-                    type="password" 
-                    class="input-field" 
-                    id="securityToken"
-                    placeholder="Enter 2FA token or leave blank"
-                    autocomplete="off"
-                >
+                <div class="input-description">Authenticates access to the autonomous defense agent and security orchestration</div>
             </div>
 
             <button type="submit" class="login-btn" id="loginBtn">
@@ -685,7 +698,7 @@
         <div class="demo-info">
             <p>🚀 Experience autonomous cyber defense powered by AI</p>
             <div class="demo-credentials">
-                Demo credentials: demo / demo123 / (leave token blank)
+                Demo credentials: demo / demo / demo
             </div>
         </div>
     </div>
@@ -720,9 +733,9 @@
         function handleLogin(event) {
             event.preventDefault();
             
-            const orgId = document.getElementById('orgId').value;
-            const apiKey = document.getElementById('apiKey').value;
-            const securityToken = document.getElementById('securityToken').value;
+            const openaiKey = document.getElementById('openaiKey').value;
+            const shodanKey = document.getElementById('shodanKey').value;
+            const sentinelKey = document.getElementById('sentinelKey').value;
             const loginBtn = document.getElementById('loginBtn');
             const statusMessage = document.getElementById('statusMessage');
             
@@ -731,9 +744,9 @@
             statusMessage.textContent = '';
             
             // Validate inputs
-            if (!orgId || !apiKey) {
+            if (!openaiKey || !shodanKey || !sentinelKey) {
                 statusMessage.className = 'status-message error';
-                statusMessage.textContent = '⚠️ Organization ID and API key are required';
+                statusMessage.textContent = '⚠️ All API keys are required for system initialization';
                 return;
             }
             
@@ -744,40 +757,41 @@
             
             // Multi-stage authentication simulation
             setTimeout(() => {
-                statusMessage.textContent = '🔍 Validating credentials...';
+                statusMessage.textContent = '🔍 Validating API credentials...';
                 
                 setTimeout(() => {
-                    // Check demo credentials
-                    if (orgId === 'demo' && apiKey === 'demo123') {
-                        statusMessage.textContent = '✅ Authentication successful';
-                        
-                        setTimeout(() => {
-                            statusMessage.textContent = '🚀 Initializing AI defense systems...';
+                    statusMessage.textContent = '🤖 Initializing AI models...';
+                    
+                    setTimeout(() => {
+                        // Check demo credentials
+                        if (openaiKey === 'demo' && shodanKey === 'demo' && sentinelKey === 'demo') {
+                            statusMessage.textContent = '⚡ Activating defense systems...';
                             
                             setTimeout(() => {
                                 // Store credentials
                                 localStorage.setItem('sentinel_auth', JSON.stringify({
-                                    orgId: orgId,
-                                    timestamp: Date.now(),
-                                    sessionToken: btoa(Math.random().toString(36).substring(7))
+                                    openai: openaiKey,
+                                    shodan: shodanKey,
+                                    sentinel: sentinelKey,
+                                    timestamp: Date.now()
                                 }));
                                 
                                 statusMessage.className = 'status-message success';
-                                statusMessage.textContent = '✅ AI DEFENSE AGENT READY';
+                                statusMessage.textContent = '✅ AI DEFENSE AGENT ONLINE - FULL AUTONOMY ACHIEVED';
                                 
                                 // Redirect to dashboard
                                 setTimeout(() => {
                                     window.location.href = 'dashboard.html';
                                 }, 1000);
                             }, 800);
-                        }, 800);
-                    } else {
-                        statusMessage.className = 'status-message error';
-                        statusMessage.textContent = '❌ Invalid credentials. Please try again.';
-                        loginBtn.disabled = false;
-                        loginBtn.innerHTML = 'INITIALIZE AI DEFENSE AGENT';
-                    }
-                }, 1000);
+                        } else {
+                            statusMessage.className = 'status-message error';
+                            statusMessage.textContent = '❌ Invalid API credentials. Please verify your keys.';
+                            loginBtn.disabled = false;
+                            loginBtn.innerHTML = 'INITIALIZE AI DEFENSE AGENT';
+                        }
+                    }, 800);
+                }, 800);
             }, 1000);
         }
 
