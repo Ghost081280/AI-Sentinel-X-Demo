@@ -1101,3 +1101,374 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--secondary);
         }
+    </style>
+</head>
+<body>
+    <script>
+        // Check authentication
+        const auth = localStorage.getItem('sentinel_auth');
+        if (!auth) {
+            window.location.href = 'index.html';
+        } else {
+            const authData = JSON.parse(auth);
+            if (Date.now() - authData.timestamp > 24 * 60 * 60 * 1000) {
+                localStorage.removeItem('sentinel_auth');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+
+    <!-- Enhanced Matrix Background -->
+    <div class="matrix-bg">
+        <div class="quantum-grid"></div>
+        <div class="neural-particles" id="neuralParticles"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Enhanced Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="logo-container">
+                        <div class="logo-shield">
+                            <div class="logo-eye">
+                                <div class="logo-iris"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="brand-info">
+                        <h1 class="brand-name">AI SENTINEL-X</h1>
+                        <p class="brand-tagline">Quantum Command Center</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="agent-status">
+                        <div class="agent-icon">🤖</div>
+                        <div class="agent-info">
+                            <div class="agent-title">Quantum AI Agent</div>
+                            <div class="agent-status-text">Fully Autonomous</div>
+                        </div>
+                    </div>
+                    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Enhanced Navigation -->
+        <nav class="nav-tabs">
+            <div class="nav-tab active">
+                <span>🏠</span>
+                <span>Dashboard</span>
+            </div>
+            <a href="threats.html" class="nav-tab">
+                <span>⚠️</span>
+                <span>Threats</span>
+            </a>
+            <a href="network.html" class="nav-tab">
+                <span>🌐</span>
+                <span>Network</span>
+            </a>
+            <a href="defense.html" class="nav-tab">
+                <span>🛡️</span>
+                <span>Defense</span>
+            </a>
+            <a href="analytics.html" class="nav-tab">
+                <span>📊</span>
+                <span>Analytics</span>
+            </a>
+            <a href="ai-brain.html" class="nav-tab">
+                <span>🧠</span>
+                <span>AI Brain</span>
+            </a>
+            <a href="quantum.html" class="nav-tab">
+                <span>⚛️</span>
+                <span>Quantum</span>
+            </a>
+            <a href="settings.html" class="nav-tab">
+                <span>⚙️</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Central Dashboard -->
+            <div class="central-dashboard">
+                <!-- Enhanced Autonomous Banner -->
+                <div class="autonomous-banner">
+                    🤖 All Systems Operating Autonomously - No Human Intervention Required
+                </div>
+
+                <!-- Enhanced Threat Map -->
+                <div class="threat-map" id="threatMap">
+                    <div class="map-overlay">
+                        <div style="font-weight: bold; color: var(--primary); margin-bottom: 5px;">LIVE THREAT MAP</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);">Real-time quantum scanning</div>
+                    </div>
+                    <!-- Threat points will be added dynamically -->
+                </div>
+
+                <!-- Enhanced Quick Actions -->
+                <div class="quick-actions">
+                    <a href="threats.html" class="action-card">
+                        <div class="action-icon">⚠️</div>
+                        <div class="action-content">
+                            <div class="action-title">Active Threats</div>
+                            <div class="action-description">7 threats being neutralized by AI</div>
+                        </div>
+                    </a>
+                    <a href="network.html" class="action-card">
+                        <div class="action-icon">🌐</div>
+                        <div class="action-content">
+                            <div class="action-title">Network Scanner</div>
+                            <div class="action-description">Continuous quantum scanning active</div>
+                        </div>
+                    </a>
+                    <a href="defense.html" class="action-card">
+                        <div class="action-icon">🛡️</div>
+                        <div class="action-content">
+                            <div class="action-title">Active Defense</div>
+                            <div class="action-description">12 honeypots deployed autonomously</div>
+                        </div>
+                    </a>
+                    <a href="analytics.html" class="action-card">
+                        <div class="action-icon">📊</div>
+                        <div class="action-content">
+                            <div class="action-title">Analytics</div>
+                            <div class="action-description">AI predicting future attack vectors</div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Enhanced System Metrics -->
+                <div class="system-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value" id="threatCount">7</div>
+                        <div class="metric-label">Active Threats</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="responseTime">0.3ms</div>
+                        <div class="metric-label">Response Time</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="accuracy">99.8%</div>
+                        <div class="metric-label">AI Accuracy</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="uptime">100%</div>
+                        <div class="metric-label">System Uptime</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="prevented">2.4K</div>
+                        <div class="metric-label">Attacks Prevented</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="learning">∞</div>
+                        <div class="metric-label">AI Learning</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced AI Chat Widget -->
+    <div class="ai-chat-widget">
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-chat-header">
+                <span>AI ASSISTANT</span>
+                <span class="ai-chat-close" onclick="toggleChat()">×</span>
+            </div>
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="ai-message">
+                    <div class="ai-message-bubble">
+                        Welcome back! I'm your quantum AI assistant. All systems are operating autonomously. Current threat level: MODERATE. How can I assist you today?
+                    </div>
+                    <div class="ai-message-time">Just now</div>
+                </div>
+            </div>
+            <div class="ai-chat-input-container">
+                <input 
+                    type="text" 
+                    class="ai-chat-input" 
+                    id="aiChatInput" 
+                    placeholder="Ask me anything..."
+                    onkeypress="handleChatKeyPress(event)"
+                >
+                <button class="ai-chat-send" onclick="sendChatMessage()">SEND</button>
+            </div>
+        </div>
+        <div class="ai-chat-toggle" onclick="toggleChat()">🤖</div>
+    </div>
+
+    <script>
+        // Initialize neural particles
+        function initNeuralParticles() {
+            const container = document.getElementById('neuralParticles');
+            for (let i = 0; i < 30; i++) {
+                const node = document.createElement('div');
+                node.className = 'neural-node';
+                node.style.left = Math.random() * 100 + '%';
+                node.style.top = Math.random() * 100 + '%';
+                node.style.animationDelay = Math.random() * 8 + 's';
+                container.appendChild(node);
+            }
+        }
+
+        // Initialize threat map
+        function initThreatMap() {
+            const map = document.getElementById('threatMap');
+            const threats = [
+                { x: 30, y: 40 },
+                { x: 70, y: 20 },
+                { x: 50, y: 60 },
+                { x: 20, y: 70 },
+                { x: 80, y: 50 }
+            ];
+
+            threats.forEach((threat, index) => {
+                const point = document.createElement('div');
+                point.className = 'threat-point';
+                point.style.left = threat.x + '%';
+                point.style.top = threat.y + '%';
+                point.style.animationDelay = index * 0.3 + 's';
+                map.appendChild(point);
+
+                // Add connecting lines
+                if (index > 0) {
+                    const line = document.createElement('div');
+                    line.className = 'threat-line';
+                    const prevThreat = threats[index - 1];
+                    const angle = Math.atan2(threat.y - prevThreat.y, threat.x - prevThreat.x) * 180 / Math.PI;
+                    const distance = Math.sqrt(Math.pow(threat.x - prevThreat.x, 2) + Math.pow(threat.y - prevThreat.y, 2));
+                    
+                    line.style.width = distance + '%';
+                    line.style.left = prevThreat.x + '%';
+                    line.style.top = prevThreat.y + '%';
+                    line.style.transform = `rotate(${angle}deg)`;
+                    map.appendChild(line);
+                }
+            });
+        }
+
+        // Auto-update metrics
+        function updateMetrics() {
+            // Update threat count
+            const threatCount = document.getElementById('threatCount');
+            const currentThreats = parseInt(threatCount.textContent);
+            threatCount.textContent = Math.max(0, currentThreats + Math.floor(Math.random() * 3 - 1));
+
+            // Update response time
+            const responseTime = document.getElementById('responseTime');
+            responseTime.textContent = (Math.random() * 0.5 + 0.1).toFixed(1) + 'ms';
+
+            // Update accuracy
+            const accuracy = document.getElementById('accuracy');
+            accuracy.textContent = (99.5 + Math.random() * 0.4).toFixed(1) + '%';
+
+            // Update prevented attacks
+            const prevented = document.getElementById('prevented');
+            const currentPrevented = parseFloat(prevented.textContent);
+            prevented.textContent = (currentPrevented + Math.random() * 0.1).toFixed(1) + 'K';
+        }
+
+        // Logout handler
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout? The AI will continue protecting your systems autonomously.')) {
+                localStorage.removeItem('sentinel_auth');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // AI Chat functionality
+        let chatOpen = false;
+
+        function toggleChat() {
+            chatOpen = !chatOpen;
+            const chatWindow = document.getElementById('aiChatWindow');
+            if (chatOpen) {
+                chatWindow.classList.add('active');
+            } else {
+                chatWindow.classList.remove('active');
+            }
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('aiChatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const messagesContainer = document.getElementById('aiChatMessages');
+            
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'ai-message';
+            userMessage.innerHTML = `
+                <div class="ai-message-bubble user">${message}</div>
+                <div class="ai-message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+            `;
+            messagesContainer.appendChild(userMessage);
+            
+            input.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Show typing indicator
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'ai-typing';
+            typingIndicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            messagesContainer.appendChild(typingIndicator);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Simulate AI response
+            setTimeout(() => {
+                typingIndicator.remove();
+                
+                const aiResponse = generateAIResponse(message);
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'ai-message';
+                aiMessage.innerHTML = `
+                    <div class="ai-message-bubble">${aiResponse}</div>
+                    <div class="ai-message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                `;
+                messagesContainer.appendChild(aiMessage);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1500);
+        }
+
+        function generateAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('threat') || lowerMessage.includes('attack')) {
+                return 'I\'ve detected 7 active threats. All are being neutralized autonomously using quantum algorithms. Would you like to see the detailed threat analysis?';
+            }
+            if (lowerMessage.includes('status') || lowerMessage.includes('system')) {
+                return 'All systems are operating at peak efficiency. Quantum encryption: Active. AI Learning: Continuous. Zero human intervention required.';
+            }
+            if (lowerMessage.includes('help') || lowerMessage.includes('what can')) {
+                return 'I can help you monitor threats, analyze network activity, configure defenses, view analytics, and control the quantum security systems. What would you like to focus on?';
+            }
+            return 'I\'m processing your request through my quantum neural networks. Is there a specific security concern you\'d like me to address?';
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            initNeuralParticles();
+            initThreatMap();
+            setInterval(updateMetrics, 5000);
+        });
+
+        // Message for debugging
+        console.log('Dashboard loaded successfully');
+    </script>
+</body>
+</html>
