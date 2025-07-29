@@ -974,13 +974,14 @@
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Coverage Expansion Mode</div>
-                                        <div class="setting-description">How aggressively to expand protection to new systems</div>
+                                        <div class="setting-name">Network Scan Range</div>
+                                        <div class="setting-description">Define which network segments the agent should monitor and protect</div>
                                     </div>
                                     <select class="select-field">
-                                        <option>Conservative</option>
-                                        <option selected>Balanced</option>
-                                        <option>Aggressive</option>
+                                        <option>Local Network Only (192.168.x.x)</option>
+                                        <option selected>All Private Networks (RFC 1918)</option>
+                                        <option>Custom IP Ranges</option>
+                                        <option>Docker Networks Only</option>
                                     </select>
                                 </div>
                             </div>
