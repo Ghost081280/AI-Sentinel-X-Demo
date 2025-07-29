@@ -118,6 +118,53 @@
             font-size: 16px;
         }
 
+        /* NIST Badge */
+        .nist-badge {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nist-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
+            animation: nistGlow 15s linear infinite;
+        }
+
+        @keyframes nistGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .nist-badge-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .nist-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nist-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
         /* Main Grid */
         .quantum-grid-layout {
             display: grid;
@@ -273,6 +320,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 15px;
         }
 
         .algorithm-info {
@@ -304,19 +352,34 @@
             text-transform: uppercase;
         }
 
-        .algorithm-status.standby {
-            background: rgba(255, 170, 0, 0.2);
-            color: var(--warning);
-        }
-
         .algorithm-status.testing {
             background: rgba(0, 204, 255, 0.2);
             color: var(--secondary);
         }
 
-        .algorithm-status.available {
-            background: rgba(124, 58, 237, 0.2);
+        .algorithm-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .algorithm-metric {
+            text-align: center;
+        }
+
+        .metric-mini-value {
+            font-size: 16px;
+            font-weight: bold;
             color: var(--accent);
+        }
+
+        .metric-mini-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
         }
 
         /* Quantum Protection Features */
@@ -724,12 +787,20 @@
         <!-- Page Header -->
         <div class="page-header">
             <h1 class="page-title">QUANTUM SECURITY</h1>
-            <p class="page-subtitle">Post-Quantum Cryptographic Protection</p>
+            <p class="page-subtitle">NIST-Approved Post-Quantum Cryptographic Protection</p>
         </div>
 
         <!-- Quantum Alert -->
         <div class="quantum-alert">
-            🔐 Quantum-resistant encryption is active. All communications protected with NIST-approved post-quantum algorithms. AI monitors for quantum threats.
+            🔐 Quantum-resistant encryption is active using NIST-standardized algorithms. All communications protected against both current and future quantum threats.
+        </div>
+
+        <!-- NIST Badge -->
+        <div class="nist-badge">
+            <div class="nist-badge-content">
+                <div class="nist-title">🏛️ NIST FIPS 203/204/205 COMPLIANT</div>
+                <div class="nist-subtitle">Implementing only standardized post-quantum cryptographic algorithms</div>
+            </div>
         </div>
 
         <!-- Main Grid -->
@@ -747,11 +818,11 @@
                 <div class="key-display">
                     <div class="key-row">
                         <span class="key-label">Active Algorithm</span>
-                        <span class="key-value" id="activeAlgorithm">CRYSTALS-Kyber-1024</span>
+                        <span class="key-value" id="activeAlgorithm">ML-KEM-1024 (Kyber)</span>
                     </div>
                     <div class="key-row">
-                        <span class="key-label">Key Size</span>
-                        <span class="key-value">1,568 bytes (Level 5)</span>
+                        <span class="key-label">Security Level</span>
+                        <span class="key-value">NIST Level 5 (AES-256 equivalent)</span>
                     </div>
                     <div class="key-row">
                         <span class="key-label">Last Rotation</span>
@@ -759,7 +830,7 @@
                     </div>
                     <div class="key-row">
                         <span class="key-label">Next Rotation</span>
-                        <span class="key-value" id="nextRotation">In 13 hours</span>
+                        <span class="key-value" id="nextRotation">In 22 hours</span>
                     </div>
                     <div class="key-row">
                         <span class="key-label">Quantum Strength</span>
@@ -783,10 +854,10 @@
                 </div>
             </div>
 
-            <!-- Algorithm Management Panel -->
+            <!-- NIST Algorithm Panel -->
             <div class="quantum-panel">
                 <div class="panel-header">
-                    <h2 class="panel-title">Post-Quantum Algorithms</h2>
+                    <h2 class="panel-title">NIST Standardized Algorithms</h2>
                 </div>
                 
                 <div class="algorithm-list">
@@ -795,11 +866,25 @@
                             <div class="algorithm-info">
                                 <div class="algorithm-name">
                                     <span>✅</span>
-                                    <span>CRYSTALS-Kyber</span>
+                                    <span>ML-KEM (CRYSTALS-Kyber)</span>
                                 </div>
-                                <div class="algorithm-type">Lattice-based Key Encapsulation</div>
+                                <div class="algorithm-type">Module-Lattice Key Encapsulation - FIPS 203</div>
                             </div>
                             <div class="algorithm-status">ACTIVE</div>
+                        </div>
+                        <div class="algorithm-metrics">
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">1.0ms</div>
+                                <div class="metric-mini-label">Latency</div>
+                            </div>
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">1,568B</div>
+                                <div class="metric-mini-label">Key Size</div>
+                            </div>
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">Level 5</div>
+                                <div class="metric-mini-label">Security</div>
+                            </div>
                         </div>
                     </div>
 
@@ -808,11 +893,25 @@
                             <div class="algorithm-info">
                                 <div class="algorithm-name">
                                     <span>✅</span>
-                                    <span>CRYSTALS-Dilithium</span>
+                                    <span>ML-DSA (CRYSTALS-Dilithium)</span>
                                 </div>
-                                <div class="algorithm-type">Lattice-based Digital Signatures</div>
+                                <div class="algorithm-type">Module-Lattice Digital Signatures - FIPS 204</div>
                             </div>
                             <div class="algorithm-status">ACTIVE</div>
+                        </div>
+                        <div class="algorithm-metrics">
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">1.2ms</div>
+                                <div class="metric-mini-label">Sign Time</div>
+                            </div>
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">4,627B</div>
+                                <div class="metric-mini-label">Signature</div>
+                            </div>
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">Level 5</div>
+                                <div class="metric-mini-label">Security</div>
+                            </div>
                         </div>
                     </div>
 
@@ -820,12 +919,26 @@
                         <div class="algorithm-header">
                             <div class="algorithm-info">
                                 <div class="algorithm-name">
-                                    <span>🟡</span>
-                                    <span>SPHINCS+</span>
+                                    <span>✅</span>
+                                    <span>SLH-DSA (SPHINCS+)</span>
                                 </div>
-                                <div class="algorithm-type">Hash-based Digital Signatures</div>
+                                <div class="algorithm-type">Stateless Hash-based Signatures - FIPS 205</div>
                             </div>
-                            <div class="algorithm-status standby">STANDBY</div>
+                            <div class="algorithm-status">ACTIVE</div>
+                        </div>
+                        <div class="algorithm-metrics">
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">15ms</div>
+                                <div class="metric-mini-label">Sign Time</div>
+                            </div>
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">49KB</div>
+                                <div class="metric-mini-label">Signature</div>
+                            </div>
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">Level 5</div>
+                                <div class="metric-mini-label">Security</div>
+                            </div>
                         </div>
                     </div>
 
@@ -836,48 +949,23 @@
                                     <span>🧪</span>
                                     <span>FALCON</span>
                                 </div>
-                                <div class="algorithm-type">Lattice-based Signatures (Compact)</div>
+                                <div class="algorithm-type">Fast Fourier Lattice Signatures - NIST Selected</div>
                             </div>
                             <div class="algorithm-status testing">TESTING</div>
                         </div>
-                    </div>
-
-                    <div class="algorithm-item" onclick="showAlgorithmDetails('mceliece')">
-                        <div class="algorithm-header">
-                            <div class="algorithm-info">
-                                <div class="algorithm-name">
-                                    <span>🔐</span>
-                                    <span>Classic McEliece</span>
-                                </div>
-                                <div class="algorithm-type">Code-based Public Key Encryption</div>
+                        <div class="algorithm-metrics">
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">0.5ms</div>
+                                <div class="metric-mini-label">Sign Time</div>
                             </div>
-                            <div class="algorithm-status available">AVAILABLE</div>
-                        </div>
-                    </div>
-
-                    <div class="algorithm-item" onclick="showAlgorithmDetails('bike')">
-                        <div class="algorithm-header">
-                            <div class="algorithm-info">
-                                <div class="algorithm-name">
-                                    <span>🚴</span>
-                                    <span>BIKE</span>
-                                </div>
-                                <div class="algorithm-type">Code-based Key Encapsulation</div>
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">1,330B</div>
+                                <div class="metric-mini-label">Signature</div>
                             </div>
-                            <div class="algorithm-status available">AVAILABLE</div>
-                        </div>
-                    </div>
-
-                    <div class="algorithm-item" onclick="showAlgorithmDetails('hqc')">
-                        <div class="algorithm-header">
-                            <div class="algorithm-info">
-                                <div class="algorithm-name">
-                                    <span>📐</span>
-                                    <span>HQC</span>
-                                </div>
-                                <div class="algorithm-type">Code-based Key Encapsulation</div>
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">Level 5</div>
+                                <div class="metric-mini-label">Security</div>
                             </div>
-                            <div class="algorithm-status standby">STANDBY</div>
                         </div>
                     </div>
                 </div>
@@ -894,32 +982,32 @@
                 <div class="feature-card">
                     <div class="feature-icon">🔄</div>
                     <div class="feature-name">Crypto-Agility Engine</div>
-                    <div class="feature-status">Automatically switches algorithms based on threat level</div>
+                    <div class="feature-status">Hot-swaps between NIST algorithms in real-time</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🎯</div>
-                    <div class="feature-name">Quantum Threat Detection</div>
-                    <div class="feature-status">Monitors for quantum computing breakthroughs</div>
+                    <div class="feature-name">Quantum Threat Monitor</div>
+                    <div class="feature-status">Tracks global quantum computing progress</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔐</div>
-                    <div class="feature-name">Hybrid Encryption</div>
-                    <div class="feature-status">Combines classical & PQC for defense in depth</div>
+                    <div class="feature-name">Hybrid Mode</div>
+                    <div class="feature-status">Combines classical + PQC for maximum security</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
-                    <div class="feature-name">Algorithm Performance Monitor</div>
-                    <div class="feature-status">Tracks latency and adjusts for optimal speed</div>
+                    <div class="feature-name">Performance Optimizer</div>
+                    <div class="feature-status">Balances security level with latency requirements</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🛡️</div>
-                    <div class="feature-name">Store-Now-Decrypt-Later Defense</div>
-                    <div class="feature-status">Protects against future quantum attacks</div>
+                    <div class="feature-name">Harvest Attack Defense</div>
+                    <div class="feature-status">Protects data from store-now-decrypt-later threats</div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <div class="feature-name">Certificate Transparency</div>
-                    <div class="feature-status">Monitors for quantum-vulnerable certificates</div>
+                    <div class="feature-icon">📜</div>
+                    <div class="feature-name">FIPS Compliance</div>
+                    <div class="feature-status">Maintains FIPS 203/204/205 compliance</div>
                 </div>
             </div>
         </div>
@@ -927,7 +1015,7 @@
         <!-- Certificate Status -->
         <div class="cert-status">
             <div class="panel-header">
-                <h2 class="panel-title">Certificate Management</h2>
+                <h2 class="panel-title">Post-Quantum Certificate Management</h2>
             </div>
             
             <div class="cert-grid">
@@ -937,7 +1025,7 @@
                         <div class="cert-expiry">Expires in 358 days</div>
                     </div>
                     <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">
-                        Post-quantum ready • RSA-4096 + Dilithium5
+                        Hybrid • RSA-4096 + ML-DSA-87 (Dilithium5)
                     </div>
                     <div class="cert-progress">
                         <div class="cert-progress-fill" style="width: 98%;"></div>
@@ -945,11 +1033,11 @@
                 </div>
                 <div class="cert-card">
                     <div class="cert-header">
-                        <div class="cert-name">API Gateway Certificate</div>
+                        <div class="cert-name">TLS Server Certificate</div>
                         <div class="cert-expiry">Expires in 87 days</div>
                     </div>
                     <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">
-                        Hybrid encryption • ECDSA P-384 + Kyber-1024
+                        Pure PQC • ML-KEM-1024 + ML-DSA-65
                     </div>
                     <div class="cert-progress">
                         <div class="cert-progress-fill" style="width: 76%;"></div>
@@ -957,26 +1045,14 @@
                 </div>
                 <div class="cert-card">
                     <div class="cert-header">
-                        <div class="cert-name">Service Mesh Certificates</div>
-                        <div class="cert-expiry">Auto-rotating daily</div>
+                        <div class="cert-name">Code Signing Certificate</div>
+                        <div class="cert-expiry">Expires in 730 days</div>
                     </div>
                     <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">
-                        Full PQC • Kyber-768 + Dilithium3
+                        Long-term • SLH-DSA-SHAKE-256f (SPHINCS+)
                     </div>
                     <div class="cert-progress">
                         <div class="cert-progress-fill" style="width: 100%;"></div>
-                    </div>
-                </div>
-                <div class="cert-card">
-                    <div class="cert-header">
-                        <div class="cert-name">Code Signing Certificate</div>
-                        <div class="cert-expiry">Expires in 265 days</div>
-                    </div>
-                    <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">
-                        Long-term secure • SPHINCS+-256f
-                    </div>
-                    <div class="cert-progress">
-                        <div class="cert-progress-fill" style="width: 88%;"></div>
                     </div>
                 </div>
             </div>
@@ -993,7 +1069,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        Welcome to Quantum Security. I manage post-quantum cryptography, monitor NIST algorithm updates, and ensure quantum-resistant protection. Click on any algorithm to learn more about its use case and implementation.
+                        Welcome to Quantum Security. I manage NIST-standardized post-quantum cryptography to protect against current and future quantum threats. Click any algorithm to learn about its specific use case and implementation details.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1003,7 +1079,7 @@
                     type="text" 
                     class="ai-chat-input" 
                     id="aiChatInput" 
-                    placeholder="Ask about quantum algorithms or encryption status..."
+                    placeholder="Ask about NIST algorithms or quantum protection..."
                     onkeypress="handleChatKeyPress(event)"
                 >
                 <button class="ai-chat-send" onclick="sendChatMessage()">SEND</button>
@@ -1022,59 +1098,42 @@
             setTimeout(() => {
                 const algorithmInfo = {
                     'kyber': {
-                        name: 'CRYSTALS-Kyber',
-                        use: '🔐 Primary use: Securing TLS handshakes, VPN connections, and any session key exchange. Replaces RSA/ECDH in protocols.',
-                        when: 'Deploy for: All external-facing services, API gateways, web servers. Critical for protecting data in transit.',
-                        technical: 'Security levels: Kyber-512 (AES-128 equivalent), Kyber-768 (AES-192), Kyber-1024 (AES-256). We use Kyber-1024 for maximum security.',
-                        performance: '⚡ Performance: ~0.8ms encryption, ~1.0ms decryption. Ciphertext: 1,568 bytes. Public key: 1,568 bytes.'
+                        name: 'ML-KEM (CRYSTALS-Kyber)',
+                        use: '🔐 Primary use: Securing all key exchanges - TLS 1.3 handshakes, VPN tunnels, SSH connections, and API authentication. This is your workhorse for protecting data in transit.',
+                        when: 'Deploy for: Every external-facing service, all client-server communications, inter-service mesh traffic. Critical for preventing "harvest now, decrypt later" attacks.',
+                        technical: 'NIST FIPS 203 compliant. Three parameter sets: ML-KEM-512 (Level 1), ML-KEM-768 (Level 3), ML-KEM-1024 (Level 5). We use ML-KEM-1024 for maximum 256-bit quantum security.',
+                        performance: '⚡ Performance: 0.9ms encapsulation, 1.1ms decapsulation. Ciphertext: 1,568 bytes. Public key: 1,568 bytes. Only 3-5ms added to TLS handshake.',
+                        realworld: '🌍 Real-world: Google already testing in Chrome. Signal implementing for E2E encryption. Your TLS traffic will use this by default.'
                     },
                     'dilithium': {
-                        name: 'CRYSTALS-Dilithium',
-                        use: '📝 Primary use: Signing certificates, software updates, API requests, audit logs, and legal documents. Ensures authenticity and non-repudiation.',
-                        when: 'Deploy for: Certificate authorities, code signing, document signing, blockchain transactions, and audit trail integrity.',
-                        technical: 'Security levels: Dilithium2 (128-bit), Dilithium3 (192-bit), Dilithium5 (256-bit). Using Dilithium5 for root CA.',
-                        performance: '⚡ Performance: ~1.2ms signing, ~0.3ms verification. Signature size: 4,627 bytes. Public key: 2,592 bytes.'
+                        name: 'ML-DSA (CRYSTALS-Dilithium)',
+                        use: '📝 Primary use: Digital signatures for certificates, code signing, document signing, blockchain transactions, and API request authentication. Replaces RSA/ECDSA signatures.',
+                        when: 'Deploy for: PKI infrastructure, software supply chain security, legal document signing, audit logs, and any scenario requiring proof of authenticity.',
+                        technical: 'NIST FIPS 204 compliant. Three variants: ML-DSA-44 (Level 2), ML-DSA-65 (Level 3), ML-DSA-87 (Level 5). Using ML-DSA-87 for root CA, ML-DSA-65 for leaf certificates.',
+                        performance: '⚡ Performance: 1.2ms signing, 0.3ms verification. Signature: 4,627 bytes (Level 5). Public key: 2,592 bytes. Fast verification ideal for high-volume scenarios.',
+                        realworld: '🌍 Real-world: Being integrated into X.509 certificates. DNSSEC post-quantum trials. Your certificates already use hybrid RSA + Dilithium.'
                     },
                     'sphincs': {
-                        name: 'SPHINCS+',
-                        use: '🛡️ Primary use: Long-term signatures for firmware, critical configurations, and archival data. Stateless design prevents key reuse issues.',
-                        when: 'Deploy for: Signing artifacts that must remain verifiable for 20+ years. Backup signature method when Dilithium unavailable.',
-                        technical: 'Variants: SPHINCS+-128f (fast), SPHINCS+-256s (small signatures). Hash-based, quantum-resistant even against future attacks.',
-                        performance: '⚡ Performance: ~15ms signing (fast variant), ~2ms verification. Larger signatures (17KB-50KB) but maximum security.'
+                        name: 'SLH-DSA (SPHINCS+)',
+                        use: '🛡️ Primary use: Ultra-long-term signatures for firmware, OS updates, root certificates, and archival data. Stateless design means no risk from nonce reuse or RNG failures.',
+                        when: 'Deploy for: Signing artifacts that must remain verifiable for 20+ years, offline root CAs, emergency backup signing, and scenarios where you cannot guarantee state management.',
+                        technical: 'NIST FIPS 205 compliant. Hash-based, proven secure even if all math problems are broken. We use SLH-DSA-SHAKE-256f for balance of speed and size.',
+                        performance: '⚡ Performance: 15ms signing (fast variant), 2ms verification. Large signatures (49KB) but absolute security. Perfect for low-frequency, high-value signatures.',
+                        realworld: '🌍 Real-world: Used by German BSI for critical infrastructure. Ideal for signing golden images, BIOS/UEFI, and compliance documents.'
                     },
                     'falcon': {
                         name: 'FALCON',
-                        use: '✍️ Primary use: Resource-constrained environments - IoT devices, embedded systems, mobile apps. Smallest signature sizes among lattice schemes.',
-                        when: 'Deploy for: Smart cards, IoT sensors, bandwidth-limited channels, embedded devices needing signatures.',
-                        technical: 'Based on NTRU lattices with Gaussian sampling. Falcon-512 (NIST Level 1) and Falcon-1024 (NIST Level 5).',
-                        performance: '⚡ Performance: ~0.5ms signing, ~0.2ms verification. Compact signatures: 690-1,330 bytes. Ideal for constrained devices.'
-                    },
-                    'mceliece': {
-                        name: 'Classic McEliece',
-                        use: '📦 Primary use: Ultra-high security for data at rest - database encryption, backup archives, classified documents. Most conservative choice.',
-                        when: 'Deploy for: Encrypting master keys, highly sensitive data storage, scenarios where key size is not a constraint.',
-                        technical: 'Code-based cryptography with 40+ years of analysis. Huge keys but unmatched security confidence.',
-                        performance: '⚡ Performance: Very fast encryption/decryption (<1ms), but public keys are 261KB-1.4MB. Use only where storage permits.'
-                    },
-                    'bike': {
-                        name: 'BIKE (Bit Flipping Key Encapsulation)',
-                        use: '🚴 Primary use: Alternative to Kyber with smaller keys. Good for memory-constrained environments needing key exchange.',
-                        when: 'Deploy for: Backup KEM option, systems with limited memory, diversifying cryptographic portfolio.',
-                        technical: 'QC-MDPC codes with compact keys. BIKE-1 (Level 1), BIKE-3 (Level 3), BIKE-5 (Level 5) security.',
-                        performance: '⚡ Performance: ~3ms encapsulation/decapsulation. Public keys: 1.5KB-5KB. Good balance of size and speed.'
-                    },
-                    'hqc': {
-                        name: 'HQC (Hamming Quasi-Cyclic)',
-                        use: '📐 Primary use: Another code-based KEM alternative. Useful for crypto-agility and avoiding single points of failure.',
-                        when: 'Deploy for: Systems requiring multiple algorithm support, research environments, testing quantum readiness.',
-                        technical: 'Error-correcting codes with proven reduction to decoding problems. Moderate key sizes.',
-                        performance: '⚡ Performance: ~2ms operations. Public keys: 3-7KB. Good alternative when diversification needed.'
+                        use: '✍️ Primary use: Compact signatures for constrained environments - IoT devices, embedded systems, bandwidth-limited channels. Smallest quantum-safe signatures available.',
+                        when: 'Deploy for: IoT sensors, automotive ECUs, satellite communications, mobile apps, smart cards, and any scenario where every byte counts.',
+                        technical: 'NIST round 3 winner, standardization pending. NTRU lattices with Gaussian sampling. Falcon-512 (Level 1) for IoT, Falcon-1024 (Level 5) for higher security.',
+                        performance: '⚡ Performance: 0.5ms signing, 0.2ms verification. Tiny signatures: 690-1,330 bytes. 70% smaller than Dilithium. Ideal for millions of IoT devices.',
+                        realworld: '🌍 Real-world: Being tested for 5G authentication. Vehicle-to-vehicle communications. Your IoT fleet will transition to this once standardized.'
                     }
                 };
                 
                 const info = algorithmInfo[algorithm];
                 if (info) {
-                    addChatMessage(`🔍 ${info.name} Details:\n\n${info.use}\n\n${info.when}\n\n${info.technical}\n\n${info.performance}`, false);
+                    addChatMessage(`🔍 ${info.name} Deep Dive:\n\n${info.use}\n\n${info.when}\n\n${info.technical}\n\n${info.performance}\n\n${info.realworld}`, false);
                 }
             }, 300);
         }
@@ -1087,7 +1146,7 @@
             // Simulate time updates
             const hours = Math.floor(Math.random() * 4) + 1;
             lastRotation.textContent = `${hours} hours ago`;
-            nextRotation.textContent = `In ${15 - hours} hours`;
+            nextRotation.textContent = `In ${24 - hours} hours`;
         }
 
         // Update metrics
@@ -1104,7 +1163,7 @@
 
         // Rotate algorithms occasionally
         function rotateAlgorithm() {
-            const algorithms = ['CRYSTALS-Kyber-1024', 'CRYSTALS-Kyber-768', 'CRYSTALS-Dilithium5', 'Hybrid-Kyber-ECDH'];
+            const algorithms = ['ML-KEM-1024 (Kyber)', 'ML-KEM-768 (Kyber)', 'Hybrid: ECDH + ML-KEM', 'ML-DSA-87 (Dilithium)'];
             const activeAlgo = document.getElementById('activeAlgorithm');
             activeAlgo.textContent = algorithms[Math.floor(Math.random() * algorithms.length)];
         }
@@ -1202,31 +1261,35 @@
         function generateAIResponse(message) {
             const lowerMessage = message.toLowerCase();
             
-            if (lowerMessage.includes('quantum') && (lowerMessage.includes('threat') || lowerMessage.includes('attack'))) {
-                return '🔐 Current quantum threat level: LOW. No quantum computers capable of breaking current encryption detected. Monitoring IBM (433 qubits), Google (70 qubits), and other quantum developments. We need ~4,000 logical qubits to threaten RSA-2048, current systems have <1,000 physical qubits.';
+            if (lowerMessage.includes('nist') || lowerMessage.includes('standard') || lowerMessage.includes('fips')) {
+                return '🏛️ NIST Standardization Status:\n\n✅ FIPS 203: ML-KEM (Kyber) - Published August 2024\n✅ FIPS 204: ML-DSA (Dilithium) - Published August 2024\n✅ FIPS 205: SLH-DSA (SPHINCS+) - Published August 2024\n🔄 FALCON: Selected but pending separate standardization\n\nWe implement all FIPS-validated algorithms with full compliance. No experimental or non-standard algorithms in production.';
+            }
+            
+            if (lowerMessage.includes('quantum') && (lowerMessage.includes('threat') || lowerMessage.includes('computer'))) {
+                return '🔐 Quantum Threat Assessment:\n\nCurrent status: No immediate threat. IBM has 1,121 physical qubits (Condor), Google has 70 logical qubits. We need ~20 million physical qubits to break RSA-2048.\n\nTimeline estimates:\n• 2030: Early quantum advantage for optimization\n• 2035-2040: Potential RSA-2048 vulnerability\n• Today: Full PQC protection already active\n\nYour data is protected against both current and future quantum attacks.';
             }
             
             if (lowerMessage.includes('performance') || lowerMessage.includes('speed') || lowerMessage.includes('latency')) {
-                return '⚡ PQC Performance Metrics:\n\n• Kyber-1024: 0.8ms encrypt + 1.0ms decrypt = 1.8ms total\n• Dilithium5: 1.2ms sign + 0.3ms verify = 1.5ms total\n• Total TLS handshake overhead: ~5ms (acceptable)\n• Hybrid mode adds ~2ms but provides defense in depth\n\nAutomatic algorithm selection based on connection type and threat level.';
+                return '⚡ Real-World Performance Impact:\n\n• TLS Handshake: +3-5ms (from 25ms to 28-30ms)\n• API Authentication: +1-2ms per request\n• Bulk Encryption: No change (still using AES)\n• Certificate Verification: +0.3ms\n\nTotal overhead: <5% for most applications. Crypto-agility engine automatically optimizes based on connection type. High-frequency trading uses Falcon, web traffic uses Kyber.';
             }
             
-            if (lowerMessage.includes('migration') || lowerMessage.includes('upgrade') || lowerMessage.includes('transition')) {
-                return '📋 PQC Migration Status:\n\n✅ Phase 1 (Complete): Inventory of all certificates and keys\n✅ Phase 2 (Complete): Hybrid encryption deployed\n🔄 Phase 3 (In Progress): Gradual transition to full PQC\n⏳ Phase 4 (Q2 2025): Deprecate classical-only algorithms\n\nCrypto-agility engine allows seamless transition with zero downtime.';
+            if (lowerMessage.includes('hybrid') || lowerMessage.includes('classical') || lowerMessage.includes('transition')) {
+                return '🔄 Hybrid Cryptography Strategy:\n\nCurrently running dual algorithms:\n• TLS: ECDHE + ML-KEM (both must be broken to compromise)\n• Certificates: RSA + ML-DSA (dual signatures)\n• Benefits: Protection even if PQC has unknown weakness\n• Timeline: Hybrid mode until 2030, then pure PQC\n\nZero downtime migration path. Old clients still connect via classical, new clients get quantum protection.';
             }
             
-            if (lowerMessage.includes('compliance') || lowerMessage.includes('standard') || lowerMessage.includes('regulation')) {
-                return '📜 Compliance Status:\n\n• NIST PQC: Fully compliant with Round 4 selections\n• CNSA 2.0: Meet NSA requirements for quantum resistance\n• FIPS 140-3: Certification pending for PQC modules\n• Common Criteria: EAL4+ evaluation in progress\n• Industry: Aligned with banking (SWIFT) and healthcare (HIPAA) quantum requirements';
+            if (lowerMessage.includes('certificate') || lowerMessage.includes('pki') || lowerMessage.includes('x.509')) {
+                return '📜 Post-Quantum PKI Status:\n\n• Root CA: Hybrid RSA-4096 + ML-DSA-87 (10-year cert)\n• Intermediate: Pure ML-DSA-65 (5-year cert)\n• Leaf certs: Auto-rotating ML-DSA-44 (90-day)\n• Code signing: SLH-DSA for 20+ year validity\n\nAll certificates include both classical and PQC signatures. Browsers/clients that don\'t support PQC still validate via RSA. Full X.509 PQC support expected by 2025.';
             }
             
-            if (lowerMessage.includes('hybrid') || lowerMessage.includes('classical')) {
-                return '🔄 Hybrid Cryptography Active:\n\nCombining classical + PQC for maximum security:\n• TLS: ECDHE + Kyber (key exchange)\n• Certs: RSA + Dilithium (signatures)\n• Benefits: Protects against both classical and quantum attacks\n• Fallback: If PQC broken, classical crypto still protects\n• Performance: Only 2-3ms additional overhead';
+            if (lowerMessage.includes('iot') || lowerMessage.includes('embedded') || lowerMessage.includes('constrained')) {
+                return '📱 IoT/Embedded Device Strategy:\n\n• Primary: FALCON (once standardized) - 690 byte signatures\n• Current: ML-DSA-44 (smallest Dilithium variant)\n• Key exchange: ML-KEM-512 (balanced security/size)\n• Optimization: Hardware acceleration via ARM Crypto Extensions\n\nAutomatic algorithm selection based on device capabilities. 8KB RAM devices get lightweight variants, gateways get full security.';
             }
             
-            if (lowerMessage.includes('store') && lowerMessage.includes('now')) {
-                return '🛡️ Store-Now-Decrypt-Later Defense:\n\nProtecting against adversaries harvesting encrypted data today for future quantum decryption:\n• All data encrypted with Kyber-1024 (256-bit quantum security)\n• Historical data being re-encrypted with PQC\n• Network traffic uses ephemeral keys (forward secrecy)\n• Estimated protection: Secure for 30+ years against quantum attacks';
+            if (lowerMessage.includes('compliance') || lowerMessage.includes('regulation') || lowerMessage.includes('mandate')) {
+                return '📋 Compliance & Regulations:\n\n✅ US Federal: CNSA 2.0 compliant (NSA mandate)\n✅ NIST: FIPS 203/204/205 certified implementations\n✅ EU: Meets ENISA quantum-safe recommendations\n✅ Financial: Aligned with SWIFT CSP requirements\n✅ Healthcare: HIPAA-ready with long-term protection\n\nWhite House memo requires PQC by 2035. You\'re already compliant, 11 years ahead of mandate.';
             }
             
-            return '🤖 I manage post-quantum cryptography for AI Sentinel-X. Click any algorithm card to learn about its specific use case, or ask me about quantum threats, performance impact, migration strategy, or compliance requirements.';
+            return '🤖 I manage NIST-standardized post-quantum cryptography for AI Sentinel-X. Click any algorithm card for detailed use cases, or ask about quantum threats, performance impact, compliance requirements, or migration strategies.';
         }
 
         // Initialize
@@ -1246,13 +1309,13 @@
             setInterval(() => {
                 if (Math.random() > 0.85 && chatOpen) {
                     const events = [
-                        '🔐 Key rotation completed. New Kyber-1024 keys deployed across all services.',
-                        '📊 NIST algorithm update check: No new vulnerabilities. All implementations current.',
-                        '⚡ Quantum crypto performance: 99.8% of connections <10ms overhead.',
-                        '🛡️ Quantum threat intelligence: IBM announced 1,000 qubit system. Still 3x below threat threshold.',
-                        '📜 Certificate rotation: 12 certificates upgraded to hybrid PQC. Zero downtime achieved.',
-                        '🔍 Crypto-agility test: Successfully switched from Kyber to BIKE in 0.3 seconds.',
-                        '⚠️ Detected RSA-2048 certificate in supply chain. Vendor notified for PQC upgrade.'
+                        '🔐 Key rotation completed. New ML-KEM-1024 keys deployed across all services.',
+                        '📊 NIST compliance check: All algorithms match FIPS 203/204/205 specifications.',
+                        '⚡ Performance optimization: 99.2% of handshakes complete within 30ms.',
+                        '🛡️ Quantum threat intel: Chinese researchers claim 1,000 qubit milestone. Still 19,000x below threat threshold.',
+                        '📜 Certificate update: 23 certificates transitioned from hybrid to pure PQC.',
+                        '✅ FALCON implementation ready. Awaiting NIST final standard before production deployment.',
+                        '🔍 Crypto-agility test: Successfully switched from ML-KEM to hybrid mode in 0.2 seconds.'
                     ];
                     addChatMessage(events[Math.floor(Math.random() * events.length)], false);
                 }
