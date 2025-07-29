@@ -26,6 +26,7 @@
             --text-secondary: #8892b0;
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
+            --gradient-encryption: linear-gradient(135deg, #00ff88 0%, #00aa66 100%);
         }
 
         body {
@@ -232,6 +233,19 @@
             font-size: 14px;
             color: var(--text-secondary);
             line-height: 1.5;
+        }
+
+        /* Encryption Badge */
+        .encryption-badge {
+            background: var(--gradient-encryption);
+            color: var(--bg-darker);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-left: 10px;
         }
 
         /* Form Controls */
@@ -509,6 +523,10 @@
                     <span class="sidebar-icon">🔐</span>
                     <span>Security</span>
                 </a>
+                <a class="sidebar-item" onclick="showSection('encryption')">
+                    <span class="sidebar-icon">🔒</span>
+                    <span>Encryption</span>
+                </a>
                 <a class="sidebar-item" onclick="showSection('ai')">
                     <span class="sidebar-icon">🤖</span>
                     <span>AI Agent</span>
@@ -573,8 +591,8 @@
 
                         <div class="setting-item">
                             <div class="setting-info">
-                                <div class="setting-name">Data Retention</div>
-                                <div class="setting-description">How long to keep security logs and analytics</div>
+                                <div class="setting-name">Data Retention <span class="encryption-badge">AES-256 Protected</span></div>
+                                <div class="setting-description">How long to keep encrypted security logs and analytics</div>
                             </div>
                             <select class="select-field">
                                 <option>30 days</option>
@@ -680,8 +698,8 @@
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Data Retention</div>
-                                        <div class="setting-description">How long to keep security logs and analytics</div>
+                                        <div class="setting-name">Data Retention <span class="encryption-badge">AES-256 Protected</span></div>
+                                        <div class="setting-description">How long to keep encrypted security logs and analytics</div>
                                     </div>
                                     <select class="select-field">
                                         <option>30 days</option>
@@ -738,8 +756,8 @@
                                 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Multi-Factor Authentication</div>
-                                        <div class="setting-description">Require MFA for all admin access</div>
+                                        <div class="setting-name">Multi-Factor Authentication <span class="encryption-badge">PBKDF2 Protected</span></div>
+                                        <div class="setting-description">Require MFA for all admin access with secure password hashing</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox" checked>
@@ -759,32 +777,137 @@
                                         <option>Never</option>
                                     </select>
                                 </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Password Policy</div>
+                                        <div class="setting-description">Minimum password requirements for users</div>
+                                    </div>
+                                    <select class="select-field">
+                                        <option>Basic (8+ chars)</option>
+                                        <option selected>Strong (12+ chars, mixed)</option>
+                                        <option>Maximum (16+ chars, all types)</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="setting-group">
-                                <h3 class="group-title">Encryption</h3>
+                                <h3 class="group-title">Access Control</h3>
                                 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Post-Quantum Cryptography</div>
-                                        <div class="setting-description">Use quantum-resistant algorithms</div>
+                                        <div class="setting-name">IP Whitelisting</div>
+                                        <div class="setting-description">Restrict access to specific IP addresses</div>
                                     </div>
                                     <label class="toggle-switch">
-                                        <input type="checkbox" checked>
+                                        <input type="checkbox">
                                         <span class="toggle-slider"></span>
                                     </label>
                                 </div>
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Key Rotation</div>
-                                        <div class="setting-description">Frequency of encryption key updates</div>
+                                        <div class="setting-name">Audit Logging <span class="encryption-badge">HMAC-SHA256 Signed</span></div>
+                                        <div class="setting-description">Log all access attempts with cryptographic integrity</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+                                <button class="btn btn-secondary" onclick="resetSettings()">Reset to Defaults</button>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'encryption':
+                    content.innerHTML = `
+                        <div class="settings-section">
+                            <h2 class="section-title">Encryption Settings</h2>
+                            
+                            <div class="setting-group">
+                                <h3 class="group-title">Data Encryption</h3>
+                                
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Encryption Algorithm</div>
+                                        <div class="setting-description">Primary algorithm for data protection</div>
                                     </div>
                                     <select class="select-field">
+                                        <option selected>AES-256-GCM (NIST Approved)</option>
+                                        <option disabled>ChaCha20-Poly1305 (Alternative)</option>
+                                    </select>
+                                </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Key Rotation</div>
+                                        <div class="setting-description">Frequency of encryption key updates using HKDF-SHA256</div>
+                                    </div>
+                                    <select class="select-field">
+                                        <option>Every 12 hours</option>
                                         <option selected>Daily</option>
                                         <option>Weekly</option>
                                         <option>Monthly</option>
                                     </select>
+                                </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Hardware Acceleration</div>
+                                        <div class="setting-description">Use AES-NI for improved performance</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="setting-group">
+                                <h3 class="group-title">Password Security</h3>
+                                
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">PBKDF2 Iterations</div>
+                                        <div class="setting-description">Computational cost for password hashing</div>
+                                    </div>
+                                    <select class="select-field">
+                                        <option>300,000 (Fast)</option>
+                                        <option selected>600,000 (Balanced)</option>
+                                        <option>1,000,000 (Maximum)</option>
+                                    </select>
+                                </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Message Authentication</div>
+                                        <div class="setting-description">HMAC-SHA256 for data integrity</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="setting-group">
+                                <h3 class="group-title">Future Upgrades</h3>
+                                
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Post-Quantum Readiness</div>
+                                        <div class="setting-description">Prepare for quantum-resistant algorithms (Available 2025)</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
                                 </div>
                             </div>
 
@@ -841,8 +964,8 @@
                                 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Auto-Update Models</div>
-                                        <div class="setting-description">Automatically update ML models</div>
+                                        <div class="setting-name">Auto-Update Models <span class="encryption-badge">Signed Updates</span></div>
+                                        <div class="setting-description">Automatically update ML models with HMAC verification</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox" checked>
@@ -877,16 +1000,16 @@
                                 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">OpenAI API</div>
-                                        <div class="setting-description">Status: Connected</div>
+                                        <div class="setting-name">OpenAI API <span class="encryption-badge">AES-256 Encrypted</span></div>
+                                        <div class="setting-description">Status: Connected (Key stored with AES-256-GCM)</div>
                                     </div>
                                     <button class="btn btn-secondary">Configure</button>
                                 </div>
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Shodan API</div>
-                                        <div class="setting-description">Status: Connected</div>
+                                        <div class="setting-name">Shodan API <span class="encryption-badge">AES-256 Encrypted</span></div>
+                                        <div class="setting-description">Status: Connected (Key stored with AES-256-GCM)</div>
                                     </div>
                                     <button class="btn btn-secondary">Configure</button>
                                 </div>
@@ -894,7 +1017,7 @@
                                 <div class="setting-item">
                                     <div class="setting-info">
                                         <div class="setting-name">SIEM Integration</div>
-                                        <div class="setting-description">Connect to existing SIEM platform</div>
+                                        <div class="setting-description">Connect to existing SIEM platform with secure TLS 1.3</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox">
@@ -908,8 +1031,8 @@
                                 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Alert Webhooks</div>
-                                        <div class="setting-description">Send critical alerts to external systems</div>
+                                        <div class="setting-name">Alert Webhooks <span class="encryption-badge">HMAC Signed</span></div>
+                                        <div class="setting-description">Send critical alerts with HMAC-SHA256 signatures</div>
                                     </div>
                                     <button class="btn btn-secondary">Add Webhook</button>
                                 </div>
@@ -937,7 +1060,7 @@
                                             🟢 1 Agent Connected to <span id="connectedDevices">247</span> Devices
                                         </div>
                                         <div class="setting-description" style="margin-top: 10px;">
-                                            Your AI Sentinel-X agent is actively protecting all discovered systems within your network infrastructure.
+                                            Your AI Sentinel-X agent is actively protecting all discovered systems with AES-256-GCM encryption for all communications.
                                         </div>
                                     </div>
                                     <button class="btn btn-secondary" onclick="refreshCoverage()">
@@ -953,7 +1076,7 @@
                                 <div class="setting-item">
                                     <div class="setting-info">
                                         <div class="setting-name">Enable Auto-Deployment</div>
-                                        <div class="setting-description">Allow the active agent to automatically expand to newly discovered systems within your Docker-based environment.</div>
+                                        <div class="setting-description">Allow the active agent to automatically expand to newly discovered systems</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox" checked>
@@ -963,11 +1086,11 @@
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Container Auto-Discovery</div>
-                                        <div class="setting-description">Automatically protect new Docker containers as they are deployed</div>
+                                        <div class="setting-name">Agent Communication <span class="encryption-badge">AES-256-GCM</span></div>
+                                        <div class="setting-description">All agent communications encrypted with AES-256-GCM</div>
                                     </div>
                                     <label class="toggle-switch">
-                                        <input type="checkbox" checked>
+                                        <input type="checkbox" checked disabled>
                                         <span class="toggle-slider"></span>
                                     </label>
                                 </div>
@@ -975,7 +1098,7 @@
                                 <div class="setting-item">
                                     <div class="setting-info">
                                         <div class="setting-name">Network Scan Range</div>
-                                        <div class="setting-description">Define which network segments the agent should monitor and protect</div>
+                                        <div class="setting-description">Define which network segments the agent should monitor</div>
                                     </div>
                                     <select class="select-field">
                                         <option>Local Network Only (192.168.x.x)</option>
@@ -1010,13 +1133,13 @@
                                         <div class="setting-name">Protection Status</div>
                                         <div class="setting-description">Overall protection coverage status</div>
                                     </div>
-                                    <input type="text" class="input-field" value="✅ Optimal - All systems protected" readonly style="color: var(--success);">
+                                    <input type="text" class="input-field" value="✅ Optimal - All systems protected with NIST encryption" readonly style="color: var(--success);">
                                 </div>
                             </div>
 
-                            <div style="background: rgba(124, 58, 237, 0.05); border: 1px solid rgba(124, 58, 237, 0.3); border-radius: 12px; padding: 20px; margin-top: 25px;">
+                            <div style="background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.3); border-radius: 12px; padding: 20px; margin-top: 25px;">
                                 <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
-                                    <strong style="color: var(--accent);">🔒 Security Note:</strong> Auto-deployment only occurs within the bounds of your current infrastructure. No external access or elevated privileges are assumed. The agent operates strictly within your configured Docker environment and network boundaries.
+                                    <strong style="color: var(--primary);">🔒 Security Note:</strong> All agent communications are protected with AES-256-GCM encryption and HMAC-SHA256 message authentication. Keys are rotated daily using HKDF-SHA256 key derivation.
                                 </p>
                             </div>
 
@@ -1040,6 +1163,17 @@
                                     <div class="setting-info">
                                         <div class="setting-name">Critical Threats</div>
                                         <div class="setting-description">Notify for critical security threats</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Encryption Events</div>
+                                        <div class="setting-description">Notify for key rotations and encryption updates</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox" checked>
@@ -1075,8 +1209,8 @@
                                 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Email Notifications</div>
-                                        <div class="setting-description">Send alerts via email</div>
+                                        <div class="setting-name">Email Notifications <span class="encryption-badge">TLS 1.3</span></div>
+                                        <div class="setting-description">Send alerts via encrypted email</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox" checked>
@@ -1091,6 +1225,17 @@
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Webhook Alerts <span class="encryption-badge">HMAC Signed</span></div>
+                                        <div class="setting-description">Send to external systems with HMAC-SHA256 signatures</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
                                         <span class="toggle-slider"></span>
                                     </label>
                                 </div>
