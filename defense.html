@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Active Defense | AI Sentinel-X</title>
+    <title>Active Defense | AI Sentinel-X</title>
     <style>
         * {
             margin: 0;
@@ -26,8 +26,6 @@
             --text-secondary: #8892b0;
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
-            --gradient-defense: linear-gradient(135deg, #00ff88 0%, #00ccff 50%, #7c3aed 100%);
-            --gradient-shield: linear-gradient(45deg, #00ff88, #00ccff, #7c3aed, #00ff88);
         }
 
         body {
@@ -37,7 +35,7 @@
             min-height: 100vh;
         }
 
-        /* Enhanced Defense Background */
+        /* Defense Background */
         .defense-bg {
             position: fixed;
             top: 0;
@@ -47,9 +45,8 @@
             pointer-events: none;
             z-index: 0;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 50%, rgba(0, 204, 255, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 60%);
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 50%, rgba(0, 204, 255, 0.08) 0%, transparent 40%);
         }
 
         .shield-grid {
@@ -63,59 +60,8 @@
         }
 
         @keyframes shieldPulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.02); }
-        }
-
-        .defense-particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .shield-particle {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: radial-gradient(circle, rgba(0, 255, 136, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: shieldFloat 15s infinite ease-in-out;
-        }
-
-        @keyframes shieldFloat {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.3;
-            }
-            33% {
-                transform: translate(100px, -100px) scale(1.5);
-                opacity: 0.6;
-            }
-            66% {
-                transform: translate(-100px, 100px) scale(0.8);
-                opacity: 0.2;
-            }
-        }
-
-        .honeypot-web {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .web-line {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
-            animation: webPulse 5s linear infinite;
-        }
-
-        @keyframes webPulse {
-            0% { opacity: 0; }
+            0%, 100% { opacity: 0.5; }
             50% { opacity: 1; }
-            100% { opacity: 0; }
         }
 
         .container {
@@ -126,7 +72,7 @@
             padding: 20px;
         }
 
-        /* Enhanced Header */
+        /* Page Header */
         .page-header {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -135,45 +81,17 @@
             margin-bottom: 30px;
             backdrop-filter: blur(20px);
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 
-                0 10px 40px rgba(0, 0, 0, 0.5),
-                inset 0 0 100px rgba(0, 255, 136, 0.05);
-        }
-
-        .defense-indicator {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
-            animation: defenseWave 3s ease-in-out infinite;
-        }
-
-        @keyframes defenseWave {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.3;
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 0.1;
-            }
         }
 
         .page-title {
             font-size: 42px;
             font-weight: bold;
-            background: var(--gradient-defense);
+            background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 10px;
             letter-spacing: 3px;
-            position: relative;
-            text-shadow: 0 0 40px rgba(0, 255, 136, 0.5);
         }
 
         .page-subtitle {
@@ -181,11 +99,10 @@
             font-size: 16px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            position: relative;
         }
 
-        /* Enhanced Autonomous Defense Alert */
-        .auto-defense-alert {
+        /* Defense Alert */
+        .defense-alert {
             background: rgba(0, 255, 136, 0.1);
             border: 2px solid var(--primary);
             border-radius: 12px;
@@ -194,30 +111,10 @@
             text-align: center;
             font-weight: bold;
             color: var(--primary);
-            position: relative;
-            overflow: hidden;
             font-size: 16px;
-            box-shadow: 
-                0 5px 20px rgba(0, 255, 136, 0.2),
-                inset 0 0 30px rgba(0, 255, 136, 0.05);
         }
 
-        .auto-defense-alert::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.3), transparent);
-            animation: defenseScan 3s linear infinite;
-        }
-
-        @keyframes defenseScan {
-            to { left: 100%; }
-        }
-
-        /* Enhanced Defense Status */
+        /* Defense Status */
         .defense-status {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -230,43 +127,17 @@
             flex-wrap: wrap;
             gap: 25px;
             backdrop-filter: blur(20px);
-            box-shadow: 
-                0 10px 40px rgba(0, 0, 0, 0.5),
-                inset 0 0 100px rgba(0, 255, 136, 0.02);
         }
 
         .status-card {
             text-align: center;
             padding: 20px;
             min-width: 160px;
-            position: relative;
         }
 
         .status-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 15px;
-            background: var(--gradient-1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            animation: iconPulse 2s ease-in-out infinite;
-            box-shadow: 
-                0 0 30px rgba(0, 255, 136, 0.5),
-                inset 0 0 20px rgba(255, 255, 255, 0.2);
-        }
-
-        @keyframes iconPulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
-            }
-            50% {
-                transform: scale(1.1);
-                box-shadow: 0 0 50px rgba(0, 255, 136, 0.8);
-            }
+            font-size: 36px;
+            margin-bottom: 15px;
         }
 
         .status-label {
@@ -281,7 +152,6 @@
             font-size: 28px;
             font-weight: bold;
             color: var(--primary);
-            text-shadow: 0 0 20px currentColor;
         }
 
         /* Main Grid */
@@ -292,16 +162,13 @@
             margin-bottom: 30px;
         }
 
-        /* Enhanced Defense Panel */
+        /* Defense Panel */
         .defense-panel {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
             padding: 25px;
             backdrop-filter: blur(20px);
-            box-shadow: 
-                0 10px 40px rgba(0, 0, 0, 0.5),
-                inset 0 0 100px rgba(0, 255, 136, 0.02);
         }
 
         .panel-header {
@@ -319,113 +186,72 @@
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 0 0 20px currentColor;
         }
 
-        /* Enhanced Deception Matrix */
-        .deception-matrix {
+        /* Honeypot List */
+        .honeypot-list {
             display: grid;
             gap: 15px;
         }
 
-        .matrix-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 15px;
-            padding: 15px;
+        .honeypot-item {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.02) 100%);
-            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
             transition: all 0.3s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
         }
 
-        .matrix-row::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .matrix-row:hover::before {
-            left: 100%;
-        }
-
-        .matrix-row:hover {
+        .honeypot-item:hover {
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 204, 255, 0.05) 100%);
+            border-color: var(--primary);
             transform: translateX(5px);
-            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.2);
         }
 
-        .deception-type {
+        .honeypot-info {
+            flex: 1;
+        }
+
+        .honeypot-name {
             font-weight: bold;
-            color: var(--secondary);
-            font-size: 16px;
+            margin-bottom: 8px;
+            font-size: 17px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .deception-icon {
-            font-size: 24px;
+        .honeypot-details {
+            font-size: 14px;
+            color: var(--text-secondary);
         }
 
-        .status-level {
-            text-align: center;
+        .honeypot-status {
             padding: 8px 16px;
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
             border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .level-active {
-            background: rgba(0, 255, 136, 0.2);
-            color: var(--success);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-            animation: activeGlow 2s ease-in-out infinite;
-        }
-
-        @keyframes activeGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(0, 255, 136, 0.5); }
-        }
-
-        .level-standby {
+        .status-inactive {
             background: rgba(255, 170, 0, 0.2);
             color: var(--warning);
-            box-shadow: 0 0 20px rgba(255, 170, 0, 0.3);
         }
 
-        .deception-port {
-            color: var(--text-secondary);
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-        }
-
-        .deception-status {
-            color: var(--success);
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* Enhanced Timeline */
+        /* Response Timeline */
         .timeline-container {
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 255, 136, 0.05) 100%);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.05) 100%);
             border-radius: 15px;
             padding: 25px;
             height: 450px;
             overflow-y: auto;
-            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
         }
 
         .timeline-event {
@@ -435,21 +261,6 @@
             padding-bottom: 25px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             animation: timelineSlide 0.5s ease;
-            position: relative;
-        }
-
-        .timeline-event::after {
-            content: '';
-            position: absolute;
-            left: 30px;
-            top: 50px;
-            bottom: -25px;
-            width: 2px;
-            background: linear-gradient(180deg, rgba(0, 255, 136, 0.3), transparent);
-        }
-
-        .timeline-event:last-child::after {
-            display: none;
         }
 
         @keyframes timelineSlide {
@@ -473,15 +284,7 @@
             justify-content: center;
             flex-shrink: 0;
             font-size: 24px;
-            box-shadow: 
-                0 0 30px rgba(0, 255, 136, 0.5),
-                inset 0 0 20px rgba(255, 255, 255, 0.2);
-            animation: timelineIconPulse 3s ease-in-out infinite;
-        }
-
-        @keyframes timelineIconPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
         }
 
         .timeline-content {
@@ -509,20 +312,52 @@
             line-height: 1.5;
         }
 
-        .timeline-stats {
-            display: flex;
+        /* Security Playbooks */
+        .playbook-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+        }
+
+        .playbook-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 10px;
-            font-size: 13px;
+            margin-top: 25px;
         }
 
-        .stat-item {
-            color: var(--text-secondary);
+        .playbook-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(0, 204, 255, 0.05) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .stat-value {
-            color: var(--secondary);
+        .playbook-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+        }
+
+        .playbook-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .playbook-name {
             font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .playbook-status {
+            font-size: 13px;
+            color: var(--text-secondary);
         }
 
         /* Back Button */
@@ -565,33 +400,15 @@
         .ai-chat-toggle {
             width: 70px;
             height: 70px;
-            background: var(--gradient-defense);
+            background: var(--gradient-1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 
-                0 5px 20px rgba(0, 255, 136, 0.4),
-                0 0 40px rgba(0, 255, 136, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
             transition: all 0.3s ease;
             font-size: 32px;
-            animation: chatDefensePulse 3s ease-in-out infinite;
-        }
-
-        @keyframes chatDefensePulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 
-                    0 5px 20px rgba(0, 255, 136, 0.4),
-                    0 0 40px rgba(0, 255, 136, 0.3);
-            }
-            50% {
-                transform: scale(1.1);
-                box-shadow: 
-                    0 5px 30px rgba(0, 204, 255, 0.6),
-                    0 0 60px rgba(0, 204, 255, 0.5);
-            }
         }
 
         .ai-chat-toggle:hover {
@@ -610,9 +427,7 @@
             display: none;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.5),
-                0 0 100px rgba(0, 255, 136, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(20px);
         }
 
@@ -633,8 +448,8 @@
         }
 
         .ai-chat-header {
-            background: var(--gradient-defense);
-            color: white;
+            background: var(--gradient-1);
+            color: var(--bg-darker);
             padding: 20px;
             display: flex;
             justify-content: space-between;
@@ -675,7 +490,7 @@
 
         .ai-message-bubble {
             background: rgba(0, 255, 136, 0.1);
-            border: 1px solid var(--primary);
+            border: 1px solid var(--border);
             border-radius: 15px;
             padding: 15px 20px;
             max-width: 80%;
@@ -725,11 +540,11 @@
         }
 
         .ai-chat-send {
-            background: var(--gradient-defense);
+            background: var(--gradient-1);
             border: none;
             border-radius: 10px;
             padding: 12px 20px;
-            color: white;
+            color: var(--bg-darker);
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -771,18 +586,6 @@
                 padding: 15px;
             }
             
-            .status-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 28px;
-            }
-            
-            .matrix-row {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 10px;
-            }
-            
             .back-btn {
                 top: 10px;
                 left: 10px;
@@ -810,61 +613,6 @@
                 height: calc(100vh - 120px);
                 right: -20px;
                 bottom: 80px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .page-title {
-                font-size: 26px;
-            }
-            
-            .page-subtitle {
-                font-size: 13px;
-            }
-            
-            .auto-defense-alert {
-                font-size: 14px;
-                padding: 15px 20px;
-            }
-            
-            .status-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-            }
-            
-            .status-value {
-                font-size: 24px;
-            }
-            
-            .status-label {
-                font-size: 12px;
-            }
-            
-            .back-btn span {
-                display: none;
-            }
-            
-            .back-btn::after {
-                content: 'Back';
-            }
-            
-            .timeline-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-            }
-            
-            .timeline-action {
-                font-size: 16px;
-            }
-            
-            .ai-chat-window {
-                width: 100vw;
-                height: 100vh;
-                right: 0;
-                bottom: 0;
-                border-radius: 0;
             }
         }
 
@@ -909,133 +657,160 @@
         <span>Back</span>
     </a>
 
-    <!-- Enhanced Defense Background -->
+    <!-- Defense Background -->
     <div class="defense-bg">
         <div class="shield-grid"></div>
-        <div class="defense-particles" id="defenseParticles"></div>
-        <div class="honeypot-web" id="honeypotWeb"></div>
     </div>
 
     <!-- Container -->
     <div class="container">
-        <!-- Enhanced Page Header -->
+        <!-- Page Header -->
         <div class="page-header">
-            <div class="defense-indicator"></div>
-            <h1 class="page-title">QUANTUM ACTIVE DEFENSE</h1>
-            <p class="page-subtitle">AI-Powered Deception & Autonomous Containment</p>
+            <h1 class="page-title">ACTIVE DEFENSE</h1>
+            <p class="page-subtitle">Automated Response & Deception Systems</p>
         </div>
 
-        <!-- Enhanced Autonomous Defense Alert -->
-        <div class="auto-defense-alert">
-            🛡️ All defense systems operating autonomously. Quantum deception grids active. Manual tactical control available.
+        <!-- Defense Alert -->
+        <div class="defense-alert">
+            🛡️ All defense systems operating autonomously. Honeypots active. AI orchestrating responses in real-time.
         </div>
 
-        <!-- Enhanced Defense Status -->
+        <!-- Defense Status -->
         <div class="defense-status">
             <div class="status-card">
                 <div class="status-icon">🍯</div>
                 <div class="status-label">Active Honeypots</div>
-                <div class="status-value" id="activeHoneypots">12</div>
+                <div class="status-value" id="activeHoneypots">8</div>
             </div>
             <div class="status-card">
-                <div class="status-icon">🎭</div>
-                <div class="status-label">Deception Systems</div>
-                <div class="status-value" id="deceptionSystems">8</div>
+                <div class="status-icon">🎯</div>
+                <div class="status-label">Threats Trapped</div>
+                <div class="status-value" id="threatsTrapped">47</div>
             </div>
             <div class="status-card">
-                <div class="status-icon">🔒</div>
-                <div class="status-label">Contained Threats</div>
-                <div class="status-value" id="containedThreats">24</div>
+                <div class="status-icon">🤖</div>
+                <div class="status-label">Auto Responses</div>
+                <div class="status-value" id="autoResponses">124</div>
             </div>
             <div class="status-card">
-                <div class="status-icon">🧠</div>
-                <div class="status-label">Intel Gathered</div>
-                <div class="status-value" id="intelGathered">147</div>
-            </div>
-            <div class="status-card">
-                <div class="status-icon">⚡</div>
-                <div class="status-label">Response Time</div>
-                <div class="status-value" id="responseTime">0.3ms</div>
+                <div class="status-icon">⏱️</div>
+                <div class="status-label">Avg Response</div>
+                <div class="status-value" id="avgResponse">0.3s</div>
             </div>
             <div class="status-card">
                 <div class="status-icon">📊</div>
-                <div class="status-label">Defense Score</div>
-                <div class="status-value" style="color: var(--success);">94%</div>
+                <div class="status-label">Success Rate</div>
+                <div class="status-value" style="color: var(--success);">99.7%</div>
             </div>
         </div>
 
         <!-- Main Grid -->
         <div class="defense-grid">
-            <!-- Enhanced Deception Matrix -->
+            <!-- Honeypot Management -->
             <div class="defense-panel">
                 <div class="panel-header">
-                    <h2 class="panel-title">Quantum Deception Matrix</h2>
+                    <h2 class="panel-title">Deception Systems</h2>
                 </div>
-                <div class="deception-matrix">
-                    <div class="matrix-row" onclick="showDeceptionDetails('ssh')">
-                        <div class="deception-type">
-                            <span class="deception-icon">🔐</span>
-                            <span>SSH Honeypot</span>
+                <div class="honeypot-list">
+                    <div class="honeypot-item" onclick="showHoneypotDetails('ssh')">
+                        <div class="honeypot-info">
+                            <div class="honeypot-name">
+                                <span>🔐</span>
+                                <span>SSH Honeypot</span>
+                            </div>
+                            <div class="honeypot-details">Port 22 • 12 intrusion attempts trapped</div>
                         </div>
-                        <div class="status-level level-active">ACTIVE</div>
-                        <div class="deception-port">Port 22</div>
-                        <div class="deception-status">● Quantum</div>
+                        <div class="honeypot-status">ACTIVE</div>
                     </div>
-                    <div class="matrix-row" onclick="showDeceptionDetails('web')">
-                        <div class="deception-type">
-                            <span class="deception-icon">🌐</span>
-                            <span>Web Application Decoy</span>
+                    <div class="honeypot-item" onclick="showHoneypotDetails('web')">
+                        <div class="honeypot-info">
+                            <div class="honeypot-name">
+                                <span>🌐</span>
+                                <span>Web Application Decoy</span>
+                            </div>
+                            <div class="honeypot-details">Port 8080 • Simulating vulnerable WordPress</div>
                         </div>
-                        <div class="status-level level-active">ACTIVE</div>
-                        <div class="deception-port">Port 8080</div>
-                        <div class="deception-status">● Adaptive</div>
+                        <div class="honeypot-status">ACTIVE</div>
                     </div>
-                    <div class="matrix-row" onclick="showDeceptionDetails('database')">
-                        <div class="deception-type">
-                            <span class="deception-icon">🗄️</span>
-                            <span>Database Honeypot</span>
+                    <div class="honeypot-item" onclick="showHoneypotDetails('database')">
+                        <div class="honeypot-info">
+                            <div class="honeypot-name">
+                                <span>🗄️</span>
+                                <span>Database Honeypot</span>
+                            </div>
+                            <div class="honeypot-details">Port 3306 • MySQL decoy with fake data</div>
                         </div>
-                        <div class="status-level level-active">ACTIVE</div>
-                        <div class="deception-port">Port 3306</div>
-                        <div class="deception-status">● Learning</div>
+                        <div class="honeypot-status">ACTIVE</div>
                     </div>
-                    <div class="matrix-row" onclick="showDeceptionDetails('ftp')">
-                        <div class="deception-type">
-                            <span class="deception-icon">📁</span>
-                            <span>FTP Trap</span>
+                    <div class="honeypot-item" onclick="showHoneypotDetails('ftp')">
+                        <div class="honeypot-info">
+                            <div class="honeypot-name">
+                                <span>📁</span>
+                                <span>FTP Server Trap</span>
+                            </div>
+                            <div class="honeypot-details">Port 21 • Ready to deploy</div>
                         </div>
-                        <div class="status-level level-standby">STANDBY</div>
-                        <div class="deception-port">Port 21</div>
-                        <div class="deception-status">● Ready</div>
+                        <div class="honeypot-status status-inactive">STANDBY</div>
                     </div>
-                    <div class="matrix-row" onclick="showDeceptionDetails('smb')">
-                        <div class="deception-type">
-                            <span class="deception-icon">🔗</span>
-                            <span>SMB Share Decoy</span>
+                    <div class="honeypot-item" onclick="showHoneypotDetails('email')">
+                        <div class="honeypot-info">
+                            <div class="honeypot-name">
+                                <span>📧</span>
+                                <span>Email Server Decoy</span>
+                            </div>
+                            <div class="honeypot-details">Port 25 • Collecting phishing attempts</div>
                         </div>
-                        <div class="status-level level-active">ACTIVE</div>
-                        <div class="deception-port">Port 445</div>
-                        <div class="deception-status">● Entangled</div>
-                    </div>
-                    <div class="matrix-row" onclick="showDeceptionDetails('email')">
-                        <div class="deception-type">
-                            <span class="deception-icon">📧</span>
-                            <span>Email Server Trap</span>
-                        </div>
-                        <div class="status-level level-active">ACTIVE</div>
-                        <div class="deception-port">Port 25</div>
-                        <div class="deception-status">● AI-Driven</div>
+                        <div class="honeypot-status">ACTIVE</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Enhanced Defense Timeline -->
+            <!-- Response Timeline -->
             <div class="defense-panel">
                 <div class="panel-header">
-                    <h2 class="panel-title">Autonomous Defense Actions</h2>
+                    <h2 class="panel-title">Automated Response Timeline</h2>
                 </div>
-                <div class="timeline-container" id="defenseTimeline">
+                <div class="timeline-container" id="responseTimeline">
                     <!-- Timeline events will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Playbooks -->
+        <div class="playbook-section">
+            <div class="panel-header">
+                <h2 class="panel-title">Active Security Playbooks</h2>
+            </div>
+            <div class="playbook-grid">
+                <div class="playbook-card" onclick="showPlaybookDetails('ddos')">
+                    <div class="playbook-icon">⚡</div>
+                    <div class="playbook-name">DDoS Mitigation</div>
+                    <div class="playbook-status">Executed 34 times</div>
+                </div>
+                <div class="playbook-card" onclick="showPlaybookDetails('malware')">
+                    <div class="playbook-icon">🦠</div>
+                    <div class="playbook-name">Malware Containment</div>
+                    <div class="playbook-status">Executed 12 times</div>
+                </div>
+                <div class="playbook-card" onclick="showPlaybookDetails('phishing')">
+                    <div class="playbook-icon">🎣</div>
+                    <div class="playbook-name">Phishing Response</div>
+                    <div class="playbook-status">Executed 89 times</div>
+                </div>
+                <div class="playbook-card" onclick="showPlaybookDetails('insider')">
+                    <div class="playbook-icon">👤</div>
+                    <div class="playbook-name">Insider Threat</div>
+                    <div class="playbook-status">Executed 5 times</div>
+                </div>
+                <div class="playbook-card" onclick="showPlaybookDetails('ransomware')">
+                    <div class="playbook-icon">🔒</div>
+                    <div class="playbook-name">Ransomware Defense</div>
+                    <div class="playbook-status">Executed 8 times</div>
+                </div>
+                <div class="playbook-card" onclick="showPlaybookDetails('zeroday')">
+                    <div class="playbook-icon">🎯</div>
+                    <div class="playbook-name">Zero-Day Response</div>
+                    <div class="playbook-status">Executed 3 times</div>
                 </div>
             </div>
         </div>
@@ -1045,13 +820,13 @@
     <div class="ai-chat-widget">
         <div class="ai-chat-window" id="aiChatWindow">
             <div class="ai-chat-header">
-                <span>DEFENSE SYSTEMS AI</span>
+                <span>DEFENSE AI</span>
                 <span class="ai-chat-close" onclick="toggleChat()">×</span>
             </div>
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        Welcome to Quantum Active Defense. I manage honeypots, deception systems, and threat containment. All systems are operating autonomously. How can I assist with your defensive operations?
+                        Welcome to Active Defense. I manage honeypots, orchestrate automated responses, and execute security playbooks. All systems are operating autonomously. How can I assist?
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1061,7 +836,7 @@
                     type="text" 
                     class="ai-chat-input" 
                     id="aiChatInput" 
-                    placeholder="Ask about deception systems or request manual control..."
+                    placeholder="Ask about honeypots, playbooks, or request manual control..."
                     onkeypress="handleChatKeyPress(event)"
                 >
                 <button class="ai-chat-send" onclick="sendChatMessage()">SEND</button>
@@ -1071,89 +846,65 @@
     </div>
 
     <script>
-        // Initialize defense particles
-        function initDefenseParticles() {
-            const container = document.getElementById('defenseParticles');
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'shield-particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-                container.appendChild(particle);
-            }
-        }
-
-        // Initialize honeypot web
-        function initHoneypotWeb() {
-            const container = document.getElementById('honeypotWeb');
-            for (let i = 0; i < 20; i++) {
-                const line = document.createElement('div');
-                line.className = 'web-line';
-                line.style.top = Math.random() * 100 + '%';
-                line.style.left = Math.random() * 100 + '%';
-                line.style.width = (100 + Math.random() * 200) + 'px';
-                line.style.transform = `rotate(${Math.random() * 360}deg)`;
-                line.style.animationDelay = Math.random() * 5 + 's';
-                container.appendChild(line);
-            }
-        }
-
-        // Show deception details
-        function showDeceptionDetails(systemId) {
+        // Show honeypot details
+        function showHoneypotDetails(type) {
             if (!chatOpen) {
                 toggleChat();
             }
-            
-            const deceptionMessages = {
-                'ssh': '🔐 SSH Honeypot: Currently tracking 3 active intrusion attempts. Quantum encryption keys being used to trace attackers. 147 credentials harvested. Manual intervention available.',
-                'web': '🌐 Web Application Decoy: Simulating vulnerable WordPress instance. 12 SQL injection attempts logged. AI is learning new attack patterns in real-time.',
-                'database': '🗄️ Database Honeypot: MySQL decoy with fake customer data. 5 data exfiltration attempts contained. Attacker behavior being analyzed by neural network.',
-                'ftp': '📁 FTP Trap: Currently in standby mode. Can be activated to simulate file server with tracked documents. Manual activation available.',
-                'smb': '🔗 SMB Share Decoy: Windows file share simulation active. 3 ransomware samples captured and isolated for analysis. Quantum sandbox preventing escape.',
-                'email': '📧 Email Server Trap: SMTP honeypot collecting spam and phishing attempts. 247 malicious emails analyzed. AI generating threat intelligence reports.'
-            };
-            
             setTimeout(() => {
-                addChatMessage(deceptionMessages[systemId] || 'Deception system information loading...', false);
+                const messages = {
+                    'ssh': '🔐 SSH Honeypot: Currently tracking 3 active sessions. 147 login attempts logged. Attacker IPs automatically blacklisted. Would you like to see captured credentials?',
+                    'web': '🌐 Web Decoy: Simulating WordPress 4.5 with known vulnerabilities. 23 SQL injection attempts captured. AI learning new attack patterns.',
+                    'database': '🗄️ Database Honeypot: MySQL instance with fake customer data. 5 data exfiltration attempts trapped. All queries logged for analysis.',
+                    'ftp': '📁 FTP Trap: Currently on standby. Can be activated to simulate file server with tracked documents. Deploy now?',
+                    'email': '📧 Email Decoy: Collected 89 phishing emails. AI analyzing for new patterns. Sender IPs reported to threat intelligence.'
+                };
+                addChatMessage(messages[type], false);
             }, 300);
         }
 
-        // Enhanced Timeline events
+        // Show playbook details
+        function showPlaybookDetails(type) {
+            if (!chatOpen) {
+                toggleChat();
+            }
+            setTimeout(() => {
+                const messages = {
+                    'ddos': '⚡ DDoS Playbook: Automatically triggers rate limiting, traffic filtering, and CDN activation. Average mitigation time: 1.2 seconds.',
+                    'malware': '🦠 Malware Playbook: Isolates infected systems, captures samples for analysis, initiates cleanup. Success rate: 99.8%.',
+                    'phishing': '🎣 Phishing Playbook: Blocks malicious URLs, quarantines emails, alerts users. Prevented 89 credential thefts.',
+                    'insider': '👤 Insider Threat Playbook: Monitors unusual access patterns, restricts privileges, logs all actions. 5 incidents prevented.',
+                    'ransomware': '🔒 Ransomware Playbook: Instant backup activation, network isolation, decryption attempt. Saved $2.3M in ransom payments.',
+                    'zeroday': '🎯 Zero-Day Playbook: Virtual patching, behavior analysis, threat containment. Mitigated 3 unknown vulnerabilities.'
+                };
+                addChatMessage(messages[type], false);
+            }, 300);
+        }
+
+        // Timeline events
         const timelineEvents = [
-            { icon: '🍯', action: 'Honeypot Triggered', details: 'SSH honeypot accessed from IP 192.168.1.105. Attacker fingerprinted.', stats: { attempts: 3, data: '12MB' } },
-            { icon: '🎭', action: 'Deception Success', details: 'Attacker downloaded quantum-tracked document from file share decoy.', stats: { files: 5, tracking: 'Active' } },
-            { icon: '🔒', action: 'Threat Contained', details: 'Malicious connection isolated in quantum sandbox environment.', stats: { isolation: '100%', escape: '0' } },
-            { icon: '🧠', action: 'Intel Gathered', details: 'New APT tactics identified and added to threat database.', stats: { patterns: 7, confidence: '94%' } },
-            { icon: '📊', action: 'Analysis Complete', details: 'Behavioral analysis revealed supply chain attack methodology.', stats: { insights: 12, priority: 'High' } },
-            { icon: '🛡️', action: 'Defense Updated', details: 'Deception systems evolved based on attacker behavior.', stats: { evolution: '+3.2%', effectiveness: '97%' } },
-            { icon: '🔄', action: 'Traffic Redirected', details: 'Suspicious traffic quantum-tunneled to isolated honeypot network.', stats: { packets: '1.2M', latency: '0.3ms' } },
-            { icon: '✅', action: 'Threat Neutralized', details: 'Ransomware contained, encryption keys extracted for victims.', stats: { saved: '$2.3M', recovery: '100%' } },
-            { icon: '⚡', action: 'Rapid Response', details: 'Zero-day exploit attempt detected and blocked in 0.2ms.', stats: { speed: '0.2ms', accuracy: '100%' } },
-            { icon: '🌐', action: 'Global Sync', details: 'Threat intelligence shared with quantum defense network.', stats: { nodes: 1247, coverage: 'Global' } }
+            { icon: '🛡️', action: 'Blocked Attack', time: new Date(), details: 'SQL injection attempt on /api/users blocked. Attacker IP blacklisted.' },
+            { icon: '🍯', action: 'Honeypot Triggered', time: new Date(), details: 'SSH honeypot accessed. Capturing attacker behavior for analysis.' },
+            { icon: '🔒', action: 'Ransomware Prevented', time: new Date(), details: 'Suspicious encryption behavior detected and stopped. System isolated.' },
+            { icon: '📧', action: 'Phishing Blocked', time: new Date(), details: '23 phishing emails quarantined. Users notified of threat.' },
+            { icon: '🎯', action: 'Zero-Day Mitigated', time: new Date(), details: 'Unknown exploit attempt detected. Virtual patch applied.' },
+            { icon: '⚡', action: 'DDoS Deflected', time: new Date(), details: '45,000 requests/second mitigated. Services remain available.' }
         ];
 
         // Add timeline event
         function addTimelineEvent(event) {
-            const timeline = document.getElementById('defenseTimeline');
-            const time = new Date().toLocaleTimeString();
-            
+            const timeline = document.getElementById('responseTimeline');
             const eventDiv = document.createElement('div');
             eventDiv.className = 'timeline-event';
+            
+            const time = event.time.toLocaleTimeString();
+            
             eventDiv.innerHTML = `
                 <div class="timeline-icon">${event.icon}</div>
                 <div class="timeline-content">
                     <div class="timeline-time">${time}</div>
                     <div class="timeline-action">${event.action}</div>
                     <div class="timeline-details">${event.details}</div>
-                    ${event.stats ? `
-                        <div class="timeline-stats">
-                            ${Object.entries(event.stats).map(([key, value]) => 
-                                `<div class="stat-item">${key}: <span class="stat-value">${value}</span></div>`
-                            ).join('')}
-                        </div>
-                    ` : ''}
                 </div>
             `;
             
@@ -1167,26 +918,10 @@
 
         // Update metrics
         function updateMetrics() {
-            // Randomly update some metrics
-            if (Math.random() > 0.7) {
-                const contained = document.getElementById('containedThreats');
-                contained.textContent = parseInt(contained.textContent) + 1;
-            }
-            
-            if (Math.random() > 0.8) {
-                const intel = document.getElementById('intelGathered');
-                intel.textContent = parseInt(intel.textContent) + 1;
-            }
-            
-            // Update response time
-            const responseTime = document.getElementById('responseTime');
-            responseTime.textContent = (0.2 + Math.random() * 0.3).toFixed(1) + 'ms';
-            
-            // Occasionally update honeypot count
-            if (Math.random() > 0.95) {
-                const honeypots = document.getElementById('activeHoneypots');
-                honeypots.textContent = Math.min(20, parseInt(honeypots.textContent) + 1);
-            }
+            // Update random metrics
+            document.getElementById('threatsTrapped').textContent = Math.floor(40 + Math.random() * 20);
+            document.getElementById('autoResponses').textContent = Math.floor(120 + Math.random() * 20);
+            document.getElementById('avgResponse').textContent = (0.2 + Math.random() * 0.3).toFixed(1) + 's';
         }
 
         // AI Chat System
@@ -1283,68 +1018,51 @@
             const lowerMessage = message.toLowerCase();
             
             if (lowerMessage.includes('honeypot') || lowerMessage.includes('deception')) {
-                return '🍯 Current deception grid: 12 honeypots active across multiple protocols. SSH trap has captured 147 credentials. Web decoy learning from 1,247 attack patterns. All systems adapting in real-time.';
+                return '🍯 Active honeypots: 8 systems across SSH, Web, Database, and Email. Total captures: 47 attackers trapped. All operating autonomously with AI-driven adaptation.';
             }
             
-            if (lowerMessage.includes('manual') || lowerMessage.includes('control') || lowerMessage.includes('activate')) {
-                return '🎛️ Manual control options: 1) Deploy new honeypot, 2) Modify deception parameters, 3) Release contained threat for analysis, 4) Export threat intelligence. Which operation would you like to perform?';
+            if (lowerMessage.includes('playbook') || lowerMessage.includes('response')) {
+                return '📋 Security playbooks executed 165 times today. Most common: Phishing (89), DDoS (34), Malware (12). Average response time: 0.3 seconds. All fully automated.';
             }
             
-            if (lowerMessage.includes('contain') || lowerMessage.includes('isolate')) {
-                return '🔒 Containment status: 24 threats currently isolated in quantum sandboxes. Zero escapes. Each sandbox runs in parallel quantum states preventing any possibility of breakout. Manual analysis available.';
+            if (lowerMessage.includes('manual') || lowerMessage.includes('control')) {
+                return '🎛️ Manual control available for: 1) Deploy/disable honeypots, 2) Modify playbook parameters, 3) Override automated responses. What would you like to control?';
             }
             
-            if (lowerMessage.includes('intel') || lowerMessage.includes('intelligence')) {
-                return '🧠 Intelligence gathered: 147 unique attack patterns, 89 zero-day signatures, 34 APT methodologies. AI has identified 3 nation-state actors. Full report available with threat actor profiles.';
+            if (lowerMessage.includes('status') || lowerMessage.includes('defense')) {
+                return '🛡️ Defense status: All systems operational. 99.7% success rate. 124 automated responses today. No manual intervention required.';
             }
             
-            if (lowerMessage.includes('response') || lowerMessage.includes('speed')) {
-                return '⚡ Average response time: 0.3ms from detection to containment. Quantum processing allows parallel evaluation of all possible attack vectors. Predictive defense activates before attacks materialize.';
-            }
-            
-            if (lowerMessage.includes('evolve') || lowerMessage.includes('adapt')) {
-                return '🔄 Deception evolution: Systems automatically adapt every 15 seconds based on attacker behavior. Current evolution rate: +3.2% effectiveness per hour. Manual evolution triggers available.';
-            }
-            
-            if (lowerMessage.includes('status') || lowerMessage.includes('report')) {
-                return '📊 Defense status: 94% effectiveness, 12 active honeypots, 8 deception systems, 24 contained threats. All systems operating autonomously. Quantum entanglement ensures instant response across all nodes.';
-            }
-            
-            return '🤖 I\'m analyzing your defense query. Please specify which deception system, containment protocol, or intelligence aspect you\'d like to explore or control.';
-        }
-
-        // Auto-generate events
-        function autoGenerateEvents() {
-            const event = timelineEvents[Math.floor(Math.random() * timelineEvents.length)];
-            addTimelineEvent(event);
+            return '🤖 I can provide information about honeypots, security playbooks, or automated responses. What would you like to know?';
         }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            initDefenseParticles();
-            initHoneypotWeb();
-            
-            // Add initial events
+            // Add initial timeline events
             for (let i = 0; i < 4; i++) {
                 const event = timelineEvents[Math.floor(Math.random() * timelineEvents.length)];
                 addTimelineEvent(event);
             }
             
             // Auto-generate events
-            setInterval(autoGenerateEvents, 12000);
+            setInterval(() => {
+                const event = timelineEvents[Math.floor(Math.random() * timelineEvents.length)];
+                event.time = new Date();
+                addTimelineEvent(event);
+            }, 10000);
             
             // Update metrics
-            setInterval(updateMetrics, 4000);
+            setInterval(updateMetrics, 5000);
             
             // Add periodic defense events to chat
             setInterval(() => {
                 if (Math.random() > 0.85 && chatOpen) {
                     const events = [
-                        '🛡️ New honeypot deployed automatically based on threat analysis.',
-                        '🎭 Deception system evolved: Now mimicking latest vulnerable software.',
-                        '🔒 Threat containment successful. Malware sample isolated for analysis.',
-                        '⚡ Response time improved by quantum optimization: Now 0.2ms average.',
-                        '🧠 Intelligence update: New APT group tactics identified and countered.'
+                        '🛡️ New attack pattern detected and playbook updated.',
+                        '🍯 Honeypot evolution: SSH trap now mimicking latest OpenSSH version.',
+                        '⚡ Response time improved: Now averaging 0.25s.',
+                        '🔒 Ransomware attempt blocked before encryption started.',
+                        '📊 Defense effectiveness: 99.8% success rate in last hour.'
                     ];
                     addChatMessage(events[Math.floor(Math.random() * events.length)], false);
                 }
