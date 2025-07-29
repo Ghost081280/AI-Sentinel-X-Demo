@@ -258,9 +258,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             transition: all 0.3s ease;
         }
 
@@ -268,6 +265,14 @@
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(0, 255, 136, 0.05) 100%);
             border-color: var(--primary);
             transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.2);
+        }
+
+        .algorithm-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
         }
 
         .algorithm-info {
@@ -276,14 +281,17 @@
 
         .algorithm-name {
             font-weight: bold;
-            margin-bottom: 8px;
-            font-size: 17px;
+            font-size: 18px;
             color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .algorithm-details {
+        .algorithm-type {
             font-size: 14px;
             color: var(--text-secondary);
+            margin-top: 5px;
         }
 
         .algorithm-status {
@@ -294,6 +302,53 @@
             font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
+        }
+
+        .algorithm-status.standby {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+        }
+
+        .algorithm-status.testing {
+            background: rgba(0, 204, 255, 0.2);
+            color: var(--secondary);
+        }
+
+        .algorithm-status.available {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent);
+        }
+
+        .algorithm-details {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .algorithm-use {
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .algorithm-when {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .use-label {
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .when-label {
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 5px;
         }
 
         /* Certificate Status */
@@ -720,39 +775,108 @@
                 
                 <div class="algorithm-list">
                     <div class="algorithm-item">
-                        <div class="algorithm-info">
-                            <div class="algorithm-name">CRYSTALS-Kyber</div>
-                            <div class="algorithm-details">Lattice-based key encapsulation • NIST Level 3</div>
+                        <div class="algorithm-header">
+                            <div class="algorithm-info">
+                                <div class="algorithm-name">
+                                    <span>✅</span>
+                                    <span>CRYSTALS-Kyber</span>
+                                </div>
+                                <div class="algorithm-type">Lattice-based Key Encapsulation</div>
+                            </div>
+                            <div class="algorithm-status">ACTIVE</div>
                         </div>
-                        <div class="algorithm-status">ACTIVE</div>
+                        <div class="algorithm-details">
+                            <div class="algorithm-use">
+                                <span class="use-label">Use:</span> 🔐 Encrypting session keys for secure communication (e.g., TLS replacement)
+                            </div>
+                            <div class="algorithm-when">
+                                <span class="when-label">When to use:</span> Anytime you need to securely exchange a secret key between two parties
+                            </div>
+                        </div>
                     </div>
+
                     <div class="algorithm-item">
-                        <div class="algorithm-info">
-                            <div class="algorithm-name">CRYSTALS-Dilithium</div>
-                            <div class="algorithm-details">Digital signatures • NIST Level 2</div>
+                        <div class="algorithm-header">
+                            <div class="algorithm-info">
+                                <div class="algorithm-name">
+                                    <span>✅</span>
+                                    <span>CRYSTALS-Dilithium</span>
+                                </div>
+                                <div class="algorithm-type">Lattice-based Digital Signatures</div>
+                            </div>
+                            <div class="algorithm-status">ACTIVE</div>
                         </div>
-                        <div class="algorithm-status">ACTIVE</div>
+                        <div class="algorithm-details">
+                            <div class="algorithm-use">
+                                <span class="use-label">Use:</span> 📝 Signing messages, logs, commands, or files to prove authenticity and integrity
+                            </div>
+                            <div class="algorithm-when">
+                                <span class="when-label">When to use:</span> When verifying that data came from a trusted source and wasn't tampered with
+                            </div>
+                        </div>
                     </div>
+
                     <div class="algorithm-item">
-                        <div class="algorithm-info">
-                            <div class="algorithm-name">SPHINCS+</div>
-                            <div class="algorithm-details">Hash-based signatures • Stateless</div>
+                        <div class="algorithm-header">
+                            <div class="algorithm-info">
+                                <div class="algorithm-name">
+                                    <span>🟡</span>
+                                    <span>SPHINCS+</span>
+                                </div>
+                                <div class="algorithm-type">Hash-based Digital Signatures (Stateless)</div>
+                            </div>
+                            <div class="algorithm-status standby">STANDBY</div>
                         </div>
-                        <div class="algorithm-status">STANDBY</div>
+                        <div class="algorithm-details">
+                            <div class="algorithm-use">
+                                <span class="use-label">Use:</span> 🛡️ Backup or alternative signature method — good for very high security or long-term validation
+                            </div>
+                            <div class="algorithm-when">
+                                <span class="when-label">When to use:</span> For signing firmware, configs, or critical assets that must remain verifiable for years
+                            </div>
+                        </div>
                     </div>
+
                     <div class="algorithm-item">
-                        <div class="algorithm-info">
-                            <div class="algorithm-name">FALCON</div>
-                            <div class="algorithm-details">Lattice-based signatures • Compact</div>
+                        <div class="algorithm-header">
+                            <div class="algorithm-info">
+                                <div class="algorithm-name">
+                                    <span>🧪</span>
+                                    <span>FALCON</span>
+                                </div>
+                                <div class="algorithm-type">Lattice-based Digital Signatures (Compact)</div>
+                            </div>
+                            <div class="algorithm-status testing">TESTING</div>
                         </div>
-                        <div class="algorithm-status">TESTING</div>
+                        <div class="algorithm-details">
+                            <div class="algorithm-use">
+                                <span class="use-label">Use:</span> ✍️ Efficient digital signatures for constrained environments (IoT, edge devices)
+                            </div>
+                            <div class="algorithm-when">
+                                <span class="when-label">When to use:</span> When bandwidth or storage is limited, and you still need strong signatures
+                            </div>
+                        </div>
                     </div>
+
                     <div class="algorithm-item">
-                        <div class="algorithm-info">
-                            <div class="algorithm-name">Classic McEliece</div>
-                            <div class="algorithm-details">Code-based encryption • Conservative</div>
+                        <div class="algorithm-header">
+                            <div class="algorithm-info">
+                                <div class="algorithm-name">
+                                    <span>🔐</span>
+                                    <span>Classic McEliece</span>
+                                </div>
+                                <div class="algorithm-type">Code-based Public Key Encryption</div>
+                            </div>
+                            <div class="algorithm-status available">AVAILABLE</div>
                         </div>
-                        <div class="algorithm-status">AVAILABLE</div>
+                        <div class="algorithm-details">
+                            <div class="algorithm-use">
+                                <span class="use-label">Use:</span> 📦 Encrypting data-at-rest (e.g., database entries, config files) with quantum-safe encryption
+                            </div>
+                            <div class="algorithm-when">
+                                <span class="when-label">When to use:</span> When you need to store sensitive data securely, even if an attacker has quantum capabilities
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -964,6 +1088,18 @@
             
             if (lowerMessage.includes('algorithm') || lowerMessage.includes('crypto')) {
                 return '🔑 Active algorithms: CRYSTALS-Kyber (key exchange), CRYSTALS-Dilithium (signatures). All NIST-approved. Hybrid mode combines classical and post-quantum for backward compatibility.';
+            }
+            
+            if (lowerMessage.includes('kyber')) {
+                return '🔐 CRYSTALS-Kyber is our primary key encapsulation mechanism. It securely exchanges session keys for encrypted channels. Based on Module-LIS problem, offering 128-bit quantum security at Level 3.';
+            }
+            
+            if (lowerMessage.includes('dilithium')) {
+                return '📝 CRYSTALS-Dilithium handles all digital signatures. It verifies authenticity of logs, commands, and certificates. Provides 128-bit classical security with compact signatures.';
+            }
+            
+            if (lowerMessage.includes('mceliece')) {
+                return '📦 Classic McEliece is available for data-at-rest encryption. Conservative choice with 40+ years of cryptanalysis. Large key sizes but maximum security for long-term storage.';
             }
             
             if (lowerMessage.includes('nist') || lowerMessage.includes('update')) {
