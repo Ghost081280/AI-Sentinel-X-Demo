@@ -259,6 +259,7 @@
             border-radius: 12px;
             padding: 20px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .algorithm-item:hover {
@@ -272,7 +273,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
         }
 
         .algorithm-info {
@@ -319,36 +319,52 @@
             color: var(--accent);
         }
 
-        .algorithm-details {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        /* Quantum Protection Features */
+        .protection-features {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
         }
 
-        .algorithm-use {
-            color: var(--text-primary);
-            margin-bottom: 8px;
-            font-size: 15px;
-            line-height: 1.5;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
         }
 
-        .algorithm-when {
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-style: italic;
-            line-height: 1.4;
+        .feature-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .use-label {
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .feature-name {
+            font-weight: bold;
             color: var(--primary);
-            font-weight: bold;
-            margin-right: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
         }
 
-        .when-label {
-            color: var(--accent);
-            font-weight: bold;
-            margin-right: 5px;
+        .feature-status {
+            font-size: 13px;
+            color: var(--text-secondary);
         }
 
         /* Certificate Status */
@@ -731,11 +747,11 @@
                 <div class="key-display">
                     <div class="key-row">
                         <span class="key-label">Active Algorithm</span>
-                        <span class="key-value" id="activeAlgorithm">CRYSTALS-Kyber</span>
+                        <span class="key-value" id="activeAlgorithm">CRYSTALS-Kyber-1024</span>
                     </div>
                     <div class="key-row">
                         <span class="key-label">Key Size</span>
-                        <span class="key-value">768-bit (Level 3)</span>
+                        <span class="key-value">1,568 bytes (Level 5)</span>
                     </div>
                     <div class="key-row">
                         <span class="key-label">Last Rotation</span>
@@ -747,7 +763,7 @@
                     </div>
                     <div class="key-row">
                         <span class="key-label">Quantum Strength</span>
-                        <span class="key-value">128-bit quantum security</span>
+                        <span class="key-value">256-bit quantum security</span>
                     </div>
                 </div>
 
@@ -774,7 +790,7 @@
                 </div>
                 
                 <div class="algorithm-list">
-                    <div class="algorithm-item">
+                    <div class="algorithm-item" onclick="showAlgorithmDetails('kyber')">
                         <div class="algorithm-header">
                             <div class="algorithm-info">
                                 <div class="algorithm-name">
@@ -785,17 +801,9 @@
                             </div>
                             <div class="algorithm-status">ACTIVE</div>
                         </div>
-                        <div class="algorithm-details">
-                            <div class="algorithm-use">
-                                <span class="use-label">Use:</span> 🔐 Encrypting session keys for secure communication (e.g., TLS replacement)
-                            </div>
-                            <div class="algorithm-when">
-                                <span class="when-label">When to use:</span> Anytime you need to securely exchange a secret key between two parties
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="algorithm-item">
+                    <div class="algorithm-item" onclick="showAlgorithmDetails('dilithium')">
                         <div class="algorithm-header">
                             <div class="algorithm-info">
                                 <div class="algorithm-name">
@@ -806,59 +814,35 @@
                             </div>
                             <div class="algorithm-status">ACTIVE</div>
                         </div>
-                        <div class="algorithm-details">
-                            <div class="algorithm-use">
-                                <span class="use-label">Use:</span> 📝 Signing messages, logs, commands, or files to prove authenticity and integrity
-                            </div>
-                            <div class="algorithm-when">
-                                <span class="when-label">When to use:</span> When verifying that data came from a trusted source and wasn't tampered with
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="algorithm-item">
+                    <div class="algorithm-item" onclick="showAlgorithmDetails('sphincs')">
                         <div class="algorithm-header">
                             <div class="algorithm-info">
                                 <div class="algorithm-name">
                                     <span>🟡</span>
                                     <span>SPHINCS+</span>
                                 </div>
-                                <div class="algorithm-type">Hash-based Digital Signatures (Stateless)</div>
+                                <div class="algorithm-type">Hash-based Digital Signatures</div>
                             </div>
                             <div class="algorithm-status standby">STANDBY</div>
                         </div>
-                        <div class="algorithm-details">
-                            <div class="algorithm-use">
-                                <span class="use-label">Use:</span> 🛡️ Backup or alternative signature method — good for very high security or long-term validation
-                            </div>
-                            <div class="algorithm-when">
-                                <span class="when-label">When to use:</span> For signing firmware, configs, or critical assets that must remain verifiable for years
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="algorithm-item">
+                    <div class="algorithm-item" onclick="showAlgorithmDetails('falcon')">
                         <div class="algorithm-header">
                             <div class="algorithm-info">
                                 <div class="algorithm-name">
                                     <span>🧪</span>
                                     <span>FALCON</span>
                                 </div>
-                                <div class="algorithm-type">Lattice-based Digital Signatures (Compact)</div>
+                                <div class="algorithm-type">Lattice-based Signatures (Compact)</div>
                             </div>
                             <div class="algorithm-status testing">TESTING</div>
                         </div>
-                        <div class="algorithm-details">
-                            <div class="algorithm-use">
-                                <span class="use-label">Use:</span> ✍️ Efficient digital signatures for constrained environments (IoT, edge devices)
-                            </div>
-                            <div class="algorithm-when">
-                                <span class="when-label">When to use:</span> When bandwidth or storage is limited, and you still need strong signatures
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="algorithm-item">
+                    <div class="algorithm-item" onclick="showAlgorithmDetails('mceliece')">
                         <div class="algorithm-header">
                             <div class="algorithm-info">
                                 <div class="algorithm-name">
@@ -869,15 +853,73 @@
                             </div>
                             <div class="algorithm-status available">AVAILABLE</div>
                         </div>
-                        <div class="algorithm-details">
-                            <div class="algorithm-use">
-                                <span class="use-label">Use:</span> 📦 Encrypting data-at-rest (e.g., database entries, config files) with quantum-safe encryption
+                    </div>
+
+                    <div class="algorithm-item" onclick="showAlgorithmDetails('bike')">
+                        <div class="algorithm-header">
+                            <div class="algorithm-info">
+                                <div class="algorithm-name">
+                                    <span>🚴</span>
+                                    <span>BIKE</span>
+                                </div>
+                                <div class="algorithm-type">Code-based Key Encapsulation</div>
                             </div>
-                            <div class="algorithm-when">
-                                <span class="when-label">When to use:</span> When you need to store sensitive data securely, even if an attacker has quantum capabilities
-                            </div>
+                            <div class="algorithm-status available">AVAILABLE</div>
                         </div>
                     </div>
+
+                    <div class="algorithm-item" onclick="showAlgorithmDetails('hqc')">
+                        <div class="algorithm-header">
+                            <div class="algorithm-info">
+                                <div class="algorithm-name">
+                                    <span>📐</span>
+                                    <span>HQC</span>
+                                </div>
+                                <div class="algorithm-type">Code-based Key Encapsulation</div>
+                            </div>
+                            <div class="algorithm-status standby">STANDBY</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quantum Protection Features -->
+        <div class="protection-features">
+            <div class="panel-header">
+                <h2 class="panel-title">Automated Quantum Protection</h2>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-name">Crypto-Agility Engine</div>
+                    <div class="feature-status">Automatically switches algorithms based on threat level</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-name">Quantum Threat Detection</div>
+                    <div class="feature-status">Monitors for quantum computing breakthroughs</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <div class="feature-name">Hybrid Encryption</div>
+                    <div class="feature-status">Combines classical & PQC for defense in depth</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-name">Algorithm Performance Monitor</div>
+                    <div class="feature-status">Tracks latency and adjusts for optimal speed</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-name">Store-Now-Decrypt-Later Defense</div>
+                    <div class="feature-status">Protects against future quantum attacks</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <div class="feature-name">Certificate Transparency</div>
+                    <div class="feature-status">Monitors for quantum-vulnerable certificates</div>
                 </div>
             </div>
         </div>
@@ -895,7 +937,7 @@
                         <div class="cert-expiry">Expires in 358 days</div>
                     </div>
                     <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">
-                        Post-quantum ready • RSA-4096 + Dilithium
+                        Post-quantum ready • RSA-4096 + Dilithium5
                     </div>
                     <div class="cert-progress">
                         <div class="cert-progress-fill" style="width: 98%;"></div>
@@ -907,7 +949,7 @@
                         <div class="cert-expiry">Expires in 87 days</div>
                     </div>
                     <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">
-                        Hybrid encryption • ECDSA + Kyber
+                        Hybrid encryption • ECDSA P-384 + Kyber-1024
                     </div>
                     <div class="cert-progress">
                         <div class="cert-progress-fill" style="width: 76%;"></div>
@@ -919,10 +961,22 @@
                         <div class="cert-expiry">Auto-rotating daily</div>
                     </div>
                     <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">
-                        Full PQC • Kyber + Dilithium
+                        Full PQC • Kyber-768 + Dilithium3
                     </div>
                     <div class="cert-progress">
                         <div class="cert-progress-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-header">
+                        <div class="cert-name">Code Signing Certificate</div>
+                        <div class="cert-expiry">Expires in 265 days</div>
+                    </div>
+                    <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">
+                        Long-term secure • SPHINCS+-256f
+                    </div>
+                    <div class="cert-progress">
+                        <div class="cert-progress-fill" style="width: 88%;"></div>
                     </div>
                 </div>
             </div>
@@ -939,7 +993,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        Welcome to Quantum Security. I manage post-quantum cryptography, monitor NIST algorithm updates, and ensure quantum-resistant protection. How can I assist with your cryptographic needs?
+                        Welcome to Quantum Security. I manage post-quantum cryptography, monitor NIST algorithm updates, and ensure quantum-resistant protection. Click on any algorithm to learn more about its use case and implementation.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -959,6 +1013,72 @@
     </div>
 
     <script>
+        // Algorithm details for chat
+        function showAlgorithmDetails(algorithm) {
+            if (!chatOpen) {
+                toggleChat();
+            }
+            
+            setTimeout(() => {
+                const algorithmInfo = {
+                    'kyber': {
+                        name: 'CRYSTALS-Kyber',
+                        use: '🔐 Primary use: Securing TLS handshakes, VPN connections, and any session key exchange. Replaces RSA/ECDH in protocols.',
+                        when: 'Deploy for: All external-facing services, API gateways, web servers. Critical for protecting data in transit.',
+                        technical: 'Security levels: Kyber-512 (AES-128 equivalent), Kyber-768 (AES-192), Kyber-1024 (AES-256). We use Kyber-1024 for maximum security.',
+                        performance: '⚡ Performance: ~0.8ms encryption, ~1.0ms decryption. Ciphertext: 1,568 bytes. Public key: 1,568 bytes.'
+                    },
+                    'dilithium': {
+                        name: 'CRYSTALS-Dilithium',
+                        use: '📝 Primary use: Signing certificates, software updates, API requests, audit logs, and legal documents. Ensures authenticity and non-repudiation.',
+                        when: 'Deploy for: Certificate authorities, code signing, document signing, blockchain transactions, and audit trail integrity.',
+                        technical: 'Security levels: Dilithium2 (128-bit), Dilithium3 (192-bit), Dilithium5 (256-bit). Using Dilithium5 for root CA.',
+                        performance: '⚡ Performance: ~1.2ms signing, ~0.3ms verification. Signature size: 4,627 bytes. Public key: 2,592 bytes.'
+                    },
+                    'sphincs': {
+                        name: 'SPHINCS+',
+                        use: '🛡️ Primary use: Long-term signatures for firmware, critical configurations, and archival data. Stateless design prevents key reuse issues.',
+                        when: 'Deploy for: Signing artifacts that must remain verifiable for 20+ years. Backup signature method when Dilithium unavailable.',
+                        technical: 'Variants: SPHINCS+-128f (fast), SPHINCS+-256s (small signatures). Hash-based, quantum-resistant even against future attacks.',
+                        performance: '⚡ Performance: ~15ms signing (fast variant), ~2ms verification. Larger signatures (17KB-50KB) but maximum security.'
+                    },
+                    'falcon': {
+                        name: 'FALCON',
+                        use: '✍️ Primary use: Resource-constrained environments - IoT devices, embedded systems, mobile apps. Smallest signature sizes among lattice schemes.',
+                        when: 'Deploy for: Smart cards, IoT sensors, bandwidth-limited channels, embedded devices needing signatures.',
+                        technical: 'Based on NTRU lattices with Gaussian sampling. Falcon-512 (NIST Level 1) and Falcon-1024 (NIST Level 5).',
+                        performance: '⚡ Performance: ~0.5ms signing, ~0.2ms verification. Compact signatures: 690-1,330 bytes. Ideal for constrained devices.'
+                    },
+                    'mceliece': {
+                        name: 'Classic McEliece',
+                        use: '📦 Primary use: Ultra-high security for data at rest - database encryption, backup archives, classified documents. Most conservative choice.',
+                        when: 'Deploy for: Encrypting master keys, highly sensitive data storage, scenarios where key size is not a constraint.',
+                        technical: 'Code-based cryptography with 40+ years of analysis. Huge keys but unmatched security confidence.',
+                        performance: '⚡ Performance: Very fast encryption/decryption (<1ms), but public keys are 261KB-1.4MB. Use only where storage permits.'
+                    },
+                    'bike': {
+                        name: 'BIKE (Bit Flipping Key Encapsulation)',
+                        use: '🚴 Primary use: Alternative to Kyber with smaller keys. Good for memory-constrained environments needing key exchange.',
+                        when: 'Deploy for: Backup KEM option, systems with limited memory, diversifying cryptographic portfolio.',
+                        technical: 'QC-MDPC codes with compact keys. BIKE-1 (Level 1), BIKE-3 (Level 3), BIKE-5 (Level 5) security.',
+                        performance: '⚡ Performance: ~3ms encapsulation/decapsulation. Public keys: 1.5KB-5KB. Good balance of size and speed.'
+                    },
+                    'hqc': {
+                        name: 'HQC (Hamming Quasi-Cyclic)',
+                        use: '📐 Primary use: Another code-based KEM alternative. Useful for crypto-agility and avoiding single points of failure.',
+                        when: 'Deploy for: Systems requiring multiple algorithm support, research environments, testing quantum readiness.',
+                        technical: 'Error-correcting codes with proven reduction to decoding problems. Moderate key sizes.',
+                        performance: '⚡ Performance: ~2ms operations. Public keys: 3-7KB. Good alternative when diversification needed.'
+                    }
+                };
+                
+                const info = algorithmInfo[algorithm];
+                if (info) {
+                    addChatMessage(`🔍 ${info.name} Details:\n\n${info.use}\n\n${info.when}\n\n${info.technical}\n\n${info.performance}`, false);
+                }
+            }, 300);
+        }
+
         // Update rotation times
         function updateRotationTimes() {
             const lastRotation = document.getElementById('lastRotation');
@@ -984,7 +1104,7 @@
 
         // Rotate algorithms occasionally
         function rotateAlgorithm() {
-            const algorithms = ['CRYSTALS-Kyber', 'CRYSTALS-Dilithium', 'FALCON', 'SPHINCS+'];
+            const algorithms = ['CRYSTALS-Kyber-1024', 'CRYSTALS-Kyber-768', 'CRYSTALS-Dilithium5', 'Hybrid-Kyber-ECDH'];
             const activeAlgo = document.getElementById('activeAlgorithm');
             activeAlgo.textContent = algorithms[Math.floor(Math.random() * algorithms.length)];
         }
@@ -1039,7 +1159,7 @@
             
             messageDiv.innerHTML = `
                 <div class="ai-message-bubble ${isUser ? 'user' : ''}">
-                    ${message}
+                    ${message.replace(/\n/g, '<br>')}
                 </div>
                 <div class="ai-message-time">${time}</div>
             `;
@@ -1083,38 +1203,30 @@
             const lowerMessage = message.toLowerCase();
             
             if (lowerMessage.includes('quantum') && (lowerMessage.includes('threat') || lowerMessage.includes('attack'))) {
-                return '🔐 No quantum computer attacks detected. Monitoring global quantum computing developments. Current protection level exceeds known quantum capabilities by 10x safety margin.';
+                return '🔐 Current quantum threat level: LOW. No quantum computers capable of breaking current encryption detected. Monitoring IBM (433 qubits), Google (70 qubits), and other quantum developments. We need ~4,000 logical qubits to threaten RSA-2048, current systems have <1,000 physical qubits.';
             }
             
-            if (lowerMessage.includes('algorithm') || lowerMessage.includes('crypto')) {
-                return '🔑 Active algorithms: CRYSTALS-Kyber (key exchange), CRYSTALS-Dilithium (signatures). All NIST-approved. Hybrid mode combines classical and post-quantum for backward compatibility.';
+            if (lowerMessage.includes('performance') || lowerMessage.includes('speed') || lowerMessage.includes('latency')) {
+                return '⚡ PQC Performance Metrics:\n\n• Kyber-1024: 0.8ms encrypt + 1.0ms decrypt = 1.8ms total\n• Dilithium5: 1.2ms sign + 0.3ms verify = 1.5ms total\n• Total TLS handshake overhead: ~5ms (acceptable)\n• Hybrid mode adds ~2ms but provides defense in depth\n\nAutomatic algorithm selection based on connection type and threat level.';
             }
             
-            if (lowerMessage.includes('kyber')) {
-                return '🔐 CRYSTALS-Kyber is our primary key encapsulation mechanism. It securely exchanges session keys for encrypted channels. Based on Module-LIS problem, offering 128-bit quantum security at Level 3.';
+            if (lowerMessage.includes('migration') || lowerMessage.includes('upgrade') || lowerMessage.includes('transition')) {
+                return '📋 PQC Migration Status:\n\n✅ Phase 1 (Complete): Inventory of all certificates and keys\n✅ Phase 2 (Complete): Hybrid encryption deployed\n🔄 Phase 3 (In Progress): Gradual transition to full PQC\n⏳ Phase 4 (Q2 2025): Deprecate classical-only algorithms\n\nCrypto-agility engine allows seamless transition with zero downtime.';
             }
             
-            if (lowerMessage.includes('dilithium')) {
-                return '📝 CRYSTALS-Dilithium handles all digital signatures. It verifies authenticity of logs, commands, and certificates. Provides 128-bit classical security with compact signatures.';
+            if (lowerMessage.includes('compliance') || lowerMessage.includes('standard') || lowerMessage.includes('regulation')) {
+                return '📜 Compliance Status:\n\n• NIST PQC: Fully compliant with Round 4 selections\n• CNSA 2.0: Meet NSA requirements for quantum resistance\n• FIPS 140-3: Certification pending for PQC modules\n• Common Criteria: EAL4+ evaluation in progress\n• Industry: Aligned with banking (SWIFT) and healthcare (HIPAA) quantum requirements';
             }
             
-            if (lowerMessage.includes('mceliece')) {
-                return '📦 Classic McEliece is available for data-at-rest encryption. Conservative choice with 40+ years of cryptanalysis. Large key sizes but maximum security for long-term storage.';
+            if (lowerMessage.includes('hybrid') || lowerMessage.includes('classical')) {
+                return '🔄 Hybrid Cryptography Active:\n\nCombining classical + PQC for maximum security:\n• TLS: ECDHE + Kyber (key exchange)\n• Certs: RSA + Dilithium (signatures)\n• Benefits: Protects against both classical and quantum attacks\n• Fallback: If PQC broken, classical crypto still protects\n• Performance: Only 2-3ms additional overhead';
             }
             
-            if (lowerMessage.includes('nist') || lowerMessage.includes('update')) {
-                return '📋 NIST PQC standardization complete. Monitoring for updates. Current implementations match latest specifications. Next algorithm migration scheduled for Q2 2025.';
+            if (lowerMessage.includes('store') && lowerMessage.includes('now')) {
+                return '🛡️ Store-Now-Decrypt-Later Defense:\n\nProtecting against adversaries harvesting encrypted data today for future quantum decryption:\n• All data encrypted with Kyber-1024 (256-bit quantum security)\n• Historical data being re-encrypted with PQC\n• Network traffic uses ephemeral keys (forward secrecy)\n• Estimated protection: Secure for 30+ years against quantum attacks';
             }
             
-            if (lowerMessage.includes('certificate') || lowerMessage.includes('pki')) {
-                return '📜 All certificates use hybrid cryptography (classical + post-quantum). Root CA valid for 358 days. Auto-rotation enabled for service certificates. Zero downtime migration path ready.';
-            }
-            
-            if (lowerMessage.includes('performance') || lowerMessage.includes('speed')) {
-                return '⚡ Quantum crypto overhead: <5ms added latency. Kyber encryption: 0.8ms, Dilithium signing: 1.2ms. Hardware acceleration enabled. Performance within acceptable limits.';
-            }
-            
-            return '🤖 I can provide information about post-quantum algorithms, NIST updates, certificate management, or quantum threat analysis. What specific aspect would you like to explore?';
+            return '🤖 I manage post-quantum cryptography for AI Sentinel-X. Click any algorithm card to learn about its specific use case, or ask me about quantum threats, performance impact, migration strategy, or compliance requirements.';
         }
 
         // Initialize
@@ -1134,11 +1246,13 @@
             setInterval(() => {
                 if (Math.random() > 0.85 && chatOpen) {
                     const events = [
-                        '🔐 Key rotation completed. New post-quantum keys deployed.',
-                        '📊 NIST algorithm check: All implementations current.',
-                        '⚡ Quantum crypto performance: Operating at peak efficiency.',
-                        '🛡️ Quantum threat analysis: No credible threats detected.',
-                        '📜 Certificate health check: All certificates quantum-ready.'
+                        '🔐 Key rotation completed. New Kyber-1024 keys deployed across all services.',
+                        '📊 NIST algorithm update check: No new vulnerabilities. All implementations current.',
+                        '⚡ Quantum crypto performance: 99.8% of connections <10ms overhead.',
+                        '🛡️ Quantum threat intelligence: IBM announced 1,000 qubit system. Still 3x below threat threshold.',
+                        '📜 Certificate rotation: 12 certificates upgraded to hybrid PQC. Zero downtime achieved.',
+                        '🔍 Crypto-agility test: Successfully switched from Kyber to BIKE in 0.3 seconds.',
+                        '⚠️ Detected RSA-2048 certificate in supply chain. Vendor notified for PQC upgrade.'
                     ];
                     addChatMessage(events[Math.floor(Math.random() * events.length)], false);
                 }
