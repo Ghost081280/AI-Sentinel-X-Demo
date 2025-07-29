@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Security | AI Sentinel-X</title>
+    <title>Encryption Security | AI Sentinel-X</title>
     <style>
         * {
             margin: 0;
@@ -27,6 +27,7 @@
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
             --gradient-quantum: linear-gradient(135deg, #7c3aed 0%, #ff00ff 50%, #00ccff 100%);
+            --gradient-classical: linear-gradient(135deg, #00ff88 0%, #00aa66 100%);
         }
 
         body {
@@ -46,8 +47,8 @@
             pointer-events: none;
             z-index: 0;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(255, 0, 255, 0.08) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(0, 204, 255, 0.08) 0%, transparent 50%);
         }
 
         .quantum-grid {
@@ -55,8 +56,8 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(124, 58, 237, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(124, 58, 237, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             animation: quantumShift 40s linear infinite;
         }
@@ -90,7 +91,7 @@
         .page-title {
             font-size: 42px;
             font-weight: bold;
-            background: var(--gradient-quantum);
+            background: var(--gradient-classical);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -105,22 +106,22 @@
             letter-spacing: 2px;
         }
 
-        /* Quantum Alert */
-        .quantum-alert {
-            background: rgba(124, 58, 237, 0.1);
-            border: 2px solid var(--accent);
+        /* Encryption Alert */
+        .encryption-alert {
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid var(--primary);
             border-radius: 12px;
             padding: 20px 25px;
             margin-bottom: 30px;
             text-align: center;
             font-weight: bold;
-            color: var(--accent);
+            color: var(--primary);
             font-size: 16px;
         }
 
         /* NIST Badge */
         .nist-badge {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 170, 102, 0.2) 100%);
             border: 2px solid var(--primary);
             border-radius: 12px;
             padding: 25px;
@@ -166,20 +167,22 @@
         }
 
         /* Main Grid */
-        .quantum-grid-layout {
+        .encryption-grid-layout {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
             gap: 25px;
             margin-bottom: 30px;
         }
 
-        /* Quantum Panel */
-        .quantum-panel {
+        /* Encryption Panel */
+        .encryption-panel {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
             padding: 30px;
             backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
         }
 
         .panel-header {
@@ -223,7 +226,7 @@
 
         /* Key Display */
         .key-display {
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(124, 58, 237, 0.05) 100%);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 255, 136, 0.05) 100%);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 25px;
@@ -257,8 +260,8 @@
             flex: 1;
         }
 
-        /* Quantum Metrics */
-        .quantum-metrics {
+        /* Encryption Metrics */
+        .encryption-metrics {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
@@ -266,7 +269,7 @@
         }
 
         .metric-box {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 170, 102, 0.05) 100%);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 20px;
@@ -276,7 +279,7 @@
 
         .metric-box:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
         }
 
         .metric-value {
@@ -301,7 +304,7 @@
         }
 
         .algorithm-item {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(124, 58, 237, 0.02) 100%);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.02) 100%);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 20px;
@@ -310,10 +313,10 @@
         }
 
         .algorithm-item:hover {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(0, 255, 136, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 170, 102, 0.05) 100%);
             border-color: var(--primary);
             transform: translateX(5px);
-            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
         }
 
         .algorithm-header {
@@ -352,9 +355,9 @@
             text-transform: uppercase;
         }
 
-        .algorithm-status.testing {
-            background: rgba(0, 204, 255, 0.2);
-            color: var(--secondary);
+        .algorithm-status.future {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent);
         }
 
         .algorithm-metrics {
@@ -373,7 +376,7 @@
         .metric-mini-value {
             font-size: 16px;
             font-weight: bold;
-            color: var(--accent);
+            color: var(--primary);
         }
 
         .metric-mini-label {
@@ -382,7 +385,49 @@
             text-transform: uppercase;
         }
 
-        /* Quantum Protection Features */
+        /* Future Quantum Section */
+        .quantum-future-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quantum-future-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .quantum-future-title {
+            font-size: 22px;
+            font-weight: bold;
+            background: var(--gradient-quantum);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .future-badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Encryption Features */
         .protection-features {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -400,8 +445,8 @@
         }
 
         .feature-card {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%);
-            border: 1px solid rgba(124, 58, 237, 0.3);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.3);
             border-radius: 12px;
             padding: 20px;
             text-align: center;
@@ -410,7 +455,7 @@
 
         .feature-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.3);
         }
 
         .feature-icon {
@@ -531,13 +576,13 @@
         .ai-chat-toggle {
             width: 70px;
             height: 70px;
-            background: var(--gradient-quantum);
+            background: var(--gradient-classical);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 5px 20px rgba(124, 58, 237, 0.4);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
             transition: all 0.3s ease;
             font-size: 32px;
         }
@@ -579,8 +624,8 @@
         }
 
         .ai-chat-header {
-            background: var(--gradient-quantum);
-            color: white;
+            background: var(--gradient-classical);
+            color: var(--bg-darker);
             padding: 20px;
             display: flex;
             justify-content: space-between;
@@ -620,8 +665,8 @@
         }
 
         .ai-message-bubble {
-            background: rgba(124, 58, 237, 0.1);
-            border: 1px solid var(--accent);
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--border);
             border-radius: 15px;
             padding: 15px 20px;
             max-width: 80%;
@@ -631,8 +676,8 @@
         }
 
         .ai-message-bubble.user {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
+            background: rgba(0, 204, 255, 0.1);
+            border-color: var(--secondary);
             align-self: flex-end;
         }
 
@@ -665,17 +710,17 @@
 
         .ai-chat-input:focus {
             outline: none;
-            border-color: var(--accent);
-            background: rgba(124, 58, 237, 0.05);
-            box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+            border-color: var(--primary);
+            background: rgba(0, 255, 136, 0.05);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
         }
 
         .ai-chat-send {
-            background: var(--gradient-quantum);
+            background: var(--gradient-classical);
             border: none;
             border-radius: 10px;
             padding: 12px 20px;
-            color: white;
+            color: var(--bg-darker);
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -685,7 +730,7 @@
 
         .ai-chat-send:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(124, 58, 237, 0.4);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
         }
 
         /* Mobile Responsive */
@@ -702,7 +747,7 @@
                 font-size: 32px;
             }
             
-            .quantum-grid-layout {
+            .encryption-grid-layout {
                 grid-template-columns: 1fr;
             }
             
@@ -713,7 +758,7 @@
                 font-size: 13px;
             }
             
-            .quantum-metrics {
+            .encryption-metrics {
                 grid-template-columns: repeat(2, 1fr);
             }
             
@@ -747,12 +792,12 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--accent);
+            background: var(--primary);
             border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
+            background: var(--secondary);
         }
     </style>
 </head>
@@ -786,43 +831,43 @@
     <div class="container">
         <!-- Page Header -->
         <div class="page-header">
-            <h1 class="page-title">QUANTUM SECURITY</h1>
-            <p class="page-subtitle">NIST-Approved Post-Quantum Cryptographic Protection</p>
+            <h1 class="page-title">ENCRYPTION SECURITY</h1>
+            <p class="page-subtitle">NIST-Approved Classical Cryptographic Protection</p>
         </div>
 
-        <!-- Quantum Alert -->
-        <div class="quantum-alert">
-            🔐 Quantum-resistant encryption is active using NIST-standardized algorithms. All communications protected against both current and future quantum threats.
+        <!-- Encryption Alert -->
+        <div class="encryption-alert">
+            🔐 Classical encryption is active using NIST-approved algorithms. All communications protected with industry-standard cryptography.
         </div>
 
         <!-- NIST Badge -->
         <div class="nist-badge">
             <div class="nist-badge-content">
-                <div class="nist-title">🏛️ NIST FIPS 203/204/205 COMPLIANT</div>
-                <div class="nist-subtitle">Implementing only standardized post-quantum cryptographic algorithms</div>
+                <div class="nist-title">🏛️ NIST SP 800 SERIES COMPLIANT</div>
+                <div class="nist-subtitle">Implementing proven, standardized cryptographic algorithms</div>
             </div>
         </div>
 
         <!-- Main Grid -->
-        <div class="quantum-grid-layout">
+        <div class="encryption-grid-layout">
             <!-- Encryption Status Panel -->
-            <div class="quantum-panel">
+            <div class="encryption-panel">
                 <div class="panel-header">
                     <h2 class="panel-title">Encryption Status</h2>
                     <div class="panel-status">
                         <div class="status-dot"></div>
-                        <span>QUANTUM SECURE</span>
+                        <span>FULLY ENCRYPTED</span>
                     </div>
                 </div>
                 
                 <div class="key-display">
                     <div class="key-row">
                         <span class="key-label">Active Algorithm</span>
-                        <span class="key-value" id="activeAlgorithm">ML-KEM-1024 (Kyber)</span>
+                        <span class="key-value" id="activeAlgorithm">AES-256-GCM</span>
                     </div>
                     <div class="key-row">
                         <span class="key-label">Security Level</span>
-                        <span class="key-value">NIST Level 5 (AES-256 equivalent)</span>
+                        <span class="key-value">256-bit (Military Grade)</span>
                     </div>
                     <div class="key-row">
                         <span class="key-label">Last Rotation</span>
@@ -833,12 +878,12 @@
                         <span class="key-value" id="nextRotation">In 22 hours</span>
                     </div>
                     <div class="key-row">
-                        <span class="key-label">Quantum Strength</span>
-                        <span class="key-value">256-bit quantum security</span>
+                        <span class="key-label">Compliance</span>
+                        <span class="key-value">FIPS 140-2 Level 2</span>
                     </div>
                 </div>
 
-                <div class="quantum-metrics">
+                <div class="encryption-metrics">
                     <div class="metric-box">
                         <div class="metric-value" id="encryptedChannels">247</div>
                         <div class="metric-label">Encrypted Channels</div>
@@ -848,123 +893,123 @@
                         <div class="metric-label">Keys Rotated</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value" id="quantumStrength">100%</div>
+                        <div class="metric-value">100%</div>
                         <div class="metric-label">Protection Level</div>
                     </div>
                 </div>
             </div>
 
             <!-- NIST Algorithm Panel -->
-            <div class="quantum-panel">
+            <div class="encryption-panel">
                 <div class="panel-header">
-                    <h2 class="panel-title">NIST Standardized Algorithms</h2>
+                    <h2 class="panel-title">Active Encryption Algorithms</h2>
                 </div>
                 
                 <div class="algorithm-list">
-                    <div class="algorithm-item" onclick="showAlgorithmDetails('kyber')">
+                    <div class="algorithm-item" onclick="showAlgorithmDetails('aes')">
                         <div class="algorithm-header">
                             <div class="algorithm-info">
                                 <div class="algorithm-name">
                                     <span>✅</span>
-                                    <span>ML-KEM (CRYSTALS-Kyber)</span>
+                                    <span>AES-256-GCM</span>
                                 </div>
-                                <div class="algorithm-type">Module-Lattice Key Encapsulation - FIPS 203</div>
-                            </div>
-                            <div class="algorithm-status">ACTIVE</div>
-                        </div>
-                        <div class="algorithm-metrics">
-                            <div class="algorithm-metric">
-                                <div class="metric-mini-value">1.0ms</div>
-                                <div class="metric-mini-label">Latency</div>
-                            </div>
-                            <div class="algorithm-metric">
-                                <div class="metric-mini-value">1,568B</div>
-                                <div class="metric-mini-label">Key Size</div>
-                            </div>
-                            <div class="algorithm-metric">
-                                <div class="metric-mini-value">Level 5</div>
-                                <div class="metric-mini-label">Security</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="algorithm-item" onclick="showAlgorithmDetails('dilithium')">
-                        <div class="algorithm-header">
-                            <div class="algorithm-info">
-                                <div class="algorithm-name">
-                                    <span>✅</span>
-                                    <span>ML-DSA (CRYSTALS-Dilithium)</span>
-                                </div>
-                                <div class="algorithm-type">Module-Lattice Digital Signatures - FIPS 204</div>
+                                <div class="algorithm-type">Advanced Encryption Standard - Galois/Counter Mode</div>
                             </div>
                             <div class="algorithm-status">ACTIVE</div>
                         </div>
                         <div class="algorithm-metrics">
                             <div class="algorithm-metric">
                                 <div class="metric-mini-value">1.2ms</div>
-                                <div class="metric-mini-label">Sign Time</div>
+                                <div class="metric-mini-label">Latency</div>
                             </div>
                             <div class="algorithm-metric">
-                                <div class="metric-mini-value">4,627B</div>
-                                <div class="metric-mini-label">Signature</div>
+                                <div class="metric-mini-value">256-bit</div>
+                                <div class="metric-mini-label">Key Size</div>
                             </div>
                             <div class="algorithm-metric">
-                                <div class="metric-mini-value">Level 5</div>
-                                <div class="metric-mini-label">Security</div>
+                                <div class="metric-mini-value">FIPS 197</div>
+                                <div class="metric-mini-label">Standard</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="algorithm-item" onclick="showAlgorithmDetails('sphincs')">
+                    <div class="algorithm-item" onclick="showAlgorithmDetails('hmac')">
                         <div class="algorithm-header">
                             <div class="algorithm-info">
                                 <div class="algorithm-name">
                                     <span>✅</span>
-                                    <span>SLH-DSA (SPHINCS+)</span>
+                                    <span>HMAC-SHA256</span>
                                 </div>
-                                <div class="algorithm-type">Stateless Hash-based Signatures - FIPS 205</div>
+                                <div class="algorithm-type">Hash-based Message Authentication Code</div>
                             </div>
                             <div class="algorithm-status">ACTIVE</div>
                         </div>
                         <div class="algorithm-metrics">
                             <div class="algorithm-metric">
-                                <div class="metric-mini-value">15ms</div>
-                                <div class="metric-mini-label">Sign Time</div>
+                                <div class="metric-mini-value">0.3ms</div>
+                                <div class="metric-mini-label">Verify Time</div>
                             </div>
                             <div class="algorithm-metric">
-                                <div class="metric-mini-value">49KB</div>
-                                <div class="metric-mini-label">Signature</div>
+                                <div class="metric-mini-value">256-bit</div>
+                                <div class="metric-mini-label">Digest Size</div>
                             </div>
                             <div class="algorithm-metric">
-                                <div class="metric-mini-value">Level 5</div>
-                                <div class="metric-mini-label">Security</div>
+                                <div class="metric-mini-value">FIPS 198-1</div>
+                                <div class="metric-mini-label">Standard</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="algorithm-item" onclick="showAlgorithmDetails('falcon')">
+                    <div class="algorithm-item" onclick="showAlgorithmDetails('pbkdf2')">
                         <div class="algorithm-header">
                             <div class="algorithm-info">
                                 <div class="algorithm-name">
-                                    <span>🧪</span>
-                                    <span>FALCON</span>
+                                    <span>✅</span>
+                                    <span>PBKDF2-HMAC-SHA256</span>
                                 </div>
-                                <div class="algorithm-type">Fast Fourier Lattice Signatures - NIST Selected</div>
+                                <div class="algorithm-type">Password-Based Key Derivation Function 2</div>
                             </div>
-                            <div class="algorithm-status testing">TESTING</div>
+                            <div class="algorithm-status">ACTIVE</div>
                         </div>
                         <div class="algorithm-metrics">
                             <div class="algorithm-metric">
-                                <div class="metric-mini-value">0.5ms</div>
-                                <div class="metric-mini-label">Sign Time</div>
+                                <div class="metric-mini-value">150ms</div>
+                                <div class="metric-mini-label">Hash Time</div>
                             </div>
                             <div class="algorithm-metric">
-                                <div class="metric-mini-value">1,330B</div>
-                                <div class="metric-mini-label">Signature</div>
+                                <div class="metric-mini-value">600K</div>
+                                <div class="metric-mini-label">Iterations</div>
                             </div>
                             <div class="algorithm-metric">
-                                <div class="metric-mini-value">Level 5</div>
-                                <div class="metric-mini-label">Security</div>
+                                <div class="metric-mini-value">SP 800-132</div>
+                                <div class="metric-mini-label">Standard</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="algorithm-item" onclick="showAlgorithmDetails('hkdf')">
+                        <div class="algorithm-header">
+                            <div class="algorithm-info">
+                                <div class="algorithm-name">
+                                    <span>✅</span>
+                                    <span>HKDF-SHA256</span>
+                                </div>
+                                <div class="algorithm-type">HMAC-based Extract-and-Expand Key Derivation</div>
+                            </div>
+                            <div class="algorithm-status">ACTIVE</div>
+                        </div>
+                        <div class="algorithm-metrics">
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">0.1ms</div>
+                                <div class="metric-mini-label">Derive Time</div>
+                            </div>
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">Unlimited</div>
+                                <div class="metric-mini-label">Key Output</div>
+                            </div>
+                            <div class="algorithm-metric">
+                                <div class="metric-mini-value">RFC 5869</div>
+                                <div class="metric-mini-label">Standard</div>
                             </div>
                         </div>
                     </div>
@@ -972,42 +1017,84 @@
             </div>
         </div>
 
-        <!-- Quantum Protection Features -->
+        <!-- Quantum Future Section -->
+        <div class="quantum-future-section">
+            <div class="quantum-future-header">
+                <h2 class="quantum-future-title">Future: Post-Quantum Upgrade</h2>
+                <span class="future-badge">ROADMAP 2025</span>
+            </div>
+            
+            <p style="color: var(--text-secondary); margin-bottom: 20px; line-height: 1.6;">
+                While our current NIST-approved classical encryption provides robust protection against all known threats, 
+                we're preparing for the quantum computing era. Post-quantum cryptography will be available as an optional 
+                upgrade once NIST standardization is complete.
+            </p>
+            
+            <div class="algorithm-list">
+                <div class="algorithm-item" style="opacity: 0.7;">
+                    <div class="algorithm-header">
+                        <div class="algorithm-info">
+                            <div class="algorithm-name" style="color: var(--accent);">
+                                <span>🔮</span>
+                                <span>ML-KEM (Kyber)</span>
+                            </div>
+                            <div class="algorithm-type">Module-Lattice Key Encapsulation</div>
+                        </div>
+                        <div class="algorithm-status future">FUTURE</div>
+                    </div>
+                </div>
+                
+                <div class="algorithm-item" style="opacity: 0.7;">
+                    <div class="algorithm-header">
+                        <div class="algorithm-info">
+                            <div class="algorithm-name" style="color: var(--accent);">
+                                <span>🔮</span>
+                                <span>ML-DSA (Dilithium)</span>
+                            </div>
+                            <div class="algorithm-type">Module-Lattice Digital Signatures</div>
+                        </div>
+                        <div class="algorithm-status future">FUTURE</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Automated Protection Features -->
         <div class="protection-features">
             <div class="panel-header">
-                <h2 class="panel-title">Automated Quantum Protection</h2>
+                <h2 class="panel-title">Automated Encryption Protection</h2>
             </div>
             
             <div class="feature-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🔄</div>
-                    <div class="feature-name">Crypto-Agility Engine</div>
-                    <div class="feature-status">Hot-swaps between NIST algorithms in real-time</div>
+                    <div class="feature-name">Auto Key Rotation</div>
+                    <div class="feature-status">Rotates encryption keys every 24 hours</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🎯</div>
-                    <div class="feature-name">Quantum Threat Monitor</div>
-                    <div class="feature-status">Tracks global quantum computing progress</div>
+                    <div class="feature-name">Perfect Forward Secrecy</div>
+                    <div class="feature-status">Each session uses unique ephemeral keys</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔐</div>
-                    <div class="feature-name">Hybrid Mode</div>
-                    <div class="feature-status">Combines classical + PQC for maximum security</div>
+                    <div class="feature-name">End-to-End Encryption</div>
+                    <div class="feature-status">All data encrypted at rest and in transit</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
-                    <div class="feature-name">Performance Optimizer</div>
-                    <div class="feature-status">Balances security level with latency requirements</div>
+                    <div class="feature-name">Crypto Performance</div>
+                    <div class="feature-status">Hardware acceleration when available</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🛡️</div>
-                    <div class="feature-name">Harvest Attack Defense</div>
-                    <div class="feature-status">Protects data from store-now-decrypt-later threats</div>
+                    <div class="feature-name">Side-Channel Protection</div>
+                    <div class="feature-status">Constant-time implementations</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📜</div>
-                    <div class="feature-name">FIPS Compliance</div>
-                    <div class="feature-status">Maintains FIPS 203/204/205 compliance</div>
+                    <div class="feature-name">Compliance Engine</div>
+                    <div class="feature-status">FIPS, PCI-DSS, HIPAA compliant</div>
                 </div>
             </div>
         </div>
@@ -1015,7 +1102,7 @@
         <!-- Certificate Status -->
         <div class="cert-status">
             <div class="panel-header">
-                <h2 class="panel-title">Post-Quantum Certificate Management</h2>
+                <h2 class="panel-title">Certificate Management</h2>
             </div>
             
             <div class="cert-grid">
@@ -1025,7 +1112,7 @@
                         <div class="cert-expiry">Expires in 358 days</div>
                     </div>
                     <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">
-                        Hybrid • RSA-4096 + ML-DSA-87 (Dilithium5)
+                        RSA-4096 with SHA-256
                     </div>
                     <div class="cert-progress">
                         <div class="cert-progress-fill" style="width: 98%;"></div>
@@ -1037,7 +1124,7 @@
                         <div class="cert-expiry">Expires in 87 days</div>
                     </div>
                     <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">
-                        Pure PQC • ML-KEM-1024 + ML-DSA-65
+                        ECDSA P-384 with AES-256-GCM
                     </div>
                     <div class="cert-progress">
                         <div class="cert-progress-fill" style="width: 76%;"></div>
@@ -1049,7 +1136,7 @@
                         <div class="cert-expiry">Expires in 730 days</div>
                     </div>
                     <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">
-                        Long-term • SLH-DSA-SHAKE-256f (SPHINCS+)
+                        RSA-3072 with SHA-384
                     </div>
                     <div class="cert-progress">
                         <div class="cert-progress-fill" style="width: 100%;"></div>
@@ -1063,13 +1150,13 @@
     <div class="ai-chat-widget">
         <div class="ai-chat-window" id="aiChatWindow">
             <div class="ai-chat-header">
-                <span>QUANTUM SECURITY AI</span>
+                <span>ENCRYPTION AI</span>
                 <span class="ai-chat-close" onclick="toggleChat()">×</span>
             </div>
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        Welcome to Quantum Security. I manage NIST-standardized post-quantum cryptography to protect against current and future quantum threats. Click any algorithm to learn about its specific use case and implementation details.
+                        Welcome to Encryption Security. I manage NIST-approved classical cryptography to protect your data. Click any algorithm to learn about its specific use case and implementation details.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1079,7 +1166,7 @@
                     type="text" 
                     class="ai-chat-input" 
                     id="aiChatInput" 
-                    placeholder="Ask about NIST algorithms or quantum protection..."
+                    placeholder="Ask about encryption algorithms or data protection..."
                     onkeypress="handleChatKeyPress(event)"
                 >
                 <button class="ai-chat-send" onclick="sendChatMessage()">SEND</button>
@@ -1097,37 +1184,37 @@
             
             setTimeout(() => {
                 const algorithmInfo = {
-                    'kyber': {
-                        name: 'ML-KEM (CRYSTALS-Kyber)',
-                        use: '🔐 Primary use: Securing all key exchanges - TLS 1.3 handshakes, VPN tunnels, SSH connections, and API authentication. This is your workhorse for protecting data in transit.',
-                        when: 'Deploy for: Every external-facing service, all client-server communications, inter-service mesh traffic. Critical for preventing "harvest now, decrypt later" attacks.',
-                        technical: 'NIST FIPS 203 compliant. Three parameter sets: ML-KEM-512 (Level 1), ML-KEM-768 (Level 3), ML-KEM-1024 (Level 5). We use ML-KEM-1024 for maximum 256-bit quantum security.',
-                        performance: '⚡ Performance: 0.9ms encapsulation, 1.1ms decapsulation. Ciphertext: 1,568 bytes. Public key: 1,568 bytes. Only 3-5ms added to TLS handshake.',
-                        realworld: '🌍 Real-world: Google already testing in Chrome. Signal implementing for E2E encryption. Your TLS traffic will use this by default.'
+                    'aes': {
+                        name: 'AES-256-GCM',
+                        use: '🔐 Primary use: Encrypting all data at rest and in transit - database records, API communications, file storage, and inter-service traffic. This is your workhorse for data confidentiality.',
+                        when: 'Deploy for: Every data storage system, all network communications, API payloads, backup archives. Critical for PCI-DSS, HIPAA, and GDPR compliance.',
+                        technical: 'NIST FIPS 197 approved. 256-bit key size provides quantum-resistant security level. GCM mode provides both encryption and authentication in a single pass.',
+                        performance: '⚡ Performance: 1.2ms average latency. Hardware acceleration via AES-NI reduces this to 0.3ms. Throughput: 2.5 GB/s with AES-NI.',
+                        realworld: '🌍 Real-world: Used by AWS S3, Google Cloud Storage, every major database. Your TLS 1.3 connections use AES-256-GCM by default.'
                     },
-                    'dilithium': {
-                        name: 'ML-DSA (CRYSTALS-Dilithium)',
-                        use: '📝 Primary use: Digital signatures for certificates, code signing, document signing, blockchain transactions, and API request authentication. Replaces RSA/ECDSA signatures.',
-                        when: 'Deploy for: PKI infrastructure, software supply chain security, legal document signing, audit logs, and any scenario requiring proof of authenticity.',
-                        technical: 'NIST FIPS 204 compliant. Three variants: ML-DSA-44 (Level 2), ML-DSA-65 (Level 3), ML-DSA-87 (Level 5). Using ML-DSA-87 for root CA, ML-DSA-65 for leaf certificates.',
-                        performance: '⚡ Performance: 1.2ms signing, 0.3ms verification. Signature: 4,627 bytes (Level 5). Public key: 2,592 bytes. Fast verification ideal for high-volume scenarios.',
-                        realworld: '🌍 Real-world: Being integrated into X.509 certificates. DNSSEC post-quantum trials. Your certificates already use hybrid RSA + Dilithium.'
+                    'hmac': {
+                        name: 'HMAC-SHA256',
+                        use: '✓ Primary use: Message authentication and integrity verification for API requests, webhook signatures, log files, and configuration changes. Prevents tampering and replay attacks.',
+                        when: 'Deploy for: REST API authentication, webhook validation, audit log integrity, configuration file protection, and inter-service communication verification.',
+                        technical: 'NIST FIPS 198-1 compliant. Produces 256-bit message authentication codes. Resistant to length extension attacks unlike plain SHA-256.',
+                        performance: '⚡ Performance: 0.3ms verification time. Can process 1 million signatures per second on modern hardware. Minimal overhead for API calls.',
+                        realworld: '🌍 Real-world: GitHub webhooks, AWS API signatures, JWT tokens. Every authenticated API request in your system uses HMAC-SHA256.'
                     },
-                    'sphincs': {
-                        name: 'SLH-DSA (SPHINCS+)',
-                        use: '🛡️ Primary use: Ultra-long-term signatures for firmware, OS updates, root certificates, and archival data. Stateless design means no risk from nonce reuse or RNG failures.',
-                        when: 'Deploy for: Signing artifacts that must remain verifiable for 20+ years, offline root CAs, emergency backup signing, and scenarios where you cannot guarantee state management.',
-                        technical: 'NIST FIPS 205 compliant. Hash-based, proven secure even if all math problems are broken. We use SLH-DSA-SHAKE-256f for balance of speed and size.',
-                        performance: '⚡ Performance: 15ms signing (fast variant), 2ms verification. Large signatures (49KB) but absolute security. Perfect for low-frequency, high-value signatures.',
-                        realworld: '🌍 Real-world: Used by German BSI for critical infrastructure. Ideal for signing golden images, BIOS/UEFI, and compliance documents.'
+                    'pbkdf2': {
+                        name: 'PBKDF2-HMAC-SHA256',
+                        use: '🔑 Primary use: Password hashing for user credentials, API keys, and sensitive tokens. Protects against rainbow table and brute-force attacks by making password cracking computationally expensive.',
+                        when: 'Deploy for: User password storage, API key generation, master key derivation, encrypted backup passphrases. Never store passwords in plain text or simple hashes.',
+                        technical: 'NIST SP 800-132 compliant. Configured with 600,000 iterations (2024 standard). Automatically increases iterations yearly to match computing power growth.',
+                        performance: '⚡ Performance: 150ms hash time (intentionally slow). Tuned to balance security and user experience. GPU-resistant design.',
+                        realworld: '🌍 Real-world: Django default password hasher, 1Password master passwords, WiFi WPA2 keys. Your user passwords are protected with PBKDF2.'
                     },
-                    'falcon': {
-                        name: 'FALCON',
-                        use: '✍️ Primary use: Compact signatures for constrained environments - IoT devices, embedded systems, bandwidth-limited channels. Smallest quantum-safe signatures available.',
-                        when: 'Deploy for: IoT sensors, automotive ECUs, satellite communications, mobile apps, smart cards, and any scenario where every byte counts.',
-                        technical: 'NIST round 3 winner, standardization pending. NTRU lattices with Gaussian sampling. Falcon-512 (Level 1) for IoT, Falcon-1024 (Level 5) for higher security.',
-                        performance: '⚡ Performance: 0.5ms signing, 0.2ms verification. Tiny signatures: 690-1,330 bytes. 70% smaller than Dilithium. Ideal for millions of IoT devices.',
-                        realworld: '🌍 Real-world: Being tested for 5G authentication. Vehicle-to-vehicle communications. Your IoT fleet will transition to this once standardized.'
+                    'hkdf': {
+                        name: 'HKDF-SHA256',
+                        use: '🔄 Primary use: Deriving multiple cryptographic keys from a single master secret. Ensures proper key separation for different purposes - encryption, authentication, signing.',
+                        when: 'Deploy for: TLS session keys, API token generation, multi-tenant key isolation, encrypted database field keys, microservice authentication tokens.',
+                        technical: 'RFC 5869 standard. Two-step process: Extract (concentrates entropy) and Expand (generates keys). Supports context-specific key derivation.',
+                        performance: '⚡ Performance: 0.1ms per key derivation. Can generate unlimited keys from single master. No performance penalty for multiple keys.',
+                        realworld: '🌍 Real-world: Signal Protocol (WhatsApp/Signal encryption), TLS 1.3 key schedule, your microservices derive unique keys per service using HKDF.'
                     }
                 };
                 
@@ -1159,13 +1246,6 @@
             const keys = document.getElementById('keysRotated');
             const current = parseFloat(keys.textContent);
             keys.textContent = (current + 0.1).toFixed(1) + 'K';
-        }
-
-        // Rotate algorithms occasionally
-        function rotateAlgorithm() {
-            const algorithms = ['ML-KEM-1024 (Kyber)', 'ML-KEM-768 (Kyber)', 'Hybrid: ECDH + ML-KEM', 'ML-DSA-87 (Dilithium)'];
-            const activeAlgo = document.getElementById('activeAlgorithm');
-            activeAlgo.textContent = algorithms[Math.floor(Math.random() * algorithms.length)];
         }
 
         // AI Chat System
@@ -1240,7 +1320,7 @@
                 const dot = document.createElement('div');
                 dot.style.width = '8px';
                 dot.style.height = '8px';
-                dot.style.background = 'var(--accent)';
+                dot.style.background = 'var(--primary)';
                 dot.style.borderRadius = '50%';
                 dot.style.animation = 'typingDot 1.4s ease-in-out infinite';
                 dot.style.animationDelay = `${i * 0.2}s`;
@@ -1262,34 +1342,30 @@
             const lowerMessage = message.toLowerCase();
             
             if (lowerMessage.includes('nist') || lowerMessage.includes('standard') || lowerMessage.includes('fips')) {
-                return '🏛️ NIST Standardization Status:\n\n✅ FIPS 203: ML-KEM (Kyber) - Published August 2024\n✅ FIPS 204: ML-DSA (Dilithium) - Published August 2024\n✅ FIPS 205: SLH-DSA (SPHINCS+) - Published August 2024\n🔄 FALCON: Selected but pending separate standardization\n\nWe implement all FIPS-validated algorithms with full compliance. No experimental or non-standard algorithms in production.';
+                return '🏛️ NIST Compliance Status:\n\n✅ FIPS 197: AES-256 (Approved)\n✅ FIPS 198-1: HMAC-SHA256 (Approved)\n✅ SP 800-132: PBKDF2 (Approved)\n✅ RFC 5869: HKDF (IETF Standard)\n\nAll algorithms are production-ready with decades of cryptanalysis. No experimental or proprietary algorithms in use.';
             }
             
-            if (lowerMessage.includes('quantum') && (lowerMessage.includes('threat') || lowerMessage.includes('computer'))) {
-                return '🔐 Quantum Threat Assessment:\n\nCurrent status: No immediate threat. IBM has 1,121 physical qubits (Condor), Google has 70 logical qubits. We need ~20 million physical qubits to break RSA-2048.\n\nTimeline estimates:\n• 2030: Early quantum advantage for optimization\n• 2035-2040: Potential RSA-2048 vulnerability\n• Today: Full PQC protection already active\n\nYour data is protected against both current and future quantum attacks.';
+            if (lowerMessage.includes('quantum') || lowerMessage.includes('post-quantum')) {
+                return '🔮 Quantum Status:\n\nCurrent: Classical encryption (AES-256) provides excellent protection against all known threats. With 256-bit keys, even quantum computers would need 2^128 operations to break.\n\nFuture: Post-quantum algorithms (Kyber, Dilithium) available as optional upgrade once NIST standardization completes in 2024-2025.\n\nYour data is secure today and ready for tomorrow.';
             }
             
             if (lowerMessage.includes('performance') || lowerMessage.includes('speed') || lowerMessage.includes('latency')) {
-                return '⚡ Real-World Performance Impact:\n\n• TLS Handshake: +3-5ms (from 25ms to 28-30ms)\n• API Authentication: +1-2ms per request\n• Bulk Encryption: No change (still using AES)\n• Certificate Verification: +0.3ms\n\nTotal overhead: <5% for most applications. Crypto-agility engine automatically optimizes based on connection type. High-frequency trading uses Falcon, web traffic uses Kyber.';
+                return '⚡ Encryption Performance:\n\n• AES-256-GCM: 1.2ms (0.3ms with AES-NI)\n• HMAC-SHA256: 0.3ms per verification\n• PBKDF2: 150ms (intentionally slow)\n• HKDF: 0.1ms per key\n\nTotal overhead: <2% for typical applications. Hardware acceleration automatically detected and used when available.';
             }
             
-            if (lowerMessage.includes('hybrid') || lowerMessage.includes('classical') || lowerMessage.includes('transition')) {
-                return '🔄 Hybrid Cryptography Strategy:\n\nCurrently running dual algorithms:\n• TLS: ECDHE + ML-KEM (both must be broken to compromise)\n• Certificates: RSA + ML-DSA (dual signatures)\n• Benefits: Protection even if PQC has unknown weakness\n• Timeline: Hybrid mode until 2030, then pure PQC\n\nZero downtime migration path. Old clients still connect via classical, new clients get quantum protection.';
+            if (lowerMessage.includes('compliance') || lowerMessage.includes('regulation')) {
+                return '📋 Compliance Coverage:\n\n✅ PCI-DSS: AES-256 for cardholder data\n✅ HIPAA: Encryption at rest and in transit\n✅ GDPR: Cryptographic pseudonymization\n✅ SOC 2: Key management controls\n✅ FedRAMP: FIPS 140-2 validated\n\nAll encryption automatically configured to meet regulatory requirements.';
             }
             
-            if (lowerMessage.includes('certificate') || lowerMessage.includes('pki') || lowerMessage.includes('x.509')) {
-                return '📜 Post-Quantum PKI Status:\n\n• Root CA: Hybrid RSA-4096 + ML-DSA-87 (10-year cert)\n• Intermediate: Pure ML-DSA-65 (5-year cert)\n• Leaf certs: Auto-rotating ML-DSA-44 (90-day)\n• Code signing: SLH-DSA for 20+ year validity\n\nAll certificates include both classical and PQC signatures. Browsers/clients that don\'t support PQC still validate via RSA. Full X.509 PQC support expected by 2025.';
+            if (lowerMessage.includes('key') && (lowerMessage.includes('rotation') || lowerMessage.includes('management'))) {
+                return '🔄 Key Management:\n\n• Rotation: Every 24 hours (configurable)\n• Storage: Hardware Security Module (HSM) when available\n• Derivation: HKDF for key hierarchy\n• Backup: Encrypted with master key\n• Access: Role-based with audit logging\n\nZero-downtime key rotation ensures continuous protection.';
             }
             
-            if (lowerMessage.includes('iot') || lowerMessage.includes('embedded') || lowerMessage.includes('constrained')) {
-                return '📱 IoT/Embedded Device Strategy:\n\n• Primary: FALCON (once standardized) - 690 byte signatures\n• Current: ML-DSA-44 (smallest Dilithium variant)\n• Key exchange: ML-KEM-512 (balanced security/size)\n• Optimization: Hardware acceleration via ARM Crypto Extensions\n\nAutomatic algorithm selection based on device capabilities. 8KB RAM devices get lightweight variants, gateways get full security.';
+            if (lowerMessage.includes('certificate') || lowerMessage.includes('tls') || lowerMessage.includes('ssl')) {
+                return '📜 Certificate Management:\n\n• TLS 1.3 with AES-256-GCM cipher suites\n• Automatic renewal 30 days before expiry\n• ECDSA P-384 for better performance\n• Certificate pinning for critical services\n• OCSP stapling enabled\n\nAll certificates managed automatically with no downtime.';
             }
             
-            if (lowerMessage.includes('compliance') || lowerMessage.includes('regulation') || lowerMessage.includes('mandate')) {
-                return '📋 Compliance & Regulations:\n\n✅ US Federal: CNSA 2.0 compliant (NSA mandate)\n✅ NIST: FIPS 203/204/205 certified implementations\n✅ EU: Meets ENISA quantum-safe recommendations\n✅ Financial: Aligned with SWIFT CSP requirements\n✅ Healthcare: HIPAA-ready with long-term protection\n\nWhite House memo requires PQC by 2035. You\'re already compliant, 11 years ahead of mandate.';
-            }
-            
-            return '🤖 I manage NIST-standardized post-quantum cryptography for AI Sentinel-X. Click any algorithm card for detailed use cases, or ask about quantum threats, performance impact, compliance requirements, or migration strategies.';
+            return '🤖 I manage NIST-approved encryption for AI Sentinel-X. Click any algorithm card for detailed use cases, or ask about compliance, performance, key management, or future quantum upgrades.';
         }
 
         // Initialize
@@ -1298,24 +1374,17 @@
             setInterval(updateMetrics, 5000);
             setInterval(updateRotationTimes, 60000);
             
-            // Occasionally rotate algorithm
-            setInterval(() => {
-                if (Math.random() > 0.9) {
-                    rotateAlgorithm();
-                }
-            }, 30000);
-            
-            // Add periodic quantum events to chat
+            // Add periodic encryption events to chat
             setInterval(() => {
                 if (Math.random() > 0.85 && chatOpen) {
                     const events = [
-                        '🔐 Key rotation completed. New ML-KEM-1024 keys deployed across all services.',
-                        '📊 NIST compliance check: All algorithms match FIPS 203/204/205 specifications.',
-                        '⚡ Performance optimization: 99.2% of handshakes complete within 30ms.',
-                        '🛡️ Quantum threat intel: Chinese researchers claim 1,000 qubit milestone. Still 19,000x below threat threshold.',
-                        '📜 Certificate update: 23 certificates transitioned from hybrid to pure PQC.',
-                        '✅ FALCON implementation ready. Awaiting NIST final standard before production deployment.',
-                        '🔍 Crypto-agility test: Successfully switched from ML-KEM to hybrid mode in 0.2 seconds.'
+                        '🔐 Key rotation completed. New AES-256-GCM keys deployed across all services.',
+                        '📊 Encryption performance: 99.98% of operations complete within 2ms.',
+                        '✅ FIPS compliance check passed. All algorithms operating within specifications.',
+                        '🛡️ Side-channel analysis: No timing vulnerabilities detected in crypto implementations.',
+                        '📜 Certificate renewal: TLS certificate will auto-renew in 87 days.',
+                        '⚡ Hardware acceleration active: AES-NI reducing latency by 75%.',
+                        '🔍 Integrity check: All HMAC signatures verified successfully in last hour.'
                     ];
                     addChatMessage(events[Math.floor(Math.random() * events.length)], false);
                 }
