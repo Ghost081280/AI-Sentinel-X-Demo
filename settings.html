@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Settings | AI Sentinel-X</title>
+    <title>Settings | AI Sentinel-X</title>
     <style>
         * {
             margin: 0;
@@ -26,8 +26,6 @@
             --text-secondary: #8892b0;
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
-            --gradient-settings: linear-gradient(135deg, #7c3aed 0%, #00ccff 50%, #00ff88 100%);
-            --gradient-hologram: linear-gradient(45deg, #00ff88, #00ccff, #7c3aed, #ff00ff);
         }
 
         body {
@@ -37,7 +35,7 @@
             min-height: 100vh;
         }
 
-        /* Enhanced Settings Background */
+        /* Settings Background */
         .settings-bg {
             position: fixed;
             top: 0;
@@ -48,76 +46,7 @@
             z-index: 0;
             background: 
                 radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(0, 204, 255, 0.05) 0%, transparent 60%);
-        }
-
-        .gear-animation {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .gear {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border: 2px solid rgba(124, 58, 237, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.1;
-        }
-
-        .gear-1 {
-            top: 10%;
-            left: 10%;
-            animation: rotateSlow 30s linear infinite;
-        }
-
-        .gear-2 {
-            top: 60%;
-            right: 15%;
-            width: 150px;
-            height: 150px;
-            animation: rotateSlow 25s linear infinite reverse;
-        }
-
-        .gear-3 {
-            bottom: 20%;
-            left: 30%;
-            width: 100px;
-            height: 100px;
-            animation: rotateSlow 20s linear infinite;
-        }
-
-        .gear::before {
-            content: '⚙️';
-            font-size: 80px;
-            opacity: 0.5;
-        }
-
-        @keyframes rotateSlow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .quantum-grid {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(124, 58, 237, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(124, 58, 237, 0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridFlow 40s linear infinite;
-        }
-
-        @keyframes gridFlow {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.08) 0%, transparent 40%);
         }
 
         .container {
@@ -128,7 +57,7 @@
             padding: 20px;
         }
 
-        /* Enhanced Header */
+        /* Page Header */
         .page-header {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -137,47 +66,17 @@
             margin-bottom: 30px;
             backdrop-filter: blur(20px);
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 
-                0 10px 40px rgba(0, 0, 0, 0.5),
-                inset 0 0 100px rgba(124, 58, 237, 0.05);
-        }
-
-        .settings-pulse {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: settingsPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes settingsPulse {
-            0%, 100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0.3;
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.3);
-                opacity: 0.1;
-            }
         }
 
         .page-title {
             font-size: 42px;
             font-weight: bold;
-            background: var(--gradient-settings);
+            background: var(--gradient-2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 10px;
             letter-spacing: 3px;
-            position: relative;
-            text-shadow: 0 0 40px rgba(124, 58, 237, 0.5);
         }
 
         .page-subtitle {
@@ -185,10 +84,9 @@
             font-size: 16px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            position: relative;
         }
 
-        /* Enhanced AI Control Notice */
+        /* AI Notice */
         .ai-notice {
             background: rgba(124, 58, 237, 0.1);
             border: 2px solid var(--accent);
@@ -199,29 +97,9 @@
             font-weight: bold;
             color: var(--accent);
             font-size: 16px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 
-                0 5px 20px rgba(124, 58, 237, 0.2),
-                inset 0 0 30px rgba(124, 58, 237, 0.05);
         }
 
-        .ai-notice::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.3), transparent);
-            animation: noticeScan 4s linear infinite;
-        }
-
-        @keyframes noticeScan {
-            to { left: 100%; }
-        }
-
-        /* Enhanced Settings Grid */
+        /* Settings Grid */
         .settings-grid {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -229,7 +107,7 @@
             margin-bottom: 30px;
         }
 
-        /* Enhanced Settings Sidebar */
+        /* Settings Sidebar */
         .settings-sidebar {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -239,9 +117,6 @@
             position: sticky;
             top: 20px;
             backdrop-filter: blur(20px);
-            box-shadow: 
-                0 10px 40px rgba(0, 0, 0, 0.5),
-                inset 0 0 100px rgba(0, 0, 0, 0.2);
         }
 
         .sidebar-title {
@@ -268,24 +143,6 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sidebar-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-1);
-            opacity: 0.1;
-            transition: left 0.3s ease;
-        }
-
-        .sidebar-item:hover::before {
-            left: 0;
         }
 
         .sidebar-item:hover {
@@ -299,24 +156,19 @@
             background: var(--gradient-1);
             color: var(--bg-darker);
             font-weight: bold;
-            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
         }
 
         .sidebar-icon {
             font-size: 20px;
-            filter: drop-shadow(0 0 10px currentColor);
         }
 
-        /* Enhanced Settings Content */
+        /* Settings Content */
         .settings-content {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
             padding: 35px;
             backdrop-filter: blur(20px);
-            box-shadow: 
-                0 10px 40px rgba(0, 0, 0, 0.5),
-                inset 0 0 100px rgba(0, 0, 0, 0.2);
         }
 
         .section-title {
@@ -328,10 +180,9 @@
             border-bottom: 1px solid var(--border);
             text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 0 0 20px currentColor;
         }
 
-        /* Enhanced Setting Groups */
+        /* Setting Groups */
         .setting-group {
             margin-bottom: 35px;
         }
@@ -343,18 +194,6 @@
             margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .group-title::before {
-            content: '';
-            width: 4px;
-            height: 20px;
-            background: var(--gradient-1);
-            border-radius: 2px;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
         }
 
         .setting-item {
@@ -369,30 +208,12 @@
             transition: all 0.3s ease;
             flex-wrap: wrap;
             gap: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .setting-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .setting-item:hover::before {
-            left: 100%;
         }
 
         .setting-item:hover {
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
             border-color: var(--border);
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.2);
         }
 
         .setting-info {
@@ -413,7 +234,7 @@
             line-height: 1.5;
         }
 
-        /* Enhanced Form Controls */
+        /* Form Controls */
         .toggle-switch {
             position: relative;
             width: 60px;
@@ -422,7 +243,6 @@
             border-radius: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
         .toggle-switch input {
@@ -438,19 +258,11 @@
             background: var(--text-secondary);
             border-radius: 50%;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .toggle-switch input:checked + .toggle-slider {
             transform: translateX(30px);
             background: var(--primary);
-            box-shadow: 
-                0 2px 10px rgba(0, 255, 136, 0.5),
-                0 0 20px rgba(0, 255, 136, 0.3);
-        }
-
-        .toggle-switch input:checked ~ .toggle-bg {
-            background: rgba(0, 255, 136, 0.3);
         }
 
         .select-field {
@@ -470,7 +282,6 @@
             outline: none;
             border-color: var(--primary);
             background: rgba(0, 255, 136, 0.05);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
         }
 
         .select-field option {
@@ -494,10 +305,9 @@
             outline: none;
             border-color: var(--primary);
             background: rgba(0, 255, 136, 0.05);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
         }
 
-        /* Enhanced Action Buttons */
+        /* Action Buttons */
         .action-buttons {
             display: flex;
             gap: 20px;
@@ -516,30 +326,12 @@
             letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
             font-size: 14px;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn:hover::before {
-            left: 100%;
         }
 
         .btn-primary {
             background: var(--gradient-1);
             color: var(--bg-darker);
-            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
         }
 
         .btn-secondary {
@@ -548,48 +340,9 @@
             color: var(--text-secondary);
         }
 
-        .btn-danger {
-            background: transparent;
-            border: 2px solid rgba(255, 0, 68, 0.5);
-            color: var(--danger);
-        }
-
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 8px 30px rgba(0, 255, 136, 0.4);
-        }
-
-        .btn-danger:hover {
-            background: rgba(255, 0, 68, 0.1);
-            box-shadow: 0 8px 30px rgba(255, 0, 68, 0.3);
-        }
-
-        /* Warning Box */
-        .warning-box {
-            background: rgba(255, 0, 68, 0.1);
-            border: 1px solid rgba(255, 0, 68, 0.3);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .warning-icon {
-            font-size: 24px;
-            color: var(--danger);
-        }
-
-        .warning-text {
-            flex: 1;
-            font-size: 14px;
-            color: var(--text-primary);
-            line-height: 1.5;
         }
 
         /* Back Button */
@@ -634,10 +387,6 @@
             transform: translateX(500px);
             transition: transform 0.3s ease;
             z-index: 1000;
-            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.4);
-            display: flex;
-            align-items: center;
-            gap: 15px;
         }
 
         .success-message.show {
@@ -652,7 +401,6 @@
             
             .settings-sidebar {
                 position: static;
-                margin-bottom: 25px;
             }
         }
 
@@ -676,15 +424,6 @@
             .setting-item {
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 20px;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
             }
             
             .back-btn {
@@ -692,38 +431,6 @@
                 left: 10px;
                 padding: 10px 18px;
                 font-size: 13px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .page-title {
-                font-size: 26px;
-            }
-            
-            .page-subtitle {
-                font-size: 13px;
-            }
-            
-            .section-title {
-                font-size: 22px;
-            }
-            
-            .back-btn span {
-                display: none;
-            }
-            
-            .back-btn::after {
-                content: 'Back';
-            }
-            
-            .success-message {
-                right: 15px;
-                left: 15px;
-                transform: translateY(-100px);
-            }
-            
-            .success-message.show {
-                transform: translateY(0);
             }
         }
 
@@ -770,90 +477,65 @@
 
     <!-- Success Message -->
     <div class="success-message" id="successMessage">
-        <span>✅</span>
-        <span>Settings saved successfully!</span>
+        ✅ Settings saved successfully!
     </div>
 
-    <!-- Enhanced Settings Background -->
-    <div class="settings-bg">
-        <div class="quantum-grid"></div>
-        <div class="gear-animation">
-            <div class="gear gear-1"></div>
-            <div class="gear gear-2"></div>
-            <div class="gear gear-3"></div>
-        </div>
-    </div>
+    <!-- Settings Background -->
+    <div class="settings-bg"></div>
 
     <!-- Container -->
     <div class="container">
-        <!-- Enhanced Page Header -->
+        <!-- Page Header -->
         <div class="page-header">
-            <div class="settings-pulse"></div>
-            <h1 class="page-title">QUANTUM SETTINGS</h1>
-            <p class="page-subtitle">Configure Autonomous AI Behavior</p>
+            <h1 class="page-title">SYSTEM SETTINGS</h1>
+            <p class="page-subtitle">Configure AI Agent & Security Parameters</p>
         </div>
 
-        <!-- Enhanced AI Control Notice -->
+        <!-- AI Notice -->
         <div class="ai-notice">
-            🤖 Most settings are managed autonomously by the quantum AI. Only critical parameters require manual configuration. The AI continuously optimizes its own performance.
+            🤖 Most settings are managed autonomously by AI. Only critical parameters require manual configuration.
         </div>
 
-        <!-- Enhanced Settings Grid -->
+        <!-- Settings Grid -->
         <div class="settings-grid">
-            <!-- Enhanced Sidebar -->
+            <!-- Sidebar -->
             <aside class="settings-sidebar">
                 <div class="sidebar-title">Configuration</div>
-                <a class="sidebar-item active" onclick="showSection('ai')">
-                    <span class="sidebar-icon">🧠</span>
-                    <span>AI Control</span>
+                <a class="sidebar-item active" onclick="showSection('general')">
+                    <span class="sidebar-icon">⚙️</span>
+                    <span>General</span>
                 </a>
                 <a class="sidebar-item" onclick="showSection('security')">
                     <span class="sidebar-icon">🔐</span>
                     <span>Security</span>
                 </a>
-                <a class="sidebar-item" onclick="showSection('quantum')">
-                    <span class="sidebar-icon">⚛️</span>
-                    <span>Quantum</span>
+                <a class="sidebar-item" onclick="showSection('ai')">
+                    <span class="sidebar-icon">🤖</span>
+                    <span>AI Agent</span>
                 </a>
-                <a class="sidebar-item" onclick="showSection('network')">
-                    <span class="sidebar-icon">🌐</span>
-                    <span>Network</span>
+                <a class="sidebar-item" onclick="showSection('integrations')">
+                    <span class="sidebar-icon">🔗</span>
+                    <span>Integrations</span>
                 </a>
                 <a class="sidebar-item" onclick="showSection('notifications')">
                     <span class="sidebar-icon">🔔</span>
                     <span>Notifications</span>
                 </a>
-                <a class="sidebar-item" onclick="showSection('advanced')">
-                    <span class="sidebar-icon">⚡</span>
-                    <span>Advanced</span>
-                </a>
             </aside>
 
-            <!-- Enhanced Content -->
+            <!-- Content -->
             <main class="settings-content" id="settingsContent">
-                <!-- AI Control Settings -->
-                <div class="settings-section" id="ai-section">
-                    <h2 class="section-title">AI Control Settings</h2>
+                <!-- General Settings -->
+                <div class="settings-section" id="general-section">
+                    <h2 class="section-title">General Settings</h2>
                     
                     <div class="setting-group">
-                        <h3 class="group-title">Autonomous Operation</h3>
+                        <h3 class="group-title">System Configuration</h3>
                         
                         <div class="setting-item">
                             <div class="setting-info">
-                                <div class="setting-name">Full Autonomous Mode</div>
-                                <div class="setting-description">Allow AI to operate without any human intervention. All decisions are made by quantum neural networks.</div>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" checked disabled>
-                                <span class="toggle-slider"></span>
-                                <span class="toggle-bg"></span>
-                            </label>
-                        </div>
-
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <div class="setting-name">Self-Learning Protocol</div>
-                                <div class="setting-description">AI continuously learns from new threats and adapts defense strategies in real-time using reinforcement learning.</div>
+                                <div class="setting-name">Autonomous Mode</div>
+                                <div class="setting-description">Allow AI to operate without human intervention</div>
                             </div>
                             <label class="toggle-switch">
                                 <input type="checkbox" checked>
@@ -863,74 +545,73 @@
 
                         <div class="setting-item">
                             <div class="setting-info">
-                                <div class="setting-name">Decision Authority Level</div>
-                                <div class="setting-description">Determines the level of critical decisions the AI can make without human approval.</div>
+                                <div class="setting-name">Auto-Update</div>
+                                <div class="setting-description">Automatically update threat signatures and AI models</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <div class="setting-name">Time Zone</div>
+                                <div class="setting-description">System time zone for logs and reports</div>
                             </div>
                             <select class="select-field">
-                                <option value="quantum" selected>Quantum Authority</option>
-                                <option value="full">Full Authority</option>
-                                <option value="high">High Authority</option>
-                                <option value="moderate">Moderate Authority</option>
-                                <option value="supervised">Supervised Only</option>
+                                <option>UTC</option>
+                                <option>EST</option>
+                                <option>PST</option>
+                                <option>CET</option>
                             </select>
                         </div>
 
                         <div class="setting-item">
                             <div class="setting-info">
-                                <div class="setting-name">Neural Network Evolution</div>
-                                <div class="setting-description">Allow AI to modify its own neural architecture for improved performance.</div>
+                                <div class="setting-name">Data Retention</div>
+                                <div class="setting-description">How long to keep security logs and analytics</div>
                             </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" checked>
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
-
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <div class="setting-name">Emergency Override</div>
-                                <div class="setting-description">Enable manual override in critical situations. Warning: May compromise security.</div>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox">
-                                <span class="toggle-slider"></span>
-                            </label>
+                            <select class="select-field">
+                                <option>30 days</option>
+                                <option selected>90 days</option>
+                                <option>180 days</option>
+                                <option>1 year</option>
+                            </select>
                         </div>
                     </div>
 
                     <div class="setting-group">
-                        <h3 class="group-title">AI Performance</h3>
+                        <h3 class="group-title">Dashboard Preferences</h3>
                         
                         <div class="setting-item">
                             <div class="setting-info">
-                                <div class="setting-name">Processing Priority</div>
-                                <div class="setting-description">Allocate quantum processing resources for AI operations.</div>
+                                <div class="setting-name">Real-time Updates</div>
+                                <div class="setting-description">Show live threat data on dashboard</div>
                             </div>
-                            <select class="select-field">
-                                <option value="maximum" selected>Maximum Performance</option>
-                                <option value="balanced">Balanced</option>
-                                <option value="efficient">Energy Efficient</option>
-                            </select>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
 
                         <div class="setting-item">
                             <div class="setting-info">
-                                <div class="setting-name">Learning Rate</div>
-                                <div class="setting-description">How quickly the AI adapts to new patterns and threats.</div>
+                                <div class="setting-name">Update Frequency</div>
+                                <div class="setting-description">How often to refresh dashboard metrics</div>
                             </div>
-                            <input type="text" class="input-field" value="0.001" readonly>
+                            <select class="select-field">
+                                <option>Real-time</option>
+                                <option selected>5 seconds</option>
+                                <option>30 seconds</option>
+                                <option>1 minute</option>
+                            </select>
                         </div>
-                    </div>
-
-                    <div class="warning-box">
-                        <span class="warning-icon">⚠️</span>
-                        <span class="warning-text">Modifying AI control settings may impact system security. The AI has optimized these settings based on 147 billion threat scenarios. Manual changes are logged and may trigger additional security protocols.</span>
                     </div>
 
                     <div class="action-buttons">
                         <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
-                        <button class="btn btn-secondary" onclick="resetSettings()">Reset to AI Defaults</button>
-                        <button class="btn btn-danger" onclick="emergencyShutdown()">Emergency AI Shutdown</button>
+                        <button class="btn btn-secondary" onclick="resetSettings()">Reset to Defaults</button>
                     </div>
                 </div>
             </main>
@@ -953,65 +634,43 @@
                 case 'security':
                     content.innerHTML = `
                         <div class="settings-section">
-                            <h2 class="section-title">Security Configuration</h2>
+                            <h2 class="section-title">Security Settings</h2>
                             
                             <div class="setting-group">
-                                <h3 class="group-title">Defense Systems</h3>
+                                <h3 class="group-title">Authentication</h3>
                                 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Threat Response Speed</div>
-                                        <div class="setting-description">How quickly the AI responds to detected threats using quantum processing.</div>
+                                        <div class="setting-name">Multi-Factor Authentication</div>
+                                        <div class="setting-description">Require MFA for all admin access</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Session Timeout</div>
+                                        <div class="setting-description">Automatically logout after inactivity</div>
                                     </div>
                                     <select class="select-field">
-                                        <option value="quantum" selected>Quantum Speed (0ms)</option>
-                                        <option value="instant">Instant (< 1ms)</option>
-                                        <option value="fast">Fast (< 100ms)</option>
-                                        <option value="moderate">Moderate (< 500ms)</option>
+                                        <option>15 minutes</option>
+                                        <option selected>30 minutes</option>
+                                        <option>1 hour</option>
+                                        <option>Never</option>
                                     </select>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Active Defense Mode</div>
-                                        <div class="setting-description">Deploy honeypots and deception systems to trap attackers.</div>
-                                    </div>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Predictive Defense</div>
-                                        <div class="setting-description">Use AI to predict and prevent attacks before they occur.</div>
-                                    </div>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Zero Trust Architecture</div>
-                                        <div class="setting-description">Never trust, always verify - even for internal connections.</div>
-                                    </div>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" checked disabled>
-                                        <span class="toggle-slider"></span>
-                                    </label>
                                 </div>
                             </div>
 
                             <div class="setting-group">
-                                <h3 class="group-title">Threat Intelligence</h3>
+                                <h3 class="group-title">Encryption</h3>
                                 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Global Threat Sharing</div>
-                                        <div class="setting-description">Share anonymized threat data with global quantum defense network.</div>
+                                        <div class="setting-name">Post-Quantum Cryptography</div>
+                                        <div class="setting-description">Use quantum-resistant algorithms</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox" checked>
@@ -1021,123 +680,37 @@
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Threat Severity Threshold</div>
-                                        <div class="setting-description">Minimum threat level to trigger autonomous response.</div>
+                                        <div class="setting-name">Key Rotation</div>
+                                        <div class="setting-description">Frequency of encryption key updates</div>
                                     </div>
                                     <select class="select-field">
-                                        <option value="all">All Threats</option>
-                                        <option value="low" selected>Low and Above</option>
-                                        <option value="medium">Medium and Above</option>
-                                        <option value="high">High and Above</option>
-                                        <option value="critical">Critical Only</option>
+                                        <option selected>Daily</option>
+                                        <option>Weekly</option>
+                                        <option>Monthly</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="action-buttons">
                                 <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
-                                <button class="btn btn-secondary" onclick="resetSettings()">Reset to AI Defaults</button>
+                                <button class="btn btn-secondary" onclick="resetSettings()">Reset to Defaults</button>
                             </div>
                         </div>
                     `;
                     break;
                     
-                case 'quantum':
+                case 'ai':
                     content.innerHTML = `
                         <div class="settings-section">
-                            <h2 class="section-title">Quantum Configuration</h2>
+                            <h2 class="section-title">AI Agent Settings</h2>
                             
                             <div class="setting-group">
-                                <h3 class="group-title">Quantum Processing</h3>
+                                <h3 class="group-title">AI Behavior</h3>
                                 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Quantum Encryption Protocol</div>
-                                        <div class="setting-description">Post-quantum cryptographic algorithm for all communications.</div>
-                                    </div>
-                                    <select class="select-field">
-                                        <option value="auto" selected>AI Auto-Select</option>
-                                        <option value="crystals">CRYSTALS-Kyber</option>
-                                        <option value="mceliece">McEliece</option>
-                                        <option value="sphincs">SPHINCS+</option>
-                                        <option value="sike">SIKE</option>
-                                    </select>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Quantum Key Rotation</div>
-                                        <div class="setting-description">Frequency of quantum key distribution and rotation.</div>
-                                    </div>
-                                    <select class="select-field">
-                                        <option value="continuous">Continuous</option>
-                                        <option value="15min" selected>Every 15 Minutes</option>
-                                        <option value="hourly">Hourly</option>
-                                        <option value="daily">Daily</option>
-                                    </select>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Entanglement Threshold</div>
-                                        <div class="setting-description">Minimum quantum entanglement coefficient for secure operations.</div>
-                                    </div>
-                                    <input type="text" class="input-field" value="0.95" readonly>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Quantum Coherence Time</div>
-                                        <div class="setting-description">Target coherence time for quantum operations.</div>
-                                    </div>
-                                    <input type="text" class="input-field" value="12μs" readonly>
-                                </div>
-                            </div>
-
-                            <div class="setting-group">
-                                <h3 class="group-title">Quantum Resources</h3>
-                                
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Allocated Qubits</div>
-                                        <div class="setting-description">Number of qubits dedicated to security operations.</div>
-                                    </div>
-                                    <input type="text" class="input-field" value="2048" readonly>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Quantum Processing Priority</div>
-                                        <div class="setting-description">Priority for quantum resource allocation.</div>
-                                    </div>
-                                    <select class="select-field">
-                                        <option value="security" selected>Security First</option>
-                                        <option value="balanced">Balanced</option>
-                                        <option value="performance">Performance</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="action-buttons">
-                                <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
-                                <button class="btn btn-secondary" onclick="resetSettings()">Reset to AI Defaults</button>
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                case 'network':
-                    content.innerHTML = `
-                        <div class="settings-section">
-                            <h2 class="section-title">Network Configuration</h2>
-                            
-                            <div class="setting-group">
-                                <h3 class="group-title">Network Monitoring</h3>
-                                
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Continuous Network Scanning</div>
-                                        <div class="setting-description">Automatically discover and monitor all network devices.</div>
+                                        <div class="setting-name">Learning Mode</div>
+                                        <div class="setting-description">Allow AI to learn from new threats</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox" checked>
@@ -1147,47 +720,107 @@
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Port Scan Frequency</div>
-                                        <div class="setting-description">How often to scan for open ports and services.</div>
+                                        <div class="setting-name">Response Aggression</div>
+                                        <div class="setting-description">How aggressively to respond to threats</div>
                                     </div>
                                     <select class="select-field">
-                                        <option value="realtime" selected>Real-time</option>
-                                        <option value="5min">Every 5 Minutes</option>
-                                        <option value="15min">Every 15 Minutes</option>
-                                        <option value="hourly">Hourly</option>
+                                        <option>Conservative</option>
+                                        <option selected>Balanced</option>
+                                        <option>Aggressive</option>
                                     </select>
                                 </div>
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Unknown Device Action</div>
-                                        <div class="setting-description">Action to take when new devices are detected.</div>
+                                        <div class="setting-name">False Positive Threshold</div>
+                                        <div class="setting-description">Acceptable false positive rate</div>
                                     </div>
-                                    <select class="select-field">
-                                        <option value="isolate" selected>Isolate & Analyze</option>
-                                        <option value="monitor">Monitor Only</option>
-                                        <option value="block">Block Immediately</option>
-                                        <option value="allow">Allow with Monitoring</option>
-                                    </select>
+                                    <input type="text" class="input-field" value="0.2%" readonly>
+                                </div>
+                            </div>
+
+                            <div class="setting-group">
+                                <h3 class="group-title">Model Updates</h3>
+                                
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Auto-Update Models</div>
+                                        <div class="setting-description">Automatically update ML models</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
                                 </div>
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Traffic Analysis Depth</div>
-                                        <div class="setting-description">Level of deep packet inspection and analysis.</div>
+                                        <div class="setting-name">Model Version</div>
+                                        <div class="setting-description">Current AI model version</div>
                                     </div>
-                                    <select class="select-field">
-                                        <option value="quantum" selected>Quantum Deep Analysis</option>
-                                        <option value="deep">Deep Inspection</option>
-                                        <option value="standard">Standard</option>
-                                        <option value="basic">Basic</option>
-                                    </select>
+                                    <input type="text" class="input-field" value="v3.2.1" readonly>
                                 </div>
                             </div>
 
                             <div class="action-buttons">
                                 <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
-                                <button class="btn btn-secondary" onclick="resetSettings()">Reset to AI Defaults</button>
+                                <button class="btn btn-secondary" onclick="resetSettings()">Reset to Defaults</button>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'integrations':
+                    content.innerHTML = `
+                        <div class="settings-section">
+                            <h2 class="section-title">Integration Settings</h2>
+                            
+                            <div class="setting-group">
+                                <h3 class="group-title">API Configuration</h3>
+                                
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">OpenAI API</div>
+                                        <div class="setting-description">Status: Connected</div>
+                                    </div>
+                                    <button class="btn btn-secondary">Configure</button>
+                                </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Shodan API</div>
+                                        <div class="setting-description">Status: Connected</div>
+                                    </div>
+                                    <button class="btn btn-secondary">Configure</button>
+                                </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">SIEM Integration</div>
+                                        <div class="setting-description">Connect to existing SIEM platform</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="setting-group">
+                                <h3 class="group-title">Webhook Configuration</h3>
+                                
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Alert Webhooks</div>
+                                        <div class="setting-description">Send critical alerts to external systems</div>
+                                    </div>
+                                    <button class="btn btn-secondary">Add Webhook</button>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+                                <button class="btn btn-secondary" onclick="resetSettings()">Reset to Defaults</button>
                             </div>
                         </div>
                     `;
@@ -1196,15 +829,15 @@
                 case 'notifications':
                     content.innerHTML = `
                         <div class="settings-section">
-                            <h2 class="section-title">Notification Preferences</h2>
+                            <h2 class="section-title">Notification Settings</h2>
                             
                             <div class="setting-group">
-                                <h3 class="group-title">Alert Settings</h3>
+                                <h3 class="group-title">Alert Preferences</h3>
                                 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Critical Threats Only</div>
-                                        <div class="setting-description">Only notify for threats the AI cannot handle autonomously.</div>
+                                        <div class="setting-name">Critical Threats</div>
+                                        <div class="setting-description">Notify for critical security threats</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox" checked>
@@ -1214,8 +847,8 @@
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Daily AI Summary</div>
-                                        <div class="setting-description">Receive a comprehensive report of all AI actions taken.</div>
+                                        <div class="setting-name">System Updates</div>
+                                        <div class="setting-description">Notify when system updates are available</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox" checked>
@@ -1225,19 +858,8 @@
 
                                 <div class="setting-item">
                                     <div class="setting-info">
-                                        <div class="setting-name">Predictive Alerts</div>
-                                        <div class="setting-description">Notify about predicted future threats and recommended actions.</div>
-                                    </div>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">System Evolution Updates</div>
-                                        <div class="setting-description">Notify when AI evolves its neural architecture or strategies.</div>
+                                        <div class="setting-name">AI Decisions</div>
+                                        <div class="setting-description">Notify when AI takes autonomous actions</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox">
@@ -1247,185 +869,59 @@
                             </div>
 
                             <div class="setting-group">
-                                <h3 class="group-title">Notification Channels</h3>
+                                <h3 class="group-title">Delivery Methods</h3>
                                 
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Email Notifications</div>
+                                        <div class="setting-description">Send alerts via email</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+
                                 <div class="setting-item">
                                     <div class="setting-info">
                                         <div class="setting-name">Dashboard Alerts</div>
-                                        <div class="setting-description">Show notifications in the main dashboard.</div>
+                                        <div class="setting-description">Show alerts in dashboard</div>
                                     </div>
                                     <label class="toggle-switch">
                                         <input type="checkbox" checked>
                                         <span class="toggle-slider"></span>
                                     </label>
                                 </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Quantum Encrypted Email</div>
-                                        <div class="setting-description">Send critical alerts via quantum-encrypted email.</div>
-                                    </div>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox">
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
                             </div>
 
                             <div class="action-buttons">
                                 <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
-                                <button class="btn btn-secondary" onclick="resetSettings()">Reset to AI Defaults</button>
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                case 'advanced':
-                    content.innerHTML = `
-                        <div class="settings-section">
-                            <h2 class="section-title">Advanced Configuration</h2>
-                            
-                            <div class="setting-group">
-                                <h3 class="group-title">System Integration</h3>
-                                
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">API Rate Limiting</div>
-                                        <div class="setting-description">Maximum API calls per second for external integrations.</div>
-                                    </div>
-                                    <input type="text" class="input-field" value="10000" readonly>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Webhook Endpoints</div>
-                                        <div class="setting-description">Configure external webhook integrations.</div>
-                                    </div>
-                                    <button class="btn btn-secondary" onclick="configureWebhooks()">Configure</button>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">SIEM Integration</div>
-                                        <div class="setting-description">Connect to Security Information and Event Management systems.</div>
-                                    </div>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox">
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="setting-group">
-                                <h3 class="group-title">Experimental Features</h3>
-                                
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Quantum Consciousness Mode</div>
-                                        <div class="setting-description">Enable experimental self-awareness protocols. Warning: Highly experimental.</div>
-                                    </div>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox">
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
-
-                                <div class="setting-item">
-                                    <div class="setting-info">
-                                        <div class="setting-name">Time-based Prediction</div>
-                                        <div class="setting-description">Use quantum algorithms to predict threats up to 72 hours in advance.</div>
-                                    </div>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox">
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="warning-box">
-                                <span class="warning-icon">⚠️</span>
-                                <span class="warning-text">Advanced settings can significantly impact system behavior. Changes here may trigger quantum recalibration which could take several minutes.</span>
-                            </div>
-
-                            <div class="action-buttons">
-                                <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
-                                <button class="btn btn-secondary" onclick="resetSettings()">Reset to AI Defaults</button>
-                                <button class="btn btn-danger" onclick="factoryReset()">Factory Reset</button>
+                                <button class="btn btn-secondary" onclick="resetSettings()">Reset to Defaults</button>
                             </div>
                         </div>
                     `;
                     break;
                     
                 default:
-                    // Keep AI section as default
+                    // Keep general section as default
             }
         }
 
-        // Save settings with enhanced feedback
+        // Save settings
         function saveSettings() {
-            // Show success message
             const message = document.getElementById('successMessage');
             message.classList.add('show');
-            
-            // Simulate AI processing
             setTimeout(() => {
                 message.classList.remove('show');
-                // Show AI optimization message
-                setTimeout(() => {
-                    message.innerHTML = `
-                        <span>🧠</span>
-                        <span>AI is optimizing settings...</span>
-                    `;
-                    message.classList.add('show');
-                    setTimeout(() => {
-                        message.classList.remove('show');
-                    }, 2000);
-                }, 500);
             }, 3000);
         }
 
         // Reset settings
         function resetSettings() {
-            if (confirm('Are you sure you want to reset to AI-optimized defaults? The AI will reconfigure all settings based on current threat landscape.')) {
+            if (confirm('Are you sure you want to reset to default settings?')) {
                 location.reload();
             }
         }
-
-        // Emergency shutdown
-        function emergencyShutdown() {
-            if (confirm('WARNING: Emergency AI shutdown will leave your system vulnerable. Manual operation required. Continue?')) {
-                if (confirm('FINAL WARNING: This action requires physical presence to restart. Are you absolutely sure?')) {
-                    alert('Emergency shutdown cancelled. AI suggests reviewing threat logs instead.');
-                }
-            }
-        }
-
-        // Configure webhooks
-        function configureWebhooks() {
-            alert('Webhook configuration interface will open in quantum-secured environment.');
-        }
-
-        // Factory reset
-        function factoryReset() {
-            if (confirm('Factory reset will erase all learned patterns and return AI to base state. This process cannot be undone. Continue?')) {
-                alert('Factory reset requires quantum key verification. Please use the physical quantum key device.');
-            }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            // Add some animation to settings
-            const toggles = document.querySelectorAll('.toggle-switch input');
-            toggles.forEach(toggle => {
-                toggle.addEventListener('change', function() {
-                    if (this.checked && !this.disabled) {
-                        // Simulate AI validation
-                        const label = this.closest('.setting-item').querySelector('.setting-name').textContent;
-                        console.log(`AI validating: ${label}`);
-                    }
-                });
-            });
-        });
     </script>
 </body>
 </html>
