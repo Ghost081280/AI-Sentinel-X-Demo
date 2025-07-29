@@ -299,60 +299,124 @@
             transition: width 1s ease;
         }
 
-        /* AI Modules Section */
+        /* AI Modules Section - Enhanced */
         .ai-modules {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
-            padding: 25px;
+            padding: 30px;
             margin-bottom: 30px;
             backdrop-filter: blur(20px);
-        }
-
-        .modules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
-        }
-
-        .module-card {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(124, 58, 237, 0.1) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
+        .ai-modules::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+            animation: moduleGlow 20s linear infinite;
+        }
+
+        @keyframes moduleGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .module-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(124, 58, 237, 0.2) 100%);
+            border: 2px solid rgba(124, 58, 237, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(0, 255, 136, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .module-card:hover::before {
+            opacity: 1;
+        }
+
         .module-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
             border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+            box-shadow: 
+                0 15px 40px rgba(124, 58, 237, 0.4),
+                0 0 60px rgba(0, 255, 136, 0.2),
+                inset 0 0 20px rgba(0, 255, 136, 0.1);
         }
 
         .module-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
+            font-size: 56px;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.5));
+        }
+
+        .module-card:hover .module-icon {
+            transform: scale(1.2) rotate(10deg);
+            filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.8));
         }
 
         .module-name {
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             color: var(--primary);
-            font-size: 16px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .module-status {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
         }
 
         .module-active {
             color: var(--success);
+            font-weight: 600;
+        }
+
+        .module-stats {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            color: var(--text-secondary);
+            opacity: 0.8;
         }
 
         /* Decision Log */
@@ -791,26 +855,59 @@
             </div>
         </div>
 
-        <!-- AI Modules -->
+        <!-- AI Modules - Enhanced -->
         <div class="ai-modules">
             <div class="panel-header">
                 <h2 class="panel-title">AI Core Modules</h2>
             </div>
             <div class="modules-grid">
+                <div class="module-card" onclick="showModuleDetails('threat-detection')">
+                    <div class="module-icon">🎯</div>
+                    <div class="module-name">Threat Detection</div>
+                    <div class="module-status module-active">● Active</div>
+                    <div class="module-stats">50k events/sec • 99.8% accuracy</div>
+                </div>
+                <div class="module-card" onclick="showModuleDetails('log-analysis')">
+                    <div class="module-icon">📊</div>
+                    <div class="module-name">Log Analysis</div>
+                    <div class="module-status module-active">● Active</div>
+                    <div class="module-stats">2.4M logs/day • LSTM neural net</div>
+                </div>
+                <div class="module-card" onclick="showModuleDetails('pattern-recognition')">
+                    <div class="module-icon">🔍</div>
+                    <div class="module-name">Pattern Recognition</div>
+                    <div class="module-status module-active">● Active</div>
+                    <div class="module-stats">1,247 patterns • 23 new today</div>
+                </div>
+                <div class="module-card" onclick="showModuleDetails('response-engine')">
+                    <div class="module-icon">🛡️</div>
+                    <div class="module-name">Response Engine</div>
+                    <div class="module-status module-active">● Active</div>
+                    <div class="module-stats">12ms avg response • 99.7% success</div>
+                </div>
+                <div class="module-card" onclick="showModuleDetails('predictive-analytics')">
+                    <div class="module-icon">🔮</div>
+                    <div class="module-name">Predictive Analytics</div>
+                    <div class="module-status module-active">● Active</div>
+                    <div class="module-stats">72hr forecast • 87% accuracy</div>
+                </div>
                 <div class="module-card" onclick="showModuleDetails('behavioral-analysis')">
                     <div class="module-icon">📈</div>
                     <div class="module-name">Behavioral Analysis</div>
                     <div class="module-status module-active">● Active</div>
+                    <div class="module-stats">2,847 behaviors • 2σ threshold</div>
                 </div>
                 <div class="module-card" onclick="showModuleDetails('compliance-monitor')">
                     <div class="module-icon">✅</div>
                     <div class="module-name">Compliance Monitor</div>
                     <div class="module-status module-active">● Active</div>
+                    <div class="module-stats">15 frameworks • Auto-remediation</div>
                 </div>
                 <div class="module-card" onclick="showModuleDetails('self-learning')">
                     <div class="module-icon">🔄</div>
                     <div class="module-name">Self-Learning</div>
                     <div class="module-status module-active">● Active</div>
+                    <div class="module-stats">Updates every 15min • RL+HF</div>
                 </div>
             </div>
         </div>
@@ -1109,29 +1206,4 @@
         document.head.appendChild(style);
     </script>
 </body>
-</html>showModuleDetails('threat-detection')">
-                    <div class="module-icon">🎯</div>
-                    <div class="module-name">Threat Detection</div>
-                    <div class="module-status module-active">● Active</div>
-                </div>
-                <div class="module-card" onclick="showModuleDetails('log-analysis')">
-                    <div class="module-icon">📊</div>
-                    <div class="module-name">Log Analysis</div>
-                    <div class="module-status module-active">● Active</div>
-                </div>
-                <div class="module-card" onclick="showModuleDetails('pattern-recognition')">
-                    <div class="module-icon">🔍</div>
-                    <div class="module-name">Pattern Recognition</div>
-                    <div class="module-status module-active">● Active</div>
-                </div>
-                <div class="module-card" onclick="showModuleDetails('response-engine')">
-                    <div class="module-icon">🛡️</div>
-                    <div class="module-name">Response Engine</div>
-                    <div class="module-status module-active">● Active</div>
-                </div>
-                <div class="module-card" onclick="showModuleDetails('predictive-analytics')">
-                    <div class="module-icon">🔮</div>
-                    <div class="module-name">Predictive Analytics</div>
-                    <div class="module-status module-active">● Active</div>
-                </div>
-                <div class="module-card" onclick="
+</html>
