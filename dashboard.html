@@ -27,6 +27,7 @@
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
             --gradient-shield: linear-gradient(135deg, #1a4d2e 0%, #00ff88 50%, #00ccff 100%);
+            --gradient-encryption: linear-gradient(135deg, #00ff88 0%, #00aa66 100%);
         }
 
         body {
@@ -354,6 +355,92 @@
             box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
         }
 
+        /* Encryption Status Bar */
+        .encryption-status-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .encryption-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .encryption-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-encryption);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .encryption-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .encryption-title {
+            font-weight: bold;
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .encryption-algorithms {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .algorithm-badge {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 11px;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .encryption-metrics {
+            display: flex;
+            gap: 25px;
+        }
+
+        .encryption-metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         /* Security Feed */
         .security-feed {
             background: var(--bg-card);
@@ -431,6 +518,11 @@
         .feed-item.danger {
             background: rgba(255, 0, 68, 0.05);
             border-left-color: var(--danger);
+        }
+
+        .feed-item.encryption {
+            background: rgba(0, 255, 136, 0.08);
+            border-left-color: var(--primary);
         }
 
         .feed-time {
@@ -688,6 +780,15 @@
                 right: -20px;
                 bottom: 80px;
             }
+
+            .encryption-status-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .encryption-metrics {
+                justify-content: center;
+            }
         }
 
         /* Custom Scrollbar */
@@ -800,7 +901,7 @@
             </a>
             <a href="quantum.html" class="nav-tab">
                 <span>🔐</span>
-                <span>Quantum</span>
+                <span>Encryption</span>
             </a>
             <a href="settings.html" class="nav-tab">
                 <span>⚙️</span>
@@ -813,6 +914,36 @@
             <!-- Alert Banner -->
             <div class="alert-banner">
                 🤖 AI Agent Operating Autonomously | Real-time Threat Detection Active | Manual Override Available
+            </div>
+
+            <!-- Encryption Status Bar -->
+            <div class="encryption-status-bar">
+                <div class="encryption-info">
+                    <div class="encryption-icon">🔒</div>
+                    <div class="encryption-details">
+                        <div class="encryption-title">NIST-Approved Encryption Active</div>
+                        <div class="encryption-algorithms">
+                            <span class="algorithm-badge">AES-256-GCM</span>
+                            <span class="algorithm-badge">HMAC-SHA256</span>
+                            <span class="algorithm-badge">PBKDF2</span>
+                            <span class="algorithm-badge">HKDF-SHA256</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="encryption-metrics">
+                    <div class="encryption-metric">
+                        <div class="metric-value" id="encryptedChannels">247</div>
+                        <div class="metric-label">Encrypted Channels</div>
+                    </div>
+                    <div class="encryption-metric">
+                        <div class="metric-value" id="keyRotations">1.2K</div>
+                        <div class="metric-label">Key Rotations</div>
+                    </div>
+                    <div class="encryption-metric">
+                        <div class="metric-value">256-bit</div>
+                        <div class="metric-label">Security Level</div>
+                    </div>
+                </div>
             </div>
 
             <!-- Security Feed -->
@@ -856,7 +987,7 @@
                     <div class="action-icon">🔐</div>
                     <div class="action-content">
                         <div class="action-title">Encryption Status</div>
-                        <div class="action-description">Post-quantum algorithms active: Kyber-1024</div>
+                        <div class="action-description">NIST-approved algorithms: AES-256-GCM</div>
                     </div>
                 </a>
             </div>
@@ -901,7 +1032,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        Welcome! I'm your AI security assistant. I can help you investigate incidents, analyze logs, or manage security policies. All systems are currently operating autonomously. How can I assist you?
+                        Welcome! I'm your AI security assistant. I can help you investigate incidents, analyze logs, or manage security policies. All systems are currently operating autonomously with NIST-approved encryption. How can I assist you?
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -927,11 +1058,11 @@
                 { type: 'success', time: new Date(), message: '✅ Successfully blocked SQL injection attempt on /api/users' },
                 { type: 'normal', time: new Date(), message: '🔍 AI analyzed 147,892 log entries - no anomalies detected' },
                 { type: 'warning', time: new Date(), message: '⚠️ Suspicious login pattern detected from IP 192.168.1.47' },
-                { type: 'success', time: new Date(), message: '🔐 Encryption keys rotated using Kyber-1024 algorithm' },
+                { type: 'encryption', time: new Date(), message: '🔐 AES-256-GCM encryption keys rotated automatically' },
                 { type: 'normal', time: new Date(), message: '📊 Automated compliance report generated for SOC 2' },
                 { type: 'danger', time: new Date(), message: '🚨 DDoS attack detected and mitigated - 45,000 requests blocked' },
                 { type: 'success', time: new Date(), message: '✅ Security patch applied to vulnerable systems automatically' },
-                { type: 'normal', time: new Date(), message: '🤖 AI model retrained with latest threat patterns' }
+                { type: 'encryption', time: new Date(), message: '🔒 All API communications secured with HMAC-SHA256 integrity verification' }
             ];
 
             const feed = document.getElementById('securityFeed');
@@ -966,6 +1097,13 @@
 
             const responseTime = document.getElementById('responseTime');
             responseTime.textContent = Math.floor(8 + Math.random() * 8) + 'ms';
+
+            const encryptedChannels = document.getElementById('encryptedChannels');
+            encryptedChannels.textContent = Math.floor(240 + Math.random() * 20);
+
+            const keyRotations = document.getElementById('keyRotations');
+            const currentRotations = parseFloat(keyRotations.textContent);
+            keyRotations.textContent = (currentRotations + 0.01).toFixed(2) + 'K';
 
             if (Math.random() > 0.8) {
                 const fp = document.getElementById('falsePositives');
@@ -1041,6 +1179,9 @@
         function generateAIResponse(message) {
             const lowerMessage = message.toLowerCase();
             
+            if (lowerMessage.includes('encryption') || lowerMessage.includes('crypto')) {
+                return 'All data is protected using NIST-approved algorithms: AES-256-GCM for encryption, HMAC-SHA256 for integrity, PBKDF2 for password hashing, and HKDF-SHA256 for key derivation. Keys are rotated every 24 hours automatically.';
+            }
             if (lowerMessage.includes('threat') || lowerMessage.includes('attack')) {
                 return 'I\'ve detected 3 active threats in the last hour. All are being handled autonomously. The most significant was a SQL injection attempt that was blocked in 12ms. Would you like details on any specific threat?';
             }
@@ -1051,7 +1192,7 @@
                 return 'I\'ve analyzed 2.4M log entries today using ML pattern recognition. No critical anomalies detected. False positive rate is at 0.2%. The AI model was last retrained 3 hours ago.';
             }
             if (lowerMessage.includes('status') || lowerMessage.includes('health')) {
-                return 'All systems operational. AI agent running in autonomous mode with 99.98% uptime. Response time averaging 12ms. No critical issues detected.';
+                return 'All systems operational. AI agent running in autonomous mode with 99.98% uptime. Response time averaging 12ms. NIST encryption protecting all channels. No critical issues detected.';
             }
             return 'I\'m analyzing your request. Could you provide more details about what you\'d like to investigate or configure?';
         }
@@ -1069,8 +1210,9 @@
                     { type: 'success', message: '✅ Automated patch applied to vulnerable system' },
                     { type: 'normal', message: '🔍 Network scan completed - all devices secure' },
                     { type: 'warning', message: '⚠️ Unusual traffic pattern detected on port 445' },
-                    { type: 'success', message: '🔐 SSL certificate renewed automatically' },
-                    { type: 'normal', message: '📊 AI model accuracy improved to 99.9%' }
+                    { type: 'encryption', message: '🔐 SSL/TLS certificates renewed with AES-256-GCM' },
+                    { type: 'normal', message: '📊 AI model accuracy improved to 99.9%' },
+                    { type: 'encryption', message: '🔒 PBKDF2 password hashing protecting user credentials' }
                 ];
                 
                 const randomFeed = feedTypes[Math.floor(Math.random() * feedTypes.length)];
