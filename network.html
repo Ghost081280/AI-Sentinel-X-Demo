@@ -36,6 +36,7 @@
             background: var(--bg-darker);
             color: var(--text-primary);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* Network Background */
@@ -137,6 +138,8 @@
             margin-bottom: 25px;
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .overview-title {
@@ -215,6 +218,7 @@
             color: var(--primary);
             margin-bottom: 8px;
             font-family: 'Courier New', monospace;
+            word-break: break-all;
         }
 
         .overview-label {
@@ -258,6 +262,8 @@
             margin-bottom: 25px;
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .panel-title {
@@ -321,6 +327,8 @@
             align-items: center;
             padding: 12px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .result-item:last-child {
@@ -332,6 +340,8 @@
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
+            flex: 1;
+            min-width: 120px;
         }
 
         .result-value {
@@ -339,6 +349,8 @@
             font-weight: bold;
             color: var(--text-primary);
             font-family: 'Courier New', monospace;
+            text-align: right;
+            word-break: break-all;
         }
 
         /* Service List */
@@ -357,6 +369,8 @@
             justify-content: space-between;
             align-items: center;
             transition: all 0.3s ease;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .service-item:hover {
@@ -367,6 +381,7 @@
 
         .service-info {
             flex: 1;
+            min-width: 200px;
         }
 
         .service-name {
@@ -386,6 +401,7 @@
             font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .status-secure {
@@ -682,19 +698,113 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 15px;
+                padding: 10px;
             }
             
             .page-header {
-                padding: 25px;
+                padding: 20px 15px;
             }
             
             .page-title {
-                font-size: 32px;
+                font-size: 28px;
+                letter-spacing: 1px;
+            }
+            
+            .page-subtitle {
+                font-size: 14px;
+            }
+            
+            .auto-scan-alert {
+                font-size: 14px;
+                padding: 15px;
+            }
+            
+            .network-overview {
+                padding: 20px 15px;
+            }
+            
+            .overview-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .overview-title {
+                font-size: 20px;
             }
             
             .overview-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .overview-card {
+                padding: 15px 10px;
+            }
+            
+            .overview-icon {
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+            
+            .overview-value {
+                font-size: 18px;
+            }
+            
+            .overview-label {
+                font-size: 11px;
+            }
+            
+            .scan-panel {
+                padding: 20px 15px;
+            }
+            
+            .panel-title {
+                font-size: 18px;
+            }
+            
+            .scan-results {
+                padding: 15px;
+            }
+            
+            .result-item {
+                padding: 10px 0;
+            }
+            
+            .result-label {
+                font-size: 12px;
+            }
+            
+            .result-value {
+                font-size: 13px;
+            }
+            
+            .service-item {
+                padding: 12px;
+            }
+            
+            .service-info {
+                min-width: 150px;
+            }
+            
+            .service-name {
+                font-size: 14px;
+            }
+            
+            .service-details {
+                font-size: 12px;
+            }
+            
+            .device-discovery {
+                padding: 20px 15px;
+            }
+            
+            .discovery-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .device-card {
+                padding: 15px;
             }
             
             .back-btn {
@@ -716,10 +826,46 @@
             }
             
             .ai-chat-window {
-                width: calc(100vw - 40px);
+                width: calc(100vw - 20px);
                 height: calc(100vh - 120px);
-                right: -20px;
+                right: -10px;
                 bottom: 80px;
+            }
+            
+            .ai-chat-input {
+                font-size: 14px;
+                padding: 10px 12px;
+            }
+            
+            .ai-chat-send {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 24px;
+            }
+            
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .overview-value {
+                font-size: 20px;
+            }
+            
+            .panel-header {
+                gap: 15px;
+            }
+            
+            .panel-title {
+                font-size: 16px;
+            }
+            
+            .scan-status {
+                font-size: 11px;
             }
         }
 
