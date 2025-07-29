@@ -26,6 +26,7 @@
             --text-secondary: #8892b0;
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
+            --gradient-encryption: linear-gradient(135deg, #00ff88 0%, #00aa66 100%);
         }
 
         body {
@@ -112,6 +113,108 @@
             font-weight: bold;
             color: var(--primary);
             font-size: 16px;
+        }
+
+        /* Encryption Status Panel */
+        .encryption-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+        }
+
+        .encryption-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .encryption-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .encryption-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gradient-encryption);
+            color: var(--bg-darker);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .encryption-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .crypto-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .crypto-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+            border-color: var(--primary);
+        }
+
+        .crypto-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .crypto-name {
+            font-weight: bold;
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .crypto-details {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .crypto-metrics {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .crypto-metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
         }
 
         /* Defense Status */
@@ -672,7 +775,108 @@
 
         <!-- Defense Alert -->
         <div class="defense-alert">
-            🛡️ All defense systems operating autonomously. Honeypots active. AI orchestrating responses in real-time.
+            🛡️ All defense systems operating autonomously. Honeypots active. AI orchestrating responses in real-time with NIST-approved encryption.
+        </div>
+
+        <!-- Encryption Status Panel -->
+        <div class="encryption-panel">
+            <div class="encryption-header">
+                <h2 class="encryption-title">Data Protection Layer</h2>
+                <div class="encryption-badge">
+                    <span>🔒</span>
+                    <span>NIST ENCRYPTION ACTIVE</span>
+                </div>
+            </div>
+            
+            <div class="encryption-grid">
+                <div class="crypto-card">
+                    <div class="crypto-icon">🔐</div>
+                    <div class="crypto-name">AES-256-GCM</div>
+                    <div class="crypto-details">
+                        Primary encryption for all data at rest and in transit. Provides authenticated encryption with 256-bit security.
+                    </div>
+                    <div class="crypto-metrics">
+                        <div class="crypto-metric">
+                            <div class="metric-value">256-bit</div>
+                            <div class="metric-label">Key Size</div>
+                        </div>
+                        <div class="crypto-metric">
+                            <div class="metric-value">1.2ms</div>
+                            <div class="metric-label">Latency</div>
+                        </div>
+                        <div class="crypto-metric">
+                            <div class="metric-value">FIPS 197</div>
+                            <div class="metric-label">Standard</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="crypto-card">
+                    <div class="crypto-icon">✓</div>
+                    <div class="crypto-name">HMAC-SHA256</div>
+                    <div class="crypto-details">
+                        Message authentication and integrity verification. Prevents tampering and ensures data authenticity.
+                    </div>
+                    <div class="crypto-metrics">
+                        <div class="crypto-metric">
+                            <div class="metric-value">256-bit</div>
+                            <div class="metric-label">Digest</div>
+                        </div>
+                        <div class="crypto-metric">
+                            <div class="metric-value">0.3ms</div>
+                            <div class="metric-label">Verify</div>
+                        </div>
+                        <div class="crypto-metric">
+                            <div class="metric-value">FIPS 198</div>
+                            <div class="metric-label">Standard</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="crypto-card">
+                    <div class="crypto-icon">🔑</div>
+                    <div class="crypto-name">PBKDF2-HMAC-SHA256</div>
+                    <div class="crypto-details">
+                        Password hashing with configurable iterations. Protects stored credentials against brute-force attacks.
+                    </div>
+                    <div class="crypto-metrics">
+                        <div class="crypto-metric">
+                            <div class="metric-value">600K</div>
+                            <div class="metric-label">Iterations</div>
+                        </div>
+                        <div class="crypto-metric">
+                            <div class="metric-value">150ms</div>
+                            <div class="metric-label">Hash Time</div>
+                        </div>
+                        <div class="crypto-metric">
+                            <div class="metric-value">SP 800-132</div>
+                            <div class="metric-label">Standard</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="crypto-card">
+                    <div class="crypto-icon">🔄</div>
+                    <div class="crypto-name">HKDF-SHA256</div>
+                    <div class="crypto-details">
+                        Key derivation for generating multiple keys from master secrets. Ensures cryptographic key separation.
+                    </div>
+                    <div class="crypto-metrics">
+                        <div class="crypto-metric">
+                            <div class="metric-value">Unlimited</div>
+                            <div class="metric-label">Key Gen</div>
+                        </div>
+                        <div class="crypto-metric">
+                            <div class="metric-value">0.1ms</div>
+                            <div class="metric-label">Derive</div>
+                        </div>
+                        <div class="crypto-metric">
+                            <div class="metric-value">RFC 5869</div>
+                            <div class="metric-label">Standard</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Defense Status -->
@@ -718,7 +922,7 @@
                                 <span>🔐</span>
                                 <span>SSH Honeypot</span>
                             </div>
-                            <div class="honeypot-details">Port 22 • 12 intrusion attempts trapped</div>
+                            <div class="honeypot-details">Port 22 • 12 intrusion attempts trapped • AES-256 encrypted logs</div>
                         </div>
                         <div class="honeypot-status">ACTIVE</div>
                     </div>
@@ -728,7 +932,7 @@
                                 <span>🌐</span>
                                 <span>Web Application Decoy</span>
                             </div>
-                            <div class="honeypot-details">Port 8080 • Simulating vulnerable WordPress</div>
+                            <div class="honeypot-details">Port 8080 • Simulating vulnerable WordPress • HMAC-SHA256 integrity</div>
                         </div>
                         <div class="honeypot-status">ACTIVE</div>
                     </div>
@@ -738,7 +942,7 @@
                                 <span>🗄️</span>
                                 <span>Database Honeypot</span>
                             </div>
-                            <div class="honeypot-details">Port 3306 • MySQL decoy with fake data</div>
+                            <div class="honeypot-details">Port 3306 • MySQL decoy with encrypted fake data</div>
                         </div>
                         <div class="honeypot-status">ACTIVE</div>
                     </div>
@@ -748,7 +952,7 @@
                                 <span>📁</span>
                                 <span>FTP Server Trap</span>
                             </div>
-                            <div class="honeypot-details">Port 21 • Ready to deploy</div>
+                            <div class="honeypot-details">Port 21 • Ready to deploy • PBKDF2 credential protection</div>
                         </div>
                         <div class="honeypot-status status-inactive">STANDBY</div>
                     </div>
@@ -758,7 +962,7 @@
                                 <span>📧</span>
                                 <span>Email Server Decoy</span>
                             </div>
-                            <div class="honeypot-details">Port 25 • Collecting phishing attempts</div>
+                            <div class="honeypot-details">Port 25 • Collecting phishing attempts • TLS 1.3 secured</div>
                         </div>
                         <div class="honeypot-status">ACTIVE</div>
                     </div>
@@ -826,7 +1030,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        Welcome to Active Defense. I manage honeypots, orchestrate automated responses, and execute security playbooks. All systems are operating autonomously. How can I assist?
+                        Welcome to Active Defense. I manage honeypots, orchestrate automated responses, and execute security playbooks. All data is protected with NIST-approved encryption. How can I assist?
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -836,7 +1040,7 @@
                     type="text" 
                     class="ai-chat-input" 
                     id="aiChatInput" 
-                    placeholder="Ask about honeypots, playbooks, or request manual control..."
+                    placeholder="Ask about honeypots, playbooks, or encryption status..."
                     onkeypress="handleChatKeyPress(event)"
                 >
                 <button class="ai-chat-send" onclick="sendChatMessage()">SEND</button>
@@ -853,11 +1057,11 @@
             }
             setTimeout(() => {
                 const messages = {
-                    'ssh': '🔐 SSH Honeypot: Currently tracking 3 active sessions. 147 login attempts logged. Attacker IPs automatically blacklisted. Would you like to see captured credentials?',
-                    'web': '🌐 Web Decoy: Simulating WordPress 4.5 with known vulnerabilities. 23 SQL injection attempts captured. AI learning new attack patterns.',
-                    'database': '🗄️ Database Honeypot: MySQL instance with fake customer data. 5 data exfiltration attempts trapped. All queries logged for analysis.',
-                    'ftp': '📁 FTP Trap: Currently on standby. Can be activated to simulate file server with tracked documents. Deploy now?',
-                    'email': '📧 Email Decoy: Collected 89 phishing emails. AI analyzing for new patterns. Sender IPs reported to threat intelligence.'
+                    'ssh': '🔐 SSH Honeypot: Currently tracking 3 active sessions. 147 login attempts logged. All captured data encrypted with AES-256-GCM. Attacker IPs automatically blacklisted.',
+                    'web': '🌐 Web Decoy: Simulating WordPress 4.5 with known vulnerabilities. 23 SQL injection attempts captured. HMAC-SHA256 ensuring log integrity. AI learning new attack patterns.',
+                    'database': '🗄️ Database Honeypot: MySQL instance with fake customer data (AES-256 encrypted). 5 data exfiltration attempts trapped. All queries logged with cryptographic timestamps.',
+                    'ftp': '📁 FTP Trap: Currently on standby. When activated, uses PBKDF2-HMAC-SHA256 for credential hashing. Can be deployed to simulate file server with tracked documents.',
+                    'email': '📧 Email Decoy: Collected 89 phishing emails. TLS 1.3 with AES-256-GCM cipher suite. AI analyzing patterns for threat intelligence.'
                 };
                 addChatMessage(messages[type], false);
             }, 300);
@@ -870,12 +1074,12 @@
             }
             setTimeout(() => {
                 const messages = {
-                    'ddos': '⚡ DDoS Playbook: Automatically triggers rate limiting, traffic filtering, and CDN activation. Average mitigation time: 1.2 seconds.',
-                    'malware': '🦠 Malware Playbook: Isolates infected systems, captures samples for analysis, initiates cleanup. Success rate: 99.8%.',
-                    'phishing': '🎣 Phishing Playbook: Blocks malicious URLs, quarantines emails, alerts users. Prevented 89 credential thefts.',
-                    'insider': '👤 Insider Threat Playbook: Monitors unusual access patterns, restricts privileges, logs all actions. 5 incidents prevented.',
-                    'ransomware': '🔒 Ransomware Playbook: Instant backup activation, network isolation, decryption attempt. Saved $2.3M in ransom payments.',
-                    'zeroday': '🎯 Zero-Day Playbook: Virtual patching, behavior analysis, threat containment. Mitigated 3 unknown vulnerabilities.'
+                    'ddos': '⚡ DDoS Playbook: Automatically triggers rate limiting, traffic filtering, and CDN activation. All blocked IPs logged with HMAC-SHA256 verification. Average mitigation: 1.2 seconds.',
+                    'malware': '🦠 Malware Playbook: Isolates infected systems, captures samples in AES-256 encrypted containers. Initiates cleanup with cryptographic verification. Success rate: 99.8%.',
+                    'phishing': '🎣 Phishing Playbook: Blocks malicious URLs, quarantines emails with PBKDF2 protected credentials. Alerts users via encrypted channels. Prevented 89 credential thefts.',
+                    'insider': '👤 Insider Threat Playbook: Monitors unusual access patterns, logs all actions with HMAC integrity. Restricts privileges using HKDF-derived access tokens. 5 incidents prevented.',
+                    'ransomware': '🔒 Ransomware Playbook: Instant backup activation with AES-256-GCM encryption. Network isolation, decryption attempt. Saved $2.3M in ransom payments.',
+                    'zeroday': '🎯 Zero-Day Playbook: Virtual patching with encrypted rule distribution. Behavior analysis using AI. All patches signed with HMAC-SHA256. Mitigated 3 unknown vulnerabilities.'
                 };
                 addChatMessage(messages[type], false);
             }, 300);
@@ -883,12 +1087,13 @@
 
         // Timeline events
         const timelineEvents = [
-            { icon: '🛡️', action: 'Blocked Attack', time: new Date(), details: 'SQL injection attempt on /api/users blocked. Attacker IP blacklisted.' },
-            { icon: '🍯', action: 'Honeypot Triggered', time: new Date(), details: 'SSH honeypot accessed. Capturing attacker behavior for analysis.' },
-            { icon: '🔒', action: 'Ransomware Prevented', time: new Date(), details: 'Suspicious encryption behavior detected and stopped. System isolated.' },
-            { icon: '📧', action: 'Phishing Blocked', time: new Date(), details: '23 phishing emails quarantined. Users notified of threat.' },
-            { icon: '🎯', action: 'Zero-Day Mitigated', time: new Date(), details: 'Unknown exploit attempt detected. Virtual patch applied.' },
-            { icon: '⚡', action: 'DDoS Deflected', time: new Date(), details: '45,000 requests/second mitigated. Services remain available.' }
+            { icon: '🛡️', action: 'Blocked Attack', time: new Date(), details: 'SQL injection attempt blocked. Attack vector logged with AES-256 encryption.' },
+            { icon: '🍯', action: 'Honeypot Triggered', time: new Date(), details: 'SSH honeypot accessed. Session encrypted and behavior captured for analysis.' },
+            { icon: '🔒', action: 'Ransomware Prevented', time: new Date(), details: 'Suspicious encryption behavior detected. Files protected with AES-256-GCM backup.' },
+            { icon: '📧', action: 'Phishing Blocked', time: new Date(), details: '23 phishing emails quarantined. HMAC-SHA256 signatures verified. Users notified.' },
+            { icon: '🎯', action: 'Zero-Day Mitigated', time: new Date(), details: 'Unknown exploit attempt detected. Virtual patch applied with cryptographic signing.' },
+            { icon: '⚡', action: 'DDoS Deflected', time: new Date(), details: '45,000 requests/second mitigated. All traffic logs encrypted for forensics.' },
+            { icon: '🔐', action: 'Keys Rotated', time: new Date(), details: 'Encryption keys automatically rotated using HKDF-SHA256 derivation.' }
         ];
 
         // Add timeline event
@@ -1017,23 +1222,27 @@
         function generateAIResponse(message) {
             const lowerMessage = message.toLowerCase();
             
+            if (lowerMessage.includes('encryption') || lowerMessage.includes('crypto')) {
+                return '🔐 All defense systems use NIST-approved encryption: AES-256-GCM for data protection, HMAC-SHA256 for integrity, PBKDF2 for passwords, and HKDF for key derivation. Keys rotate every 24 hours.';
+            }
+            
             if (lowerMessage.includes('honeypot') || lowerMessage.includes('deception')) {
-                return '🍯 Active honeypots: 8 systems across SSH, Web, Database, and Email. Total captures: 47 attackers trapped. All operating autonomously with AI-driven adaptation.';
+                return '🍯 Active honeypots: 8 systems across SSH, Web, Database, and Email. Total captures: 47 attackers trapped. All logs encrypted with AES-256-GCM for forensic integrity.';
             }
             
             if (lowerMessage.includes('playbook') || lowerMessage.includes('response')) {
-                return '📋 Security playbooks executed 165 times today. Most common: Phishing (89), DDoS (34), Malware (12). Average response time: 0.3 seconds. All fully automated.';
+                return '📋 Security playbooks executed 165 times today. Most common: Phishing (89), DDoS (34), Malware (12). All responses include cryptographic verification. Average response: 0.3 seconds.';
             }
             
             if (lowerMessage.includes('manual') || lowerMessage.includes('control')) {
-                return '🎛️ Manual control available for: 1) Deploy/disable honeypots, 2) Modify playbook parameters, 3) Override automated responses. What would you like to control?';
+                return '🎛️ Manual control available for: 1) Deploy/disable honeypots, 2) Modify playbook parameters, 3) Override automated responses, 4) Rotate encryption keys. What would you like to control?';
             }
             
             if (lowerMessage.includes('status') || lowerMessage.includes('defense')) {
-                return '🛡️ Defense status: All systems operational. 99.7% success rate. 124 automated responses today. No manual intervention required.';
+                return '🛡️ Defense status: All systems operational. 99.7% success rate. 124 automated responses today. NIST encryption protecting all data flows. No manual intervention required.';
             }
             
-            return '🤖 I can provide information about honeypots, security playbooks, or automated responses. What would you like to know?';
+            return '🤖 I can provide information about honeypots, security playbooks, automated responses, or encryption status. What would you like to know?';
         }
 
         // Initialize
@@ -1058,11 +1267,12 @@
             setInterval(() => {
                 if (Math.random() > 0.85 && chatOpen) {
                     const events = [
-                        '🛡️ New attack pattern detected and playbook updated.',
-                        '🍯 Honeypot evolution: SSH trap now mimicking latest OpenSSH version.',
-                        '⚡ Response time improved: Now averaging 0.25s.',
-                        '🔒 Ransomware attempt blocked before encryption started.',
-                        '📊 Defense effectiveness: 99.8% success rate in last hour.'
+                        '🛡️ New attack pattern detected and playbook updated with encrypted signatures.',
+                        '🍯 Honeypot evolution: SSH trap now using stronger AES-256-GCM encryption.',
+                        '⚡ Response time improved: Now averaging 0.25s with full encryption.',
+                        '🔒 Ransomware attempt blocked. Backup encryption verified with HMAC-SHA256.',
+                        '📊 Defense effectiveness: 99.8% success rate with zero cryptographic failures.',
+                        '🔐 Encryption key rotation completed. All channels using fresh AES-256 keys.'
                     ];
                     addChatMessage(events[Math.floor(Math.random() * events.length)], false);
                 }
