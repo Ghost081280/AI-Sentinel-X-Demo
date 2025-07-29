@@ -29,6 +29,7 @@
             --gradient-network: linear-gradient(135deg, #00ccff 0%, #0066ff 100%);
             --gradient-external: linear-gradient(135deg, #ff0044 0%, #ff6644 100%);
             --gradient-internal: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
+            --gradient-encryption: linear-gradient(135deg, #00ff88 0%, #00aa66 100%);
         }
 
         body {
@@ -119,6 +120,70 @@
             font-weight: bold;
             color: var(--secondary);
             font-size: 16px;
+        }
+
+        /* Encryption Status Bar */
+        .encryption-status-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .encryption-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .encryption-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-encryption);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .encryption-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .encryption-title {
+            font-weight: bold;
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .encryption-status {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .encryption-badge {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 11px;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-left: 10px;
         }
 
         /* Network Overview Section */
@@ -231,7 +296,7 @@
         /* Dual Layer Scanning */
         .scanning-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
             gap: 25px;
             margin-bottom: 30px;
         }
@@ -488,6 +553,15 @@
             font-style: italic;
         }
 
+        .device-encryption {
+            font-size: 11px;
+            color: var(--success);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
         /* Back Button */
         .back-btn {
             position: fixed;
@@ -719,6 +793,11 @@
                 padding: 15px;
             }
             
+            .encryption-status-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+            
             .network-overview {
                 padding: 20px 15px;
             }
@@ -928,6 +1007,18 @@
             🤖 Autonomous dual-layer scanning active • External reconnaissance via Shodan API • Internal discovery via deployed agent • No manual intervention required
         </div>
 
+        <!-- Encryption Status Bar -->
+        <div class="encryption-status-bar">
+            <div class="encryption-info">
+                <div class="encryption-icon">🔒</div>
+                <div class="encryption-details">
+                    <div class="encryption-title">Network Communications Protected</div>
+                    <div class="encryption-status">All network traffic encrypted with AES-256-GCM • HMAC-SHA256 integrity verification</div>
+                </div>
+            </div>
+            <div class="encryption-badge">NIST ENCRYPTION ACTIVE</div>
+        </div>
+
         <!-- Network Overview -->
         <div class="network-overview">
             <div class="overview-header">
@@ -1001,28 +1092,28 @@
                     <div class="service-item">
                         <div class="service-info">
                             <div class="service-name">HTTPS (443/tcp)</div>
-                            <div class="service-details">nginx/1.18.0 • SSL Certificate Valid</div>
+                            <div class="service-details">nginx/1.18.0 • TLS 1.3 with AES-256-GCM</div>
                         </div>
                         <div class="service-status status-secure">SECURE</div>
                     </div>
                     <div class="service-item">
                         <div class="service-info">
                             <div class="service-name">SSH (22/tcp)</div>
-                            <div class="service-details">OpenSSH_7.4 • Key Auth Only</div>
+                            <div class="service-details">OpenSSH_7.4 • Key Auth Only • AES-256-CTR</div>
                         </div>
                         <div class="service-status status-secure">SECURE</div>
                     </div>
                     <div class="service-item">
                         <div class="service-info">
                             <div class="service-name">RDP (3389/tcp)</div>
-                            <div class="service-details">Windows Server 2019 • NLA Enabled</div>
+                            <div class="service-details">Windows Server 2019 • NLA + TLS 1.2</div>
                         </div>
                         <div class="service-status status-warning">MONITOR</div>
                     </div>
                     <div class="service-item">
                         <div class="service-info">
                             <div class="service-name">SMB (445/tcp)</div>
-                            <div class="service-details">SMBv2 • Outdated Version</div>
+                            <div class="service-details">SMBv2 • Outdated • Needs AES-128-GCM</div>
                         </div>
                         <div class="service-status status-vulnerable">VULNERABLE</div>
                     </div>
@@ -1066,28 +1157,28 @@
                     <div class="service-item">
                         <div class="service-info">
                             <div class="service-name">Domain Controllers</div>
-                            <div class="service-details">2 servers • AD DS • Fully patched</div>
+                            <div class="service-details">2 servers • AD DS • Kerberos AES-256</div>
                         </div>
                         <div class="service-status status-secure">SECURE</div>
                     </div>
                     <div class="service-item">
                         <div class="service-info">
                             <div class="service-name">Database Servers</div>
-                            <div class="service-details">5 instances • MySQL/PostgreSQL</div>
+                            <div class="service-details">5 instances • TDE with AES-256</div>
                         </div>
                         <div class="service-status status-secure">SECURE</div>
                     </div>
                     <div class="service-item">
                         <div class="service-info">
                             <div class="service-name">IoT Devices</div>
-                            <div class="service-details">47 devices • Mixed firmware versions</div>
+                            <div class="service-details">47 devices • Mixed encryption support</div>
                         </div>
                         <div class="service-status status-warning">MONITOR</div>
                     </div>
                     <div class="service-item">
                         <div class="service-info">
                             <div class="service-name">Workstations</div>
-                            <div class="service-details">189 systems • 18 need updates</div>
+                            <div class="service-details">189 systems • BitLocker AES-256 enabled</div>
                         </div>
                         <div class="service-status status-warning">UPDATE</div>
                     </div>
@@ -1118,7 +1209,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        I'm conducting dual-layer network analysis. External scan via Shodan shows your public attack surface. Internal agent discovered 247 devices automatically. All scanning is autonomous - no manual trigger needed. How can I help analyze your network?
+                        I'm conducting dual-layer network analysis with NIST-approved encryption. External scan via Shodan shows your public attack surface. Internal agent discovered 247 devices automatically. All communications secured with AES-256-GCM. How can I help analyze your network?
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1128,7 +1219,7 @@
                     type="text" 
                     class="ai-chat-input" 
                     id="aiChatInput" 
-                    placeholder="Ask about external exposure, internal devices, or vulnerabilities..."
+                    placeholder="Ask about external exposure, internal devices, or encryption status..."
                     onkeypress="handleChatKeyPress(event)"
                 >
                 <button class="ai-chat-send" onclick="sendChatMessage()">SEND</button>
@@ -1140,15 +1231,15 @@
     <script>
         // Sample devices for demonstration
         const internalDevices = [
-            { name: 'DC-PRIMARY', ip: '192.168.1.10', type: 'Domain Controller', icon: '🖥️', services: 'AD, DNS, DHCP', status: 'Secure' },
-            { name: 'DC-SECONDARY', ip: '192.168.1.11', type: 'Domain Controller', icon: '🖥️', services: 'AD, DNS', status: 'Secure' },
-            { name: 'FILE-SERVER-01', ip: '192.168.1.20', type: 'File Server', icon: '📁', services: 'SMB, FTP', status: 'Monitoring' },
-            { name: 'DB-PROD-01', ip: '192.168.1.30', type: 'Database', icon: '🗄️', services: 'MySQL 8.0', status: 'Secure' },
-            { name: 'WEB-APP-01', ip: '192.168.1.40', type: 'Web Server', icon: '🌐', services: 'HTTPS, SSH', status: 'Secure' },
-            { name: 'SECURITY-CAM-01', ip: '192.168.1.50', type: 'IoT Device', icon: '📹', services: 'RTSP, HTTP', status: 'Vulnerable' },
-            { name: 'WORKSTATION-101', ip: '192.168.1.101', type: 'Workstation', icon: '💻', services: 'RDP, SMB', status: 'Update Required' },
-            { name: 'PRINTER-FINANCE', ip: '192.168.1.200', type: 'Network Printer', icon: '🖨️', services: 'IPP, SNMP', status: 'Default Password' },
-            { name: 'HVAC-CONTROLLER', ip: '192.168.1.230', type: 'Building System', icon: '🌡️', services: 'BACnet, HTTP', status: 'Monitoring' }
+            { name: 'DC-PRIMARY', ip: '192.168.1.10', type: 'Domain Controller', icon: '🖥️', services: 'AD, DNS, DHCP', status: 'Secure', encryption: 'AES-256-GCM' },
+            { name: 'DC-SECONDARY', ip: '192.168.1.11', type: 'Domain Controller', icon: '🖥️', services: 'AD, DNS', status: 'Secure', encryption: 'AES-256-GCM' },
+            { name: 'FILE-SERVER-01', ip: '192.168.1.20', type: 'File Server', icon: '📁', services: 'SMB, FTP', status: 'Monitoring', encryption: 'AES-256-GCM' },
+            { name: 'DB-PROD-01', ip: '192.168.1.30', type: 'Database', icon: '🗄️', services: 'MySQL 8.0', status: 'Secure', encryption: 'TDE AES-256' },
+            { name: 'WEB-APP-01', ip: '192.168.1.40', type: 'Web Server', icon: '🌐', services: 'HTTPS, SSH', status: 'Secure', encryption: 'TLS 1.3' },
+            { name: 'SECURITY-CAM-01', ip: '192.168.1.50', type: 'IoT Device', icon: '📹', services: 'RTSP, HTTP', status: 'Vulnerable', encryption: 'Weak/None' },
+            { name: 'WORKSTATION-101', ip: '192.168.1.101', type: 'Workstation', icon: '💻', services: 'RDP, SMB', status: 'Update Required', encryption: 'BitLocker AES-256' },
+            { name: 'PRINTER-FINANCE', ip: '192.168.1.200', type: 'Network Printer', icon: '🖨️', services: 'IPP, SNMP', status: 'Default Password', encryption: 'TLS Optional' },
+            { name: 'HVAC-CONTROLLER', ip: '192.168.1.230', type: 'Building System', icon: '🌡️', services: 'BACnet, HTTP', status: 'Monitoring', encryption: 'Basic Auth' }
         ];
 
         // Populate device grid
@@ -1167,6 +1258,10 @@
                     <div class="device-ip">${device.ip}</div>
                     <div class="device-services">Services: ${device.services}</div>
                     <div class="device-ai-status">AI Status: ${device.status}</div>
+                    <div class="device-encryption">
+                        <span>🔒</span>
+                        <span>Encryption: ${device.encryption}</span>
+                    </div>
                 `;
                 card.style.animationDelay = `${index * 0.1}s`;
                 card.onclick = () => showDeviceDetails(device);
@@ -1180,7 +1275,16 @@
                 toggleChat();
             }
             setTimeout(() => {
-                addChatMessage(`Analyzing ${device.name} (${device.ip}): Type: ${device.type}, Services: ${device.services}. Status: ${device.status}. ${device.status.includes('Vulnerable') ? 'Immediate action recommended!' : 'Being monitored by AI.'}`, false);
+                let encryptionStatus = '';
+                if (device.encryption.includes('AES-256')) {
+                    encryptionStatus = '✅ Strong encryption with ' + device.encryption;
+                } else if (device.encryption.includes('Weak') || device.encryption.includes('None')) {
+                    encryptionStatus = '⚠️ WARNING: Weak or no encryption. Immediate upgrade recommended!';
+                } else {
+                    encryptionStatus = '🔒 Encryption: ' + device.encryption;
+                }
+                
+                addChatMessage(`Analyzing ${device.name} (${device.ip}): Type: ${device.type}, Services: ${device.services}. Status: ${device.status}. ${encryptionStatus} ${device.status.includes('Vulnerable') ? 'Immediate action recommended!' : 'Being monitored by AI.'}`, false);
             }, 300);
         }
 
@@ -1313,31 +1417,35 @@
         function generateAIResponse(message) {
             const lowerMessage = message.toLowerCase();
             
+            if (lowerMessage.includes('encryption') || lowerMessage.includes('crypto')) {
+                return '🔐 Network encryption status: All agent communications use AES-256-GCM. External services mostly TLS 1.3 compliant. Internal: 189/247 devices have strong encryption, 47 IoT devices need upgrades, 11 using weak/no encryption.';
+            }
+            
             if (lowerMessage.includes('external') || lowerMessage.includes('shodan')) {
-                return '🌐 External scan via Shodan API shows 7 open ports on your public IP (45.67.89.123). Critical finding: SMB port 445 exposed with outdated version. I recommend immediate firewall rule implementation.';
+                return '🌐 External scan via Shodan API shows 7 open ports on your public IP (45.67.89.123). Critical finding: SMB port 445 exposed with outdated encryption. Recommend immediate firewall rule and upgrade to SMB3 with AES-128-GCM.';
             }
             
             if (lowerMessage.includes('internal') || lowerMessage.includes('agent')) {
-                return '🏠 Internal agent has auto-discovered 247 devices on 192.168.1.0/24. No manual scanning needed - the agent started discovery immediately upon deployment. 18 systems need patches, 2 IoT devices have default credentials.';
+                return '🏠 Internal agent has auto-discovered 247 devices on 192.168.1.0/24. All agent traffic encrypted with AES-256-GCM. 18 systems need patches, 2 IoT devices have no encryption support.';
             }
             
             if (lowerMessage.includes('vulnerable') || lowerMessage.includes('risk')) {
-                return '⚠️ Critical vulnerabilities: 1) External SMB exposure (port 445), 2) Security camera with default password, 3) 18 workstations missing patches. AI is monitoring all risks and can auto-remediate with your approval.';
+                return '⚠️ Critical vulnerabilities: 1) External SMB exposure without proper encryption, 2) Security camera with no encryption, 3) 18 workstations missing BitLocker. AI is monitoring all risks and can auto-remediate with your approval.';
             }
             
             if (lowerMessage.includes('how') && lowerMessage.includes('work')) {
-                return '🤖 Sentinel X uses dual-layer scanning: External layer queries Shodan API for your public IP to see what attackers see. Internal layer uses our deployed agent to auto-discover all devices, map services, and identify risks - all without any manual configuration.';
+                return '🤖 Sentinel X uses dual-layer scanning: External layer queries Shodan API (secured with HMAC-SHA256) for your public IP. Internal layer uses AES-256-GCM encrypted agent to auto-discover all devices - all without manual configuration.';
             }
             
             if (lowerMessage.includes('device') || lowerMessage.includes('discover')) {
-                return '📡 Device discovery is fully autonomous. The agent uses ARP scanning, service fingerprinting, and behavioral analysis. New devices are detected within 0.3 seconds. Currently tracking 247 devices with real-time status updates.';
+                return '📡 Device discovery is fully autonomous. The agent uses ARP scanning, service fingerprinting, and behavioral analysis. All communications encrypted with AES-256-GCM. New devices detected within 0.3 seconds. Currently tracking 247 devices with encryption status.';
             }
             
             if (lowerMessage.includes('manual') || lowerMessage.includes('control')) {
-                return '🎛️ While scanning is automatic, you can: 1) Override AI decisions, 2) Whitelist/blacklist devices, 3) Adjust scan sensitivity, 4) Export detailed reports. The system is designed to run autonomously but supports full manual control when needed.';
+                return '🎛️ While scanning is automatic, you can: 1) Override AI decisions, 2) Whitelist/blacklist devices, 3) Force encryption upgrades, 4) Export encrypted reports. The system runs autonomously but supports full manual control when needed.';
             }
             
-            return '🤖 I\'m analyzing your network from both external (Shodan) and internal (agent) perspectives. What specific aspect would you like to investigate?';
+            return '🤖 I\'m analyzing your network from both external (Shodan) and internal (agent) perspectives with full NIST encryption. What specific aspect would you like to investigate?';
         }
 
         // Initialize
@@ -1367,11 +1475,11 @@
             setInterval(() => {
                 if (Math.random() > 0.85 && chatOpen) {
                     const events = [
-                        '🌐 External scan update: New service detected on port 8080.',
-                        '📡 Internal discovery: New device joined network - analyzing...',
-                        '🔒 Security update: Vulnerable device isolated automatically.',
-                        '✅ Patch status: 3 systems updated successfully.',
-                        '🛡️ Firewall rule suggested based on traffic analysis.'
+                        '🌐 External scan update: New service detected on port 8080 with TLS 1.3.',
+                        '📡 Internal discovery: New device joined network - checking encryption support...',
+                        '🔒 Security update: Vulnerable device upgraded to AES-256-GCM.',
+                        '✅ Encryption status: 3 systems upgraded to BitLocker AES-256.',
+                        '🛡️ Firewall rule suggested to protect unencrypted IoT device.'
                     ];
                     addChatMessage(events[Math.floor(Math.random() * events.length)], false);
                 }
