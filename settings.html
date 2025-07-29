@@ -635,6 +635,99 @@
             const content = document.getElementById('settingsContent');
             
             switch(section) {
+                case 'general':
+                    content.innerHTML = `
+                        <div class="settings-section" id="general-section">
+                            <h2 class="section-title">General Settings</h2>
+                            
+                            <div class="setting-group">
+                                <h3 class="group-title">System Configuration</h3>
+                                
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Autonomous Mode</div>
+                                        <div class="setting-description">Allow AI to operate without human intervention</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Auto-Update</div>
+                                        <div class="setting-description">Automatically update threat signatures and AI models</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Time Zone</div>
+                                        <div class="setting-description">System time zone for logs and reports</div>
+                                    </div>
+                                    <select class="select-field">
+                                        <option>UTC</option>
+                                        <option>EST</option>
+                                        <option>PST</option>
+                                        <option>CET</option>
+                                    </select>
+                                </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Data Retention</div>
+                                        <div class="setting-description">How long to keep security logs and analytics</div>
+                                    </div>
+                                    <select class="select-field">
+                                        <option>30 days</option>
+                                        <option selected>90 days</option>
+                                        <option>180 days</option>
+                                        <option>1 year</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="setting-group">
+                                <h3 class="group-title">Dashboard Preferences</h3>
+                                
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Real-time Updates</div>
+                                        <div class="setting-description">Show live threat data on dashboard</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <div class="setting-name">Update Frequency</div>
+                                        <div class="setting-description">How often to refresh dashboard metrics</div>
+                                    </div>
+                                    <select class="select-field">
+                                        <option>Real-time</option>
+                                        <option selected>5 seconds</option>
+                                        <option>30 seconds</option>
+                                        <option>1 minute</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+                                <button class="btn btn-secondary" onclick="resetSettings()">Reset to Defaults</button>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
                 case 'security':
                     content.innerHTML = `
                         <div class="settings-section">
