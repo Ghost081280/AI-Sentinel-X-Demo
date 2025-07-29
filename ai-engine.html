@@ -336,6 +336,7 @@
             border-radius: 15px;
             padding: 30px;
             backdrop-filter: blur(20px);
+            margin-bottom: 30px;
         }
 
         .capabilities-grid {
@@ -398,6 +399,141 @@
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.3); opacity: 0.7; }
+        }
+
+        /* Autonomous Actions Log */
+        .actions-log-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            margin-bottom: 30px;
+        }
+
+        .actions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .actions-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--danger);
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: livePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
+        }
+
+        .actions-log {
+            height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .action-item {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(124, 58, 237, 0.02) 100%);
+            border-left: 3px solid var(--accent);
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 0 10px 10px 0;
+            animation: actionSlide 0.3s ease;
+        }
+
+        @keyframes actionSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .action-item.critical {
+            border-left-color: var(--danger);
+            background: linear-gradient(135deg, rgba(255, 0, 68, 0.05) 0%, rgba(0, 0, 0, 0.4) 100%);
+        }
+
+        .action-item.warning {
+            border-left-color: var(--warning);
+            background: linear-gradient(135deg, rgba(255, 170, 0, 0.05) 0%, rgba(0, 0, 0, 0.4) 100%);
+        }
+
+        .action-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .action-type {
+            font-size: 11px;
+            color: var(--accent);
+            display: inline-block;
+            padding: 2px 8px;
+            background: rgba(124, 58, 237, 0.2);
+            border-radius: 4px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .action-message {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .action-details {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 20px;
+        }
+
+        .action-detail-item {
+            display: flex;
+            gap: 5px;
+        }
+
+        .detail-label {
+            opacity: 0.7;
         }
 
         /* Back Button */
@@ -893,6 +1029,20 @@
                 </div>
             </div>
         </div>
+
+        <!-- Autonomous Actions Log -->
+        <div class="actions-log-section">
+            <div class="actions-header">
+                <h2 class="actions-title">Autonomous Decision Log</h2>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>LIVE</span>
+                </div>
+            </div>
+            <div class="actions-log" id="actionsLog">
+                <!-- Actions will be populated by JavaScript -->
+            </div>
+        </div>
     </div>
 
     <!-- AI Chat Widget -->
@@ -1068,6 +1218,44 @@
             animate();
         }
 
+        // Autonomous actions data
+        const autonomousActions = [
+            { type: 'THREAT_BLOCKED', message: 'Blocked SQL injection attempt on /api/users endpoint', details: { source: '192.168.1.105', confidence: '99.7%' }, severity: 'critical' },
+            { type: 'MODEL_UPDATE', message: 'Neural network weights updated with 147K new threat signatures', details: { accuracy_gain: '+0.2%', samples: '147,892' }, severity: 'normal' },
+            { type: 'ANOMALY_DETECTED', message: 'Unusual network traffic pattern detected and isolated', details: { anomaly_score: '0.87', action: 'Auto-quarantine' }, severity: 'warning' },
+            { type: 'PATCH_APPLIED', message: 'Automatically applied security patch to vulnerable system', details: { CVE: '2024-12345', systems: '3' }, severity: 'normal' },
+            { type: 'PREDICTION', message: 'Predicted DDoS attack in next 2 hours - preemptive measures activated', details: { probability: '78%', mitigation: 'Rate limiting enabled' }, severity: 'warning' },
+            { type: 'RESPONSE', message: 'Neutralized ransomware attempt through behavioral analysis', details: { detection_time: '0.3s', prevented_damage: '$2.3M' }, severity: 'critical' },
+            { type: 'LEARNING', message: 'Incorporated new zero-day pattern into threat database', details: { pattern_id: 'ZD-2024-0847', similar_threats: '12' }, severity: 'normal' },
+            { type: 'OPTIMIZATION', message: 'AI model self-optimized - reduced false positives by 15%', details: { before: '0.35%', after: '0.20%' }, severity: 'normal' }
+        ];
+
+        // Add autonomous action to log
+        function addActionToLog(action) {
+            const log = document.getElementById('actionsLog');
+            const actionDiv = document.createElement('div');
+            actionDiv.className = `action-item ${action.severity}`;
+            
+            const time = new Date().toLocaleTimeString();
+            const detailsHtml = Object.entries(action.details)
+                .map(([key, value]) => `<div class="action-detail-item"><span class="detail-label">${key}:</span> ${value}</div>`)
+                .join('');
+            
+            actionDiv.innerHTML = `
+                <div class="action-time">${time}</div>
+                <div class="action-type">${action.type.replace(/_/g, ' ')}</div>
+                <div class="action-message">${action.message}</div>
+                <div class="action-details">${detailsHtml}</div>
+            `;
+            
+            log.insertBefore(actionDiv, log.firstChild);
+            
+            // Keep only last 50 actions
+            while (log.children.length > 50) {
+                log.removeChild(log.lastChild);
+            }
+        }
+
         // Update metrics
         function updateMetrics() {
             // Update random metrics
@@ -1214,7 +1402,11 @@
                 return '🛡️ Real-time threat analysis: Currently tracking 7 active threats, prevented 124 attacks today. Most common: DDoS (34%), SQL injection (23%), phishing (21%). All handled autonomously.';
             }
             
-            return '🤖 I can explain neural network architecture, model performance metrics, or demonstrate specific AI capabilities. What aspect of the AI engine would you like to explore?';
+            if (lowerMessage.includes('autonomous') || lowerMessage.includes('decision')) {
+                return '🤖 Autonomous decision making is fully active. Making 1,247 security decisions per minute with 99.7% accuracy. Recent actions include blocking 3 zero-day attempts and preventing $2.3M in potential damages. Check the action log below for real-time updates.';
+            }
+            
+            return '🤖 I can explain neural network architecture, model performance metrics, autonomous decisions, or demonstrate specific AI capabilities. What aspect of the AI engine would you like to explore?';
         }
 
         // Initialize
@@ -1222,8 +1414,22 @@
             initNeuralVisualization();
             initBackgroundNetwork();
             
+            // Add initial autonomous actions
+            addActionToLog({
+                type: 'SYSTEM_INIT',
+                message: 'AI Engine initialized - Autonomous decision making enabled',
+                details: { model: 'v3.2.1', status: 'Operational' },
+                severity: 'normal'
+            });
+            
             // Update metrics periodically
             setInterval(updateMetrics, 3000);
+            
+            // Add autonomous actions periodically
+            setInterval(() => {
+                const randomAction = autonomousActions[Math.floor(Math.random() * autonomousActions.length)];
+                addActionToLog(randomAction);
+            }, 4000);
             
             // Update progress bars
             setInterval(() => {
